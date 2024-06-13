@@ -34,7 +34,7 @@ public class Item {
 	private Long id; // 상품 아이디
 
 	@Column(nullable = false, length = 50)
-	private String itemName; // 상품 이름
+	private String itemNm; // 상품 이름
 
 	private int price; // 가격
 

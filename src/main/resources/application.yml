@@ -6,26 +6,35 @@ server:
 # 데이터 베이스 설정
 spring:
     datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/shop?serverTimezone=UTC&characterEncoding=UTF-8
       username: root
       password: root
 
-# jpa 설정
+# jpa 설정        
     jpa:
-      open-in-view: true
+      open-in-view: true      #
       hibernate:
-        ddl-auto: create #update, none, create-drop, validate 
+        ddl-auto: create      # create, update, ...
         naming:
-          physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+          physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy # 카멜표기를 스네이크 표기로 변환
+      show-sql: true          # SQL 구문 보이기
       properties:
         hibernate:
-#         show_sql: true
-          format_sql: true
+          format_sql: true    # 포멧 처리해서 보이기
           
     thymeleaf:
       cache: false
           
-          
+# 로그 정보 설정
+####################################
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace  # 물음표에 바인드 파라미터 출력          
 
 
 
