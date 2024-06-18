@@ -10,6 +10,17 @@ spring:
       url: jdbc:mysql://localhost:3306/shop?serverTimezone=UTC&characterEncoding=UTF-8
       username: root
       password: root
+      
+    devtools:
+      livereload:
+        enabled: true
+        
+      restart:
+        enabled: true  
+        
+    thymeleaf:
+      cache: false 
+        
 
 # jpa 설정        
     jpa:
@@ -23,8 +34,7 @@ spring:
         hibernate:
           format_sql: true    # 포멧 처리해서 보이기
           
-    thymeleaf:
-      cache: false
+
           
 # 로그 정보 설정
 ####################################
@@ -34,7 +44,8 @@ logging:
       hibernate:
         type:
           descriptor:
-            sql: trace  # 물음표에 바인드 파라미터 출력          
+            sql: trace  # 물음표에 바인드 파라미터 출력  
+                  
 
 
 
