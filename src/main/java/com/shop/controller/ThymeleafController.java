@@ -19,4 +19,9 @@ public class ThymeleafController {
 		return "thymeleaf/ex1";
 	}
 
+	@GetMapping("/")
+	public String ex4() {
+		return "/index";
+	}
+
 }

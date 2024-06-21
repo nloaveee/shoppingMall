@@ -20,7 +20,14 @@ spring:
         
     thymeleaf:
       cache: false 
-        
+
+##################################### 
+#  security setting
+##################################### 
+    security:
+      user: 
+        name: test@test.com
+        password: 1111
 
 # jpa 설정        
     jpa:
@@ -47,6 +54,7 @@ logging:
             sql: trace  # 물음표에 바인드 파라미터 출력  
                   
 
+   
 
 
 

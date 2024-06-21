@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Ex1</title>
-</head>
-<body>
+<html  xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	>
+	
+<div layout:fragment="content">
 	<h1>Ex1 페이지 입니다.</h1>
 	<div>
 		상품명: <span th:text="${itemDto.itemNm}"></span>
@@ -18,6 +18,6 @@
 	<div>
 		상품 가격: <span th:text="${itemDto.price}"></span>
 	</div>
-	
-</body>
+</div>
+
 </html>
