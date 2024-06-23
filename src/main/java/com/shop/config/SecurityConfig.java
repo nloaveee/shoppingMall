@@ -16,6 +16,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.formLogin(Customizer.withDefaults()).logout(Customizer.withDefaults());
+
 		return http.build();
 	}
 
