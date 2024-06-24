@@ -36,16 +36,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	
-	
-	
-	
-	
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.0'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+		
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
 
 	// querydsl 추가 2
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
