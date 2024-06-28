@@ -25,7 +25,12 @@ public class SecurityConfig {
 
 		// 각 페이지에 대한 접근 권한 설정
 		http.authorizeHttpRequests(request -> request.requestMatchers("/css/**").permitAll()
-				.requestMatchers("/", "/member/**", "/item/**", "/images/**").permitAll().anyRequest().authenticated());
+				.requestMatchers("/", "/member/**", "/item/**", "/images/**").permitAll().requestMatchers("/admin/**")
+				.hasRole("ADMIN") // 특정 권한이 있는 사람만 접근 가능
+				.anyRequest().authenticated());
+
+		// 예외 처리 - 인증 실패시 뜨는 error
+		http.exceptionHandling(exception -> exception.authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
 
 		// 로그아웃
 		http.logout(Customizer.withDefaults());
