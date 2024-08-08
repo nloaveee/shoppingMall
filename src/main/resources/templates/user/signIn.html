@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section  layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="login-box w-50">
+		<h4 class="d-flex justify-content-center mt-5 text-secondary">LOGIN</h4>
+		<hr>
+		<div class="d-flex justify-content-center">
+			<div>
+				<!-- 로그인  -->
+				<form method="post" action="/shop/user/sign-in" id="loginForm">
+				<div class="d-flex">
+					<div>
+						<div class="d-flex">
+							<span>아이디</span>
+							<input type="text" id="loginId" name="loginId" placeholder="아이디를 입력하세요" class="form-control mx-3 mb-3">
+						</div>
+						<div class="d-flex">
+							<span>비밀번호</span>
+							<input type="password" id="userPwd" name="userPwd" placeholder="비밀번호를 입력하세요" class="form-control mx-3">
+						</div>
+					</div>
+					<div>
+						<input type="submit" value="로그인" class="btn btn-dark w-100 h-100">
+					</div>
+				</div>
+				</form>
+		
+				<!-- 아이디 비번 찾기 -->
+				<div class="my-3">
+					<a href="/shop/user/find-id-view"><button class="btn btn-light col-3 mr-2">아이디 찾기</button></a>
+					<a href="/shop/user/find-pwd-view"><button class="btn btn-light col-3">비밀번호 찾기</button></a>
+				</div>
+				
+				<!-- 소셜 로그인 -->
+				<div class="my-3">
+					<button class="btn btn-success col-3 mr-2"></button>
+					<button class="btn btn-success col-3 mr-2"></button>
+				</div>
+				
+				<!-- 회원가입 -->
+				<a href="/shop/user/sign-up-view" class="text-secondary">회원가입</a>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+    </script>
+</th:block>

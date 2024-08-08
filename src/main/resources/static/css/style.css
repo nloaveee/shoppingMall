@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+header {
+	height: 250px;
+}
+
+.contents {
+	min-height: 500px;
+}
+
+footer {
+	height: 100px;
+}
+a:hover {
+  text-decoration : none;
+}
+
+.inquiry-box {
+	min-height: 400px;
+}
+
+.item-select-box {
+	height: 150px;
+}
