@@ -40,11 +40,11 @@
 						<th class="bg-light w-25 text-center text-secondary">* 주소</th>
 						<td>
 							<span class="d-flex">
-								<input type="text" th:value="${user.address}" id="postCode" class="form-control col-4" placeholder="우편번호">
+								<input type="text" th:value="${postCode}" id="postCode" class="form-control col-4" placeholder="우편번호">
 								<input type="button" value="우편번호 찾기" id="addressBtn" class="btn btn-secondary ml-2 col-3"><br>
 							</span>
-							<input type="text" th:value="${user.address}" id="address" placeholder="주소" class="form-control my-2">
-							<input type="text" th:value="${user.address}" id="detailAddress" placeholder="상세주소" class="form-control">											
+							<input type="text" th:value="${address}" id="address" placeholder="주소" class="form-control my-2">
+							<input type="text" th:value="${detailAddress}" id="detailAddress" placeholder="상세주소" class="form-control">											
 						</td>
 					</tr>				
 					

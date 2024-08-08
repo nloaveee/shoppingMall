@@ -7,43 +7,54 @@
 	<div class="login-box w-50">
 		<h4 class="d-flex justify-content-center mt-5 text-secondary">LOGIN</h4>
 		<hr>
-		<div class="d-flex justify-content-center">
-			<div>
+		<div class="d-flex justify-content-center w-100">
+			<div class="w-100">
 				<!-- 로그인  -->
 				<form method="post" action="/shop/user/sign-in" id="loginForm">
-				<div class="d-flex">
-					<div>
-						<div class="d-flex">
-							<span>아이디</span>
-							<input type="text" id="userId" name="userId" placeholder="아이디를 입력하세요" class="form-control mx-3 mb-3">
-						</div>
-						<div class="d-flex">
-							<span>비밀번호</span>
-							<input type="password" id="userPwd" name="userPwd" placeholder="비밀번호를 입력하세요" class="form-control mx-3">
-						</div>
+				<div class="d-flex justify-content-center mt-4">
+					<div class="col-9">
+					    <div class="d-flex align-items-center mb-2">
+					        <span class="col-3">아이디</span>
+					        <input type="text" id="userId" name="userId" placeholder="아이디를 입력하세요" class="form-control col-9">
+					    </div>
+					    <div class="d-flex align-items-center">
+					        <span class="col-3">비밀번호</span>
+					        <input type="password" id="userPwd" name="userPwd" placeholder="비밀번호를 입력하세요" class="form-control col-9">
+					    </div>
 					</div>
-					<div>
-						<input type="submit" value="로그인" class="btn btn-dark w-100 h-100">
-					</div>
+						<div class="col-2">
+						    <input type="submit" value="로그인" class="btn btn-dark w-100 h-100">
+						</div>
 				</div>
 				</form>
 		
 				<!-- 아이디 비번 찾기 -->
-				<div class="my-3">
-					<a href="/shop/user/find-id-view"><button class="btn btn-light col-3 mr-2">아이디 찾기</button></a>
-					<a href="/shop/user/find-pwd-view"><button class="btn btn-light col-3">비밀번호 찾기</button></a>
+				<div class="d-flex justify-content-center mt-4">
+					<div>
+						<a href="/shop/user/find-id-view"><button class="btn btn-light mr-2">아이디 찾기</button></a>
+						<a href="/shop/user/find-pwd-view"><button class="btn btn-light">비밀번호 찾기</button></a>
+					</div>
 				</div>
 				
 				<!-- 소셜 로그인 -->
-				<div class="my-3">
-					<button class="btn btn-success col-3 mr-2"></button>
-					<button class="btn btn-success col-3 mr-2"></button>
+				
+				<div class="d-flex justify-content-center mt-2">
+					<div>
+						<button class="btn btn-success mr-2">카카오로그인</button>
+						<button class="btn btn-success">구글로그인</button>
+					</div>
 				</div>
+			
 				
 				<!-- 회원가입 -->
-				<a href="/shop/user/sign-up-view" class="text-secondary">회원가입</a>
+				<div class="d-flex justify-content-center mt-2">
+					<a href="/shop/user/sign-up-view" class="text-secondary">회원가입</a>
+				</div>
+				
+				
 			</div>
 		</div>
+		<hr>
 	</div>
 	
 </section>

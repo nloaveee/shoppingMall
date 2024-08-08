@@ -12,7 +12,6 @@ import com.shoppingMall.mail.Mail;
 import com.shoppingMall.user.bo.UserBO;
 
 @Service
-
 public class MailBO {
 	
 	@Autowired

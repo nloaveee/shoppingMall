@@ -167,7 +167,7 @@
     		    let detailAddress = $("#detailAddress").val().trim();
     		    let postCode = $("#postCode").val().trim();
 
-    		    let fullAddress = `${postCode} ${address} ${detailAddress}`;
+    		    let fullAddress = `${postCode}` + '&' + `${address}` + '&' + ` ${detailAddress}`;
     			
     			// validation
     			if (!userId) {
