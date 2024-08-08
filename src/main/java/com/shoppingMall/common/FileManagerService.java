@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Component

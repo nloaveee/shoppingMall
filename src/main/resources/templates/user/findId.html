@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+      
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+<div class="w-50">
+		<h4 class="d-flex justify-content-center mt-5 text-secondary">아이디 찾기</h4>
+		<hr>
+			<div class="d-flex justify-content-center">
+				<!-- 아이디 찾기  -->
+					<div class="form-group">
+				    	<input type="text" name="name" id="name" placeholder="이름을 입력해주세요" class="form-control">
+				    </div>
+				    <div class="form-group">
+				    	<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요" class="form-control">
+				    </div>
+				    <button type="submit" id="findId" class="btn btn-dark">아이디 찾기</button>
+			</div>
+		<hr>
+		</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+    	
+    	$(document).ready(function(){
+    		
+    		// 아이디 찾기 
+    		$("#findId").on('click',function(){
+    			
+    			let name = $("#name").val().trim();
+    			let email = $("#email").val().trim();
+    			
+    			// validation
+    			if (!name) {
+    				alert("이름을 입력하세요");
+    				return;
+    			}
+    			
+    			if (!email) {
+    				alert("이메일을 입력하세요")
+    				return;
+    			}
+    			
+    			$.ajax({
+    				
+    				type: "post"
+    				,url: "/shop/user/find-id"
+    				,data: {"name" : name, "email" : email}
+    			
+    				,success:function(data) {
+    					if (data.code == 200) {
+    						Swal.fire({
+    	    					icon: 'success',
+    	    					title: 'ok', 	
+    	    					text: '회원님의 아이디는 '+data.user.userId+' 입니다.',
+    	    					confirmButtonColor: '#00008b',
+    	    					confirmButtonText: '확인'
+    	    				})
+    					} else {
+    						Swal.fire({
+    	    					icon: 'error',
+    	    					title: 'error',
+    	    					text: '해당하는 아이디가 없습니다.',
+    	    					confirmButtonColor: '#00008b',
+    	    					confirmButtonText: '확인'
+    	    				})
+    					}
+    				}    				
+    			});
+    			
+    		}); //-------- 아이디 찾기 끝 
+    		
+    		
+    	});
+   
+    </script>
+</th:block>

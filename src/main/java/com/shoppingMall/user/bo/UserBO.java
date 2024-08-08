@@ -1,6 +1,7 @@
 package com.shoppingMall.user.bo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
 
 import com.shoppingMall.user.entity.User;
@@ -28,6 +29,28 @@ public class UserBO {
 				.email(email)
 				.address(address)
 				.build());
+	}
+	
+	public User getUserByUserIdAndUserPwd(String userId, String userPwd) {
+		return userRepository.findByUserIdAndUserPwd(userId,userPwd);
+	}
+	
+	public User getUserByNameAndEmail(String name, String email) {
+		return userRepository.findByNameAndEmail(name, email);
+	}
+	
+	public User updatedUserPwd(String email, String userPwd) {
+		
+		User user = userRepository.findByEmail(email);
+		
+		if (user != null) {
+			user.setUserPwd(userPwd);
+			user.setTempPwd(true);
+			
+			return userRepository.save(user);			
+		} else {
+			return null;
+		}
 	}
 	
 

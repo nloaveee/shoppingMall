@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+	<h4 class="d-flex justify-content-center mt-5 text-secondary">비밀번호 찾기</h4>
+		<hr>
+			<div class="d-flex justify-content-center">
+					<div class="form-group">
+				    	<input type="text" name="userId" id="userId" placeholder="아이디를 입력해주세요" class="form-control">
+				    </div>
+					<div class="form-group">
+				    	<input type="text" name="name" id="name" placeholder="이름을 입력해주세요" class="form-control">
+				    </div>
+				    <div class="form-group">
+				    	<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요" class="form-control">
+				    </div>
+				    <div class="d-flex justify-content-center">
+				    	<button type="submit" id="findPwd" class="btn btn-dark">비밀번호 찾기</button>
+				    </div>
+			</div>
+		<hr>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function(){
+		
+		// 비밀번호 찾기
+		$("#findPwd").on('click',function(){
+			
+			let userId = $("#userId").val().trim();
+			let name = $("#name").val().trim();
+			let email = $("#email").val().trim();
+			
+			// validation
+			if (!userId) {
+				alert("아이디를 입력하세요");
+				return;
+			}
+			
+			if (!name) {
+				alert("이름을 입력하세요");
+				return;
+			}
+			
+			if (!email) {
+				alert("이메일을 입력하세요")
+				return;
+			}
+			
+			$.ajax({
+				
+				type: "post"
+				,url: "/shop/user/find-pwd/sendEmail"
+				,data: {"userId":userId, "name" : name, "email" : email}
+			
+				,success:function(data) {
+					if (data == "성공") {
+						Swal.fire({
+	    					icon: 'success',
+	    					title: 'ok', 	
+	    					html: '회원님의 이메일로 임시 비밀번호 발송해 드렸습니다.<br>로그인 후 비밀번호 변경 해주세요.',
+	    					confirmButtonColor: '#00008b',
+	    					confirmButtonText: '확인'
+	    				})
+					} else {
+						Swal.fire({
+	    					icon: 'error',
+	    					title: 'error',
+	    					text: '조회 결과가 없습니다.',
+	    					confirmButtonColor: '#00008b',
+	    					confirmButtonText: '확인'
+	    				})
+					}
+				}    				
+			});
+			
+		}); //-------- 비밀번호 찾기 끝 		
+	});
+    </script>
+</th:block>
