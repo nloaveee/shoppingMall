@@ -31,6 +31,13 @@ public class UserBO {
 				.build());
 	}
 	
+	public User addUser(String name, String email) {
+		return userRepository.save(User.builder()
+				.name(name)
+				.email(email)
+				.build());
+	}
+	
 	public User getUserByUserIdAndUserPwd(String userId, String userPwd) {
 		return userRepository.findByUserIdAndUserPwd(userId,userPwd);
 	}
@@ -65,6 +72,10 @@ public class UserBO {
 		} else {
 			return null;
 		}
+	}
+	
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 	
 
