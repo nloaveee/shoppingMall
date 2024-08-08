@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+			<div class="d-flex justify-content-center my-4">
+				<h4 class="text-secondary">회원정보 수정</h4>
+			</div>
+			
+			<form method="post" action="/shop/user/mypage/profile-update" id="profileUpdateForm">
+			<table class="profile-table table">
+				<tbody>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 아이디</th>
+						<td><input th:value="${user.userId}" type="text" id="userId" name="userId" class="form-control" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 비밀번호</th>
+						<td><input type="password" id="userPwd" name="userPwd" class="form-control" placeholder="비밀번호를 입력하세요."></td>
+					</tr>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 비밀번호 확인</th>
+						<td><input type="password" id="confirmPassword" class="form-control" placeholder="비밀번호를 입력하세요."></td>
+					</tr>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 이름</th>
+						<td><input th:value="${user.name}" type="text" id="name" name="name" class="form-control" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 전화번호</th>
+						<td><input type="text" id="phone" name="phone" class="form-control" placeholder="전화번호를 입력하세요."></td>
+					</tr>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 이메일</th>
+						<td><input th:value="${user.email}" type="text" id="email" name="email" class="form-control" readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th class="bg-light w-25 text-center text-secondary">* 주소</th>
+						<td>
+							<span class="d-flex">
+								<input type="text" th:value="${user.address}" id="postCode" class="form-control col-4" placeholder="우편번호">
+								<input type="button" value="우편번호 찾기" id="addressBtn" class="btn btn-secondary ml-2 col-3"><br>
+							</span>
+							<input type="text" th:value="${user.address}" id="address" placeholder="주소" class="form-control my-2">
+							<input type="text" th:value="${user.address}" id="detailAddress" placeholder="상세주소" class="form-control">											
+						</td>
+					</tr>				
+					
+				</tbody>
+			</table>
+			
+			<button type="submit" id="saveBtn" class="btn btn-dark float-right mb-4">저장</button>	
+			</form>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+
+	<!-- 우편번호 찾기 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    
+    <script>
+		$(document).ready(function(){
+			
+			// 저장 버튼 클릭 시 
+			$("#profileUpdateForm").on('submit', function(e){
+				e.preventDefault();
+				
+				let userPwd = $("#userPwd").val().trim();
+				let confirmPassword = $("#confirmPassword").val().trim();
+				let phone = $("#phone").val().trim();
+    		    let postCode = $("#postCode").val().trim();
+    		    let address = $("#address").val().trim();
+    		    let detailAddress = $("#detailAddress").val().trim();
+    		    
+    		    let fullAddress = `${postCode} ${address} ${detailAddress}`;
+				
+				// validation
+				if (!userPwd || !confirmPassword) {
+					alert("비밀번호를 입력하세요");
+					return false;
+				} 
+				
+				if (userPwd != confirmPassword) {
+					alert("비밀번호가 일치하지 않습니다.");
+					return false;
+				} 
+				
+				if (!phone) {
+					alert("전화번호를 입력하세요");
+				}
+				
+				if (!address || !detailAddress || !postCode) {
+    		        alert("주소를 입력해주세요");
+    		        return false;
+    		    }
+				
+				let url = $(this).attr("action");
+    		    let formData = $(this).serializeArray();
+    		    formData.push({ name: 'fullAddress', value: fullAddress });
+    			
+    			$.post(url, $.param(formData)) 
+    			.done(function(data){
+    				
+    				if (data.code == 200) {
+    					alert("회원정보 수정이 완료되었습니다.");
+						location.href="/shop/user/mypage/profile"
+    					
+    				} else {
+    					
+    					alert(data.error_message);
+    					
+    				}					
+				});
+				
+			}); // ---------- 회원정보 수정 끝
+			
+			//우편번호 찾기 
+    		$("#addressBtn").on('click',function(){
+    			new daum.Postcode({
+    	            oncomplete: function(data) {
+    	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+    	
+    	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+    	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+    	                var addr = ''; // 주소 변수
+    	                var extraAddr = ''; // 참고항목 변수
+    	
+    	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+    	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+    	                    addr = data.roadAddress;
+    	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+    	                    addr = data.jibunAddress;
+    	                }
+    	
+    	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+    	                document.getElementById('postCode').value = data.zonecode;
+    	                document.getElementById("address").value = addr;
+    	                // 커서를 상세주소 필드로 이동한다.
+    	                document.getElementById("detailAddress").focus();
+    	            }
+    	        }).open();
+    			
+    		}); //-------------------- 우편번호 찾기 끝
+			
+		});
+    </script>
+</th:block>

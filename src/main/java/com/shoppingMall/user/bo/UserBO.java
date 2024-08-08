@@ -53,5 +53,19 @@ public class UserBO {
 		}
 	}
 	
+	public User updateUser(String userId, String userPwd, String phone, String address ) {
+		User user = userRepository.findByUserId(userId);
+		
+		if (user != null) {
+			user.setUserPwd(userPwd);
+			user.setPhone(phone);
+			user.setAddress(address);
+			
+			return userRepository.save(user);			
+		} else {
+			return null;
+		}
+	}
+	
 
 }
