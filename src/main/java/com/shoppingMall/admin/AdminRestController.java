@@ -93,7 +93,16 @@ public class AdminRestController {
 	}
 	
 	
-	// 상품 등록
+	/**
+	 * 상품 등록
+	 * @param name
+	 * @param price
+	 * @param sale
+	 * @param category
+	 * @param content
+	 * @param file
+	 * @return
+	 */
 	@PostMapping("/item/add")
 	public Map<String, Object> itemAdd(
 			@RequestParam("name") String name,
@@ -115,6 +124,37 @@ public class AdminRestController {
 		}
 		return result;
 	}
+	
+	
+	// 상품 옵션 저장 
+	@PostMapping("/item/option-add")
+	public Map<String,Object> itemOptionAdd(
+			@RequestParam("name") String name,
+			@RequestParam("size") String size,
+			@RequestParam("color") String color,
+			@RequestParam("stock") int stock) {
+		
+		boolean saveOption = itemBo.addItemOption(name, size, color,stock);
+		
+		// 응답값
+		Map<String, Object> result = new HashMap<>();
+		if (saveOption == true) {
+			result.put("code", 200); 
+		} else {
+			result.put("error_message", "상품 옵션 등록에 실패했습니다.");
+		}
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// 상품 검색 

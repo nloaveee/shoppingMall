@@ -18,8 +18,8 @@ public class FileManagerService {
 	
 	// 실제 업로드가 된 이미지가 저장될 서버의 경로 
 		// ***파일 마지막에 /를 꼭 붙이기***
-		//public static final String FILE_UPLOAD_PATH = "D:\\나현희\\shop\\workspace\\images/"; //학원
-		public static final String FILE_UPLOAD_PATH = "C:\\나현희\\shoppingMall\\workspace\\images/"; // 집
+		public static final String FILE_UPLOAD_PATH = "D:\\나현희\\shoppingMall\\workspace\\images/"; //학원
+		//public static final String FILE_UPLOAD_PATH = "C:\\나현희\\shoppingMall\\workspace\\images/"; // 집
 		
 		// input: MultipartFile
 		// output: String(이미지 경로)

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.mapper.ItemMapper;
+import com.shoppingMall.admin.mapper.ItemOptionMapper;
 import com.shoppingMall.common.FileManagerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,9 @@ public class ItemBO {
 	
 	@Autowired
 	private ItemMapper itemMapper;
+	
+	@Autowired
+	private ItemOptionMapper itemOptionMapper;
 	
 	@Autowired
 	private FileManagerService fileManagerService;
@@ -48,5 +52,15 @@ public class ItemBO {
 	
 	public Item getItemByName(String name) {
 		return itemMapper.selectItemByName(name);
+	}
+	
+	// 상품 옵션 저장 
+	public boolean addItemOption(String name, String size, String color, int stock) {
+		
+		int itemId = itemMapper.selectItemByName(name).getId();
+		
+		boolean saveOption = itemOptionMapper.insertItemOption(itemId, size, color, stock);
+		
+		return saveOption ? true : false;
 	}
 }

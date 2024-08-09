@@ -32,7 +32,8 @@
  	
  	<select id="selectItemByName"  resultType="com.shoppingMall.admin.domain.Item">
  		SELECT 
- 			`name`
+ 			`id`
+ 			,`name`
 			,`content`
 			,`price`
 			,`sale`

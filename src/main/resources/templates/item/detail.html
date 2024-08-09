@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75 bg-light mb-3">
+		<!-- 상품 대표 이미지 -->
+		<div class="col-4 bg-success mr-3">
+			<div class="d-flex justify-content-center">
+				<img th:src="${itemInfo.imagePath}" alt="본문 이미지" width="300px">	
+			</div>	
+		</div>
+	
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>
