@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.shoppingMall.admin.mapper.ItemMapper">
+ 
+ 	<insert id="insertItem" parameterType="map">
+ 		INSERT INTO `item`
+ 		(
+			`name`
+			,`content`
+			,`price`
+			,`sale`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+ 		)
+ 		VALUE
+ 		(
+			#{name}
+			,#{content}
+			,#{price}
+			,#{sale}
+			,#{category}
+			,#{imagePath}
+			,NOW()
+			,NOW()
+ 		)
+ 	
+ 	</insert>
+ 	
+ 	<select id="selectItemByName"  resultType="com.shoppingMall.admin.domain.Item">
+ 		SELECT 
+ 			`name`
+			,`content`
+			,`price`
+			,`sale`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+ 		FROM 
+ 			`item`
+ 		WHERE
+ 			`name` = #{name}
+ 	</select>
+ 	
+ 	 <select id="selectItemList"  resultType="com.shoppingMall.admin.domain.Item">
+ 		SELECT 
+ 			`id`
+ 			,`name`
+			,`content`
+			,`price`
+			,`sale`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+ 		FROM 
+ 			`item`
+ 	</select>
+ 	
+ 	<select id="selectItemListByName"  resultType="com.shoppingMall.admin.domain.Item">
+ 		SELECT 
+ 			`id`
+ 			,`name`
+			,`content`
+			,`price`
+			,`sale`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+ 		FROM 
+ 			`item`
+ 		WHERE
+ 			`name` like CONCAT('%',#{name},'%')
+ 	</select>
+ 
+ </mapper>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<!-- 상품목록 --> 
+        <div class="col-10">
+        	<div class="d-flex justify-content-between"> 
+				<h4 class="text-dark">상품목록</h4>
+				<div class="d-flex">
+					<input type="text" id="itemSearch" class="form-control" placeholder="상품명을 입력해주세요">
+					<button id="searchBtn" class="btn btn-dark col-3">검색</button>
+				</div>
+			</div>
+			<div class="mt-4">
+				<table class="table table-bold text-center">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>이미지</th>
+							<th>상품명</th>
+							<th>상품가격</th>
+							<th>카테고리</th>
+							<th>생성일</th>							
+							<th>수정일</th>							
+							<th>삭제</th>							
+						</tr>
+					</thead>				
+					<tbody>
+						<tr th:each="item,status: ${searchItemList}">
+							<td th:text="${status.count}"></td>
+							<td><img th:src="${item.mainImg}" alt="대표 이미지" width="100px"></td>
+							<td><b><a th:href="|/shop/admin/item-detail-view?name=${item.name}|" th:text="${item.name}" class="text-dark"></a></b></td>
+							<td th:text="${item.price}"></td>
+							<td th:text="${item.category}"></td>
+							<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+							<td th:text="${#temporals.format(item.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+							<td>삭제</td>
+							<td ></td>
+						</tr>						
+					</tbody>				
+				</table>
+			</div>
+		</div>		
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

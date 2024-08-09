@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75 d-flex justify-content-center mb-4">	
+	
+			<!-- 상품 이미지, 파일 선택 -->
+			<div class="col-4 bg-light mr-3">
+				<input type="file" id="file" accept=".jpg, .png, .gif">			
+			</div>
+
+			<!-- 상품 설명 -->
+			<div class="col-8 ">
+				<div class="d-flex mt-3">
+					<span>NAME</span>
+					<input type="text" id="name" class="form-control col-5 ml-2">
+				</div>
+				<div class="d-flex mt-3">
+					<div class="d-flex">
+						<span>PRICE</span>
+						<input type="text" id="price" class="form-control ml-2">
+					</div>
+					<div class="d-flex">
+						<span class="mx-2">SALE</span>
+						<input type="text" id="sale" class="form-control">
+					</div>
+				</div>			
+				<div class="mt-3">
+					<span>CATEGORY</span>
+					<select id="category">
+			            <option>--CATEGORY--</option>
+			            <option value="OUTER" id="outer">OUTER</option>
+			            <option value="TOP" id="top">TOP</option>
+			            <option value="BOTTOM" id="bottom">BOTTOM</option>
+			            <option value="DRESS" id="dress">DRESS</option>
+			            <option value="ACC" id="acc">ACC</option>
+			        </select>
+		        </div>			      			
+				<div class="d-flex mt-3">
+					<span>CONTENT</span>
+					<textarea rows="7" id="content" class="form-control w-100 ml-2 " placeholder="내용을 입력하세요"></textarea>
+				</div>
+				
+				<div class="d-flex justify-content-end">
+					<button id="saveBtn" class="btn btn-dark mt-3">등록</button>
+				</div>
+				
+			</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		
+    $(document).ready(function(){
+    	
+    	// 상품 등록 
+    	$("#saveBtn").on('click',function() {
+    		
+    		let fileName = $("#file").val();
+    		let name = $("#name").val().trim();
+    		let price = $("#price").val().trim();
+    		let sale = $("#sale").val().trim();
+    		let category = $("#category option:selected").val();
+    		let content = $("#content").val().trim();
+
+    		
+    		if (!name) {
+    			alert("상품명을 입력해주세요");
+    			return;
+    		}
+    		
+    		if (!price || !sale) {
+    			alert("상품가격을 입력해주세요");
+    			return;
+    		}
+    		
+    		if (!category) {
+    			alert ("카테고리를 선택해주세요");
+    			return;
+    		}
+    		
+    		if (!content) {
+    			alert("상품 설명을 입력해주세요");
+    			return;
+    		}
+    		
+			// 파일명이 비워져 있지 않으면 (파일명이 있는 경우) => 확장자 체크 
+			if (fileName) {
+				// C:\fakepath\door-8831267_1280.jpg
+				let extension = fileName.split(".").pop().toLowerCase(); // pop() => 배열의 제일 마지막을 가지고 온다.
+				console.log(extension);
+				
+				// extension이 뒤의 배열에 있는 값인지 아닌지 확인 
+				// 포함되어 있지 않으면 -1이다.
+				if ($.inArray(extension, ["jpg","gif","png"]) == -1) {
+					alert("이미지파일만 업로드 할 수 있습니다.");
+					$("#file").val(""); // 파일 초기화 
+					return;
+				}
+			}
+				
+				let formData = new FormData();
+				formData.append("name",name);
+				formData.append("price",price);
+				formData.append("sale",sale);
+				formData.append("category",category)
+				formData.append("content",content);
+				formData.append("file", $("#file")[0].files[0]); 
+				
+				$.ajax({
+					
+					type:"post"
+					,url:"/shop/admin/item/add"
+					,data: formData
+					, enctype:"multipart/form-data" // 파일업로드 필수 설정
+					, processData:false // 파일업로드 필수 설정
+					, contentType:false // 파일업로드 필수 설정
+					
+					, success:function(data) {
+						if (data.code == 200) {
+							alert("상품이 등록되었습니다.");
+							// 상품목록 화면으로 이동
+							location.href="/shop/admin/item-list-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+				
+					,error:function(e) {
+						alert("상품 등록에 실패했습니다.");
+					}
+				});
+    		});
+    	
+    });
+    </script>
+</th:block>

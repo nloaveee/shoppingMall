@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<h4>공지사항 작성</h4>		
+		<input type="text" id="title" th:value="${notice.title}" class="form-control  my-3" placeholder="제목을 입력하세요">
+		<textarea rows="10" id="content" th:text="${notice.content}" class="form-control" placeholder="내용을 입력하세요"></textarea>
+		
+		<div class="d-flex justify-content-between mt-3">
+			<button type="button" id="deleteBtn" class="btn btn-secondary" th:data-notice-id="${notice.id}">삭제</button>
+			<div>
+				<a href="/shop/admin/notice-list-view" class="btn btn-dark mr-2">목록</a>
+				<button type="button" id="saveBtn" class="btn btn-warning" th:data-notice-id="${notice.id}">수정</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		
+    	$(document).ready(function(){
+    		
+    		// 글 수정 
+    		$("#saveBtn").on('click',function(){
+    			
+    			let id = $(this).data("notice-id");
+    			let title = $("#title").val().trim();
+    			let content = $("#content").val();
+    			
+    			// validation
+    			if (!title) {
+    				alert("제목을 입력하세요");
+    				return;
+    			}
+    			if (!content) {
+    				alert("내용을 입력하세요");
+    				return;
+    			}
+    			
+    			$.ajax ({
+    				type: "post"
+    				, url: "/shop/admin/notice-update"
+    				, data: {"id":id ,"title": title, "content" : content}
+    			
+    				, success:function(data){
+    					if ( data.code == 200 ) {
+    						alert("공지사항이 수정되었습니다");
+    						location.href="/shop/admin/notice-list-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    				}
+    				
+    				, error:function(e) {
+    					alert("공지사항을 저장하는데 실패했습니다");
+    				}    				    				
+    			});    			
+    		}); // ---------------- 글 수정 끝
+    		
+    		// 글 삭제 
+    		$("#deleteBtn").on('click',function(){
+    			
+    			let noticeId = $(this).data("notice-id");
+    			
+    			$.ajax({
+    				type: "delete"
+    				,url: "/shop/admin/notice-delete"
+    				,data: {"noticeId" : noticeId}
+    			
+    				, success:function(data) {
+    					if (data.code == 200) {
+    						alert("공지사항 삭제 완료");
+    						location.href="/shop/admin/notice-list-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    				}
+    				
+    				, error:function(e) {
+    					alert("공지사항 삭제 실패");
+    				}    			    				
+    			});    			
+    		}); // ----------- 글 삭제 끝  
+    		
+    		
+    	});
+    </script>
+</th:block>

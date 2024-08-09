@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75">
+		<h4 class="text-dark">공지사항</h4>
+		<!-- 임시로 보기 위해서 : [[${postList}]] -->
+		<div class="mt-4">
+		<table class="table table-bold text-center">
+			<thead>
+				<tr>
+					<th>NO.</th>
+					<th>제목</th>
+					<th>작성일</th>
+					<th>수정일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="notice,status : ${noticeList}">
+					<td th:text="${status.count}"></td>
+					<td><b><a th:href="|/shop/admin/notice-detail-view?noticeId=${notice.id}" th:text="${notice.title}" class="text-dark"></a></b></td>
+					<td th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+					<td th:text="${#temporals.format(notice.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<!-- 글쓰기 버튼 -->
+		<div class="d-flex justify-content-end">
+			<a href="/shop/admin/notice-create-view" class="btn btn-dark">글쓰기</a>
+		</div>
+	</div>
+	</div>
+	
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

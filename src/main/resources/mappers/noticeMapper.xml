@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.shoppingMall.admin.mapper.NoticeMapper">
+ 
+ 	<insert id="insertNotice" parameterType="map">
+ 		INSERT INTO `notice`
+ 		(
+ 			`title`
+ 			, `content`
+ 			, `createdAt` 
+ 			, `updatedAt`
+ 		)
+ 		VALUE
+ 		(
+ 			#{title}
+ 			,#{content}
+ 			,NOW()
+ 			,NOW()
+ 		) 		
+ 	</insert>
+ 	
+ 	<select id="selectNoticeList" resultType="com.shoppingMall.admin.domain.Notice">
+ 		SELECT 
+ 			`id`
+ 			,`title`
+ 			,`content`
+ 			,`createdAt`
+ 			,`updatedAt`
+ 		FROM
+ 			`notice` 	
+ 	</select>
+ 	
+ 	 <select id="selectNoticeByNoticeId" resultType="com.shoppingMall.admin.domain.Notice">
+ 		SELECT 
+ 			`id`
+ 			,`title`
+ 			,`content`
+ 			,`createdAt`
+ 			,`updatedAt`
+ 		FROM
+ 			`notice`
+ 		WHERE
+ 			`id` = #{id} 	
+ 	</select>
+ 	
+ 	<update id="updateNoticeByNoticeId" parameterType="map">
+ 		UPDATE `notice`
+ 		SET
+ 			`title` = #{title}
+ 			,`content` = #{content}
+ 			,`updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{id}
+ 	</update>
+ 
+ 	<delete id="deleteNoticeByNoticeId">
+ 		DELETE
+ 		FROM
+ 			`notice`
+ 		WHERE
+ 			`id` = #{id}
+ 	
+ 	</delete>
+ 
+ </mapper>

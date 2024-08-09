@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<section layout:fragment="content" class="contents">
+	<div class=" d-flex justify-content-center col-10">
+		<!-- 왼쪽 카테고리 영역 -->
+		<div class="col-2">
+			<nav>
+	            <!-- 수직(세로)방향 메뉴: nav + flex-column -->
+	            <ul class="nav flex-column font-weight-bold">
+	                <li class="nav-item"><a href="#" class="nav-link text-secondary">ALL</a></li>
+	                <li class="nav-item"><a href="#" class="nav-link text-secondary">OUTER</a></li>
+	                <li class="nav-item"><a href="#" class="nav-link text-secondary">TOP</a></li>
+	                <li class="nav-item"><a href="#" class="nav-link text-secondary">BOTTOM</a></li>
+	                <li class="nav-item"><a href="#" class="nav-link text-secondary">DRESS</a></li>
+	                <li class="nav-item"><a href="#" class="nav-link text-secondary">ACC</a></li>
+	            </ul>
+	         </nav>
+         </div>
+        
+        <!-- 상품목록 --> 
+        <div class="col-10">
+        	<div class="d-flex justify-content-between"> 
+				<h4 class="text-dark">상품목록</h4>
+				<div class="d-flex">
+					<input type="text" id="itemSearch" class="form-control" placeholder="상품명을 입력해주세요">
+					<button id="searchBtn" class="btn btn-dark col-3">검색</button>
+				</div>
+			</div>
+			<div class="mt-4">
+				<table class="table table-bold text-center">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>이미지</th>
+							<th>상품명</th>
+							<th>상품가격</th>
+							<th>카테고리</th>
+							<th>생성일</th>							
+							<th>수정일</th>													
+						</tr>
+					</thead>				
+					<tbody>
+						<tr th:each="item,status: ${itemList}" >
+							<td th:text="${status.count}"></td>
+							<td><img th:src="${item.imagePath}" alt="대표 이미지" width="100px"></td>
+							<td><b><a th:href="|/shop/admin/item-detail-view?name=${item.name}|" th:text="${item.name}" class="text-dark"></a></b></td>
+							<td th:text="${item.price}"></td>
+							<td th:text="${item.category}"></td>
+							<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+							<td th:text="${#temporals.format(item.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+						</tr>						
+					</tbody>				
+				</table>
+			</div>
+		</div>		
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		$(document).ready(function(){
+			
+			// 검색하기 
+			$("#searchBtn").on('click',function(){
+				
+				let name = $("#itemSearch").val().trim();
+				
+				// validattion
+				if (!itemSearch) {
+					alert("검색어를 입력해주세요")
+					return;
+				}
+				
+				$.ajax({
+					
+					type: "post"
+					,url: "/shop/admin/item-search-view"
+					,data:{"name" : name}
+				
+					,success:function(data){
+						if (data.code == 200) {
+							location.href="/shop/admin/item-search-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					
+					,error:function() {
+						alert("상품검색 실패")
+					}
+					
+				});				
+			}); //-------- 검색하기 끝
+			
+		});
+    </script>
+</th:block>

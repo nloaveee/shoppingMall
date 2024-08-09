@@ -1,5 +1,7 @@
 package com.shoppingMall.user.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.info.ProjectInfoProperties.Build;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,11 @@ public class UserBO {
 		} else {
 			return null;
 		}
+	}
+	
+	// 회원관리 리스트 가져오기 
+	public List<User> getUsers() {
+		return userRepository.findAll();
 	}
 	
 	public User updateUser(String userId, String userPwd, String phone, String address ) {
