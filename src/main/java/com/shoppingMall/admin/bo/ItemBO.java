@@ -30,7 +30,7 @@ public class ItemBO {
 	public boolean addItem(String name, String content, int price, int sale, String category, MultipartFile file) {
 		String imagePath = null;
 		
-		imagePath = fileManagerService.uploadFile(file, category);
+		imagePath = fileManagerService.uploadFileByItems(name, file);
 		
 		Item item = itemMapper.selectItemByName(name);
 		if (item == null) {

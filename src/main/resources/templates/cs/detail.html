@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<div class="d-flex justify-content-center mt-5">
+			<h4 class="text-secondary">Q&A 작성</h4>
+		</div>
+		
+		<!-- 글 작성 -->
+		<table class="table my-3 w-100">
+			<tbody>
+				<tr>
+					<th class="bg-light w-25 text-center text-secondary">제목</th>
+					<td class="w-75"><input type="text" id="title" class="form-control" th:value="${inquiry.title}" readonly="readonly"></td>
+				</tr>
+				<tr>
+					<th class="bg-light text-center text-secondary">작성자</th>
+					<td class="w-75"><input type="text" id="name" class="form-control col-3" th:value="${inquiry.name}"  readonly="readonly"></td>
+				</tr>			
+			</tbody>		
+		</table>
+		<hr> 
+			<textarea rows="20" id="content" class="form-control" th:text="${inquiry.content}" ></textarea>
+		<hr>
+		
+		<!-- 이미지가 있을 때만 영역 노출 -->
+		<div class="my-3" th:if="${inquiry.image != null}">
+			<img th:src="${inquiry.image}" alt="본문 이미지" width="300px">
+		</div>
+		
+		<!-- 파일 선택 -->
+		<div class="d-flex justify-content-end my-4">
+			<input type="file" id="file" accept=".jpg, .png, .gif">			
+		</div>
+		
+		<div class="d-flex justify-content-between my-3">
+			<button type="button" id="inquiryListBtn" class="btn btn-light">Q&A 목록</button>
+			<div>
+				<button type="button" id="saveBtn" class="btn btn-secondary" th:data-inquiry-id="${inquiry.id}">수정</button>
+				<button type="button" id="deleteBtn" class="btn btn-dark" th:data-inquiry-id="${inquiry.id}">삭제</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		$(document).ready(function(){
+			
+			// 상품 문의 수정 
+			$("#saveBtn").on('click',function(){
+				
+				let inquiryId = $(this).data("inquiry-id");
+				let name = $("#name").val().trim();
+				let content = $("#content").val();
+				let fileName = $("#file").val();
+				
+				if (!content) {
+					alert("상품문의 내용을 작성해주세요.")
+					return;
+				}
+				
+				if (fileName) {
+					let extension = fileName.split(".").pop().toLowerCase(); 
+					
+					// extension이 뒤의 배열에 있는 값인지 아닌지 확인 
+					// 포함되어 있지 않으면 -1이다.
+					if ($.inArray(extension, ["jpg","gif","png"]) == -1) {
+						alert("이미지파일만 업로드 할 수 있습니다.");
+						$("#file").val(""); // 파일 초기화 
+						return;
+					}
+				}
+				
+				let formData = new FormData();
+				formData.append("inquiryId",inquiryId);
+				formData.append("name",name);
+				formData.append("content",content);
+				formData.append("file", $("#file")[0].files[0]); 
+				
+				$.ajax({
+					type: "post"
+					,url: "/shop/main/inquiry/update"
+					, data:formData
+					, enctype:"multipart/form-data" // 파일업로드 필수 설정
+					, processData:false // 파일업로드 필수 설정
+					, contentType:false // 파일업로드 필수 설정
+				
+					,success:function(data) {
+						if (data.code==200) {
+							alert("상품문의가 수정 되었습니다.");
+							location.href="/shop/main/inquiry-list-view";
+						}
+						else {
+							alert(data.error_message);
+						}
+					}
+					
+					, error:function(e) {
+						alert("상품문의가 수정되지 않았습니다.");
+					}										
+				});				
+			}); //--------------------수정 끝
+			
+			
+			// 상품 문의 삭제 
+			$("#deleteBtn").on('click',function(){
+				
+				let inquiryId = $(this).data("inquiry-id");
+				
+				$.ajax({
+					// request
+					type:"delete"
+					,url:"/shop/main/inquiry/delete"
+					,data: {"inquiryId" : inquiryId}
+					
+					// response
+					,success:function(data) {
+						// 성공시 목록화면으로 이동 
+						if (data.code == 200) {
+							alert("상품문의가 삭제 되었습니다.");
+							location.href="/shop/main/inquiry-list-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					,error:function(e) {
+						alert("상품문의를 삭제하는데 실패했습니다.");
+					}
+				});
+			}); //-------- 글 삭제 끝
+		});
+    </script>
+</th:block>	

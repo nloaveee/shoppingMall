@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75">
+		<h4 class="d-flex justify-content-center text-secondary mt-3">Q&A</h4>
+		<div class="mt-5">
+			<table class="table table-bold text-center">
+				<thead>
+					<tr class="text-secondary">
+						<th>NO.</th>
+						<th>상품정보</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="inquiry,status :${inquiryList}">
+						<td th:text="${status.count}"></td>
+						<td>상품정보</td>
+						<td><b><a th:text="${inquiry.title}" th:href="|/shop/main/inquiry-detail-view?inquiryId=${inquiry.id}|" class="text-dark"></a></b></td>
+						<td th:text="${inquiry.name}"></td>
+						<td th:text="${#temporals.format(inquiry.createdAt, 'yyyy.MM.dd')}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!-- 글쓰기 버튼 -->
+		<div class="d-flex justify-content-end">
+			<a href="/shop/main/inquiry-create-view" class="btn btn-dark">글쓰기</a>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

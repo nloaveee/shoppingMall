@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<div class="d-flex justify-content-center mt-5">
+			<h4 class="text-secondary">Q&A 작성</h4>
+		</div>
+		
+		<!-- 글 작성 -->
+		<table class="table my-3 w-100">
+			<tbody>
+				<tr>
+					<th class="bg-light w-25 text-center text-secondary">제목</th>
+					<td class="w-75"><input type="text" id="title" class="form-control" placeholder="제목을 입력하세요"></td>
+				</tr>
+				<tr>
+					<th class="bg-light text-center text-secondary">작성자</th>
+					<td class="w-75" th:if="${user != null}">
+        				<input th:value="${user.name}" type="text" id="name" class="form-control col-3">
+    				</td>
+    				<td class="w-75" th:if="${user == null}">
+        				<input type="text" id="name" class="form-control col-3">
+   					</td>
+				</tr>			
+			</tbody>		
+		</table>
+		<hr> 
+			<textarea rows="20" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
+		<hr>
+		
+		<!-- 파일 선택 -->
+		<div class="d-flex justify-content-end my-4">
+			<input type="file" id="file" accept=".jpg, .png, .gif">			
+		</div>
+		
+		<div class="d-flex justify-content-between my-3">
+			<button type="button" id="inquiryListBtn" class="btn btn-light">Q&A 목록</button>
+			<div>
+				<button type="button" id="clearBtn" class="btn btn-secondary">모두 지우기</button>
+				<button type="button" id="saveBtn" class="btn btn-dark" >저장</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		
+    	$(document).ready(function(){    		
+    		// 목록 버튼 클릭
+			$("#inquiryListBtn").on('click',function(){
+				location.href="/shop/user/inquiry-list-view";
+				
+			});
+			
+			// 모두 지우기 
+			$("#clearBtn").on('click',function(){
+				$("#title").val("");
+				$("#content").val("");				
+			});
+    		
+    		// 글 저장 
+    		$("#saveBtn").on('click',function(){
+    			
+    			let title = $("#title").val().trim();
+    			let name = $("#name").val().trim();
+    			let content = $("#content").val().trim();
+    			let fileName = $("#file").val();
+    			
+    			// validation
+    			if (!title) {
+    				alert("제목을 입력해주세요")
+    				return;
+    			}
+    			
+    			if (!name) {
+    				alert("작성자를 입력해주세요")
+    				return;
+    			}
+    			
+    			if (!content) {
+    				alert("내용을 입력해주세요")
+    				return;
+    			}
+    			
+    			// 파일명이 비워져 있지 않으면 (파일명이 있는 경우) => 확장자 체크 
+    			if (fileName) {
+    				// C:\fakepath\door-8831267_1280.jpg
+    				let extension = fileName.split(".").pop().toLowerCase(); // pop() => 배열의 제일 마지막을 가지고 온다.
+    				console.log(extension);
+    				
+    				// extension이 뒤의 배열에 있는 값인지 아닌지 확인 
+    				// 포함되어 있지 않으면 -1이다.
+    				if ($.inArray(extension, ["jpg","gif","png"]) == -1) {
+    					alert("이미지파일만 업로드 할 수 있습니다.");
+    					$("#file").val(""); // 파일 초기화 
+    					return;
+    				}
+    			}
+    			
+    			let formData = new FormData();
+    			formData.append("title",title);
+    			formData.append("name",name);
+    			formData.append("content",content);
+    			formData.append("file", $("#file")[0].files[0]); 
+    			
+				$.ajax({				
+				type:"post"
+				,url:"/shop/main/inquiry/create"
+				,data: formData
+				, enctype:"multipart/form-data" // 파일업로드 필수 설정
+				, processData:false // 파일업로드 필수 설정
+				, contentType:false // 파일업로드 필수 설정
+				
+				, success:function(data) {
+					if (data.code == 200) {
+						alert("상품문의가 등록되었습니다.");
+						// 상품목록 화면으로 이동
+						location.href="/shop/main/inquiry-list-view";
+					} else {
+						alert(data.error_message);
+					}
+				}
+			
+				,error:function(e) {
+					alert("상품문의 등록에 실패했습니다.");
+				}
+    			
+				});			
+    		}); // --------  글 저장 끝
+    		
+    		
+    
+    	});
+    </script>
+</th:block>

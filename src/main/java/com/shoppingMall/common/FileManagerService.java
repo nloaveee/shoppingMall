@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,40 +19,75 @@ public class FileManagerService {
 	
 	// 실제 업로드가 된 이미지가 저장될 서버의 경로 
 		// ***파일 마지막에 /를 꼭 붙이기***
-		public static final String FILE_UPLOAD_PATH = "D:\\나현희\\shoppingMall\\workspace\\images/"; //학원
-		//public static final String FILE_UPLOAD_PATH = "C:\\나현희\\shoppingMall\\workspace\\images/"; // 집
+		//public static final String FILE_UPLOAD_PATH = "D:\\나현희\\shoppingMall\\workspace\\images/"; //학원
+		public static final String FILE_UPLOAD_PATH = "C:\\나현희\\shoppingMall\\workspace\\images/"; // 집
 		
+		// Q&A 파일
 		// input: MultipartFile
 		// output: String(이미지 경로)
-		public String uploadFile (MultipartFile file, String name) {
-			// 폴더(디렉토리) 생성 
-			// 예: aaaa_17348394850
-			String directoryName = name + "_" + System.currentTimeMillis();
-			
-			String filePath = FILE_UPLOAD_PATH + directoryName + "/";
-			
-			// 폴더 생성 
-			File directory = new File(filePath);
-			if (directory.mkdir() == false) {
-				// 폴더 생성시 실패하면 경로를 null로 리턴
-				return null;
-			}
-			
-			// 파일 업로드
-			try {
-				byte[] bytes = file.getBytes();
-				// ****** 한글명으로 된 이미지는 업로드 불가하므로 나중에 영문자로 바꾸기 *******
-				Path path = Paths.get(filePath + file.getOriginalFilename());
-				Files.write(path, bytes); // 실제 파일 업로드 진행
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null; // 이미지 업로드 실패시 경로 null
-			}
-					
+		public String uploadFileInquiry(String name, MultipartFile file) {
+		    // name 파라미터에 한글이 포함되어 있는지 확인
+		    if (name != null && name.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")) {
+		        // 한글이 포함된 경우 영어로 변경 (UUID 사용)
+		        name = UUID.randomUUID().toString();
+		    }
 
-			// 파일업로드가 성공하면 이미지 url path를 리턴 
-			// 주소는 이렇게 될 것이다. (예언)
-			return "/images/" + directoryName + "/" + file.getOriginalFilename();
+		    // 폴더(디렉토리) 생성
+		    // 예: aaaa_17348394850 또는 UUID_17348394850
+		    String directoryName = name + "_" + System.currentTimeMillis();
+		    
+		    String filePath = FILE_UPLOAD_PATH + "inquiry/"  + directoryName + "/";
+
+		    // 폴더 생성
+		    File directory = new File(filePath);
+		    if (!directory.mkdir()) {
+		        // 폴더 생성시 실패하면 경로를 null로 리턴
+		        return null;
+		    }
+
+		    // 파일 업로드
+		    try {
+		        byte[] bytes = file.getBytes();
+		        // 파일 경로 설정
+		        Path path = Paths.get(filePath + file.getOriginalFilename());
+		        Files.write(path, bytes); // 실제 파일 업로드 진행
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        return null; // 이미지 업로드 실패시 경로 null
+		    }
+
+		    // 파일업로드가 성공하면 이미지 url path를 리턴
+		    return "/images/inquiry/" + directoryName + "/" + file.getOriginalFilename();
+		}
+		
+		
+		// item 파일
+		public String uploadFileByItems(String name, MultipartFile file) {
+		    // 폴더(디렉토리) 생성
+		    // 예: aaaa_17348394850 또는 UUID_17348394850
+		    String directoryName = name + "_" + System.currentTimeMillis();
+		    String filePath = FILE_UPLOAD_PATH + "items/"  + directoryName + "/";
+
+		    // 폴더 생성
+		    File directory = new File(filePath);
+		    if (!directory.mkdir()) {
+		        // 폴더 생성시 실패하면 경로를 null로 리턴
+		        return null;
+		    }
+
+		    // 파일 업로드
+		    try {
+		        byte[] bytes = file.getBytes();
+		        // 파일 경로 설정
+		        Path path = Paths.get(filePath + file.getOriginalFilename());
+		        Files.write(path, bytes); // 실제 파일 업로드 진행
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        return null; // 이미지 업로드 실패시 경로 null
+		    }
+
+		    // 파일업로드가 성공하면 이미지 url path를 리턴
+		    return "/images/items/" + directoryName + "/" + file.getOriginalFilename();
 		}
 		
 		
