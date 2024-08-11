@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingMall.admin.domain.Item;
+import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.admin.mapper.ItemMapper;
 import com.shoppingMall.admin.mapper.ItemOptionMapper;
 import com.shoppingMall.common.FileManagerService;
@@ -55,12 +56,23 @@ public class ItemBO {
 	}
 	
 	// 상품 옵션 저장 
-	public boolean addItemOption(String name, String size, String color, int stock) {
+	public boolean addItemOption(int itemId, String name, String size, String color, int stock) {
 		
-		int itemId = itemMapper.selectItemByName(name).getId();
+		List<ItemOption> optionList = itemOptionMapper.selectOptionList(itemId);
 		
-		boolean saveOption = itemOptionMapper.insertItemOption(itemId, size, color, stock);
-		
-		return saveOption ? true : false;
+        for (ItemOption option : optionList) {
+        	if (option.getColor().equals(color) && option.getSize().equals(size)) {
+        		return false;
+        	}
+        }
+        
+        itemOptionMapper.insertItemOption(itemId, size, color, stock);
+        
+        return true;
+	}
+	
+	// 상품 옵션 select
+	public List<ItemOption> getItemOptionByItemId(int itemId) {
+		return itemOptionMapper.selectOptionList(itemId);
 	}
 }

@@ -19,7 +19,7 @@ public interface ItemOptionMapper {
 			@Param("stock") int stock);
 	
 	public List<ItemOption> selectOptionList(
-			@RequestParam("itemId") int itemId,
-			@Param("size") String size,
-			@Param("color") String color);
+			@Param("itemId") int itemId);
+	
+	
 }

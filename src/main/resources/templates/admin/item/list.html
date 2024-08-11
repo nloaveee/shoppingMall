@@ -46,7 +46,7 @@
 						<tr th:each="item,status: ${itemList}" >
 							<td th:text="${status.count}"></td>
 							<td><img th:src="${item.imagePath}" alt="대표 이미지" width="100px"></td>
-							<td><b><a th:href="|/shop/admin/item-detail-view?name=${item.name}|" th:text="${item.name}" class="text-dark"></a></b></td>
+							<td><b><a th:href="|/shop/admin/item-detail-view?name=${item.name}|" th:text="${item.name}" class="optionAdd text-dark " th:data-item-id="${item.id}"></a></b></td>
 							<td th:text="${item.price}"></td>
 							<td th:text="${item.category}"></td>
 							<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
@@ -63,6 +63,19 @@
     <script>
 		$(document).ready(function(){
 			
+			// 옵션 추가하기 
+			$(".optionAdd").on('click',function() {
+				
+				let itemId = $(this).data("item-id")
+				
+				$.ajax({
+					type: "get"
+					, url: "/shop/admin/item-detail-view"
+					, data: {"itemId" : itemId}										
+				});				
+			});
+			
+					
 			// 검색하기 
 			$("#searchBtn").on('click',function(){
 				

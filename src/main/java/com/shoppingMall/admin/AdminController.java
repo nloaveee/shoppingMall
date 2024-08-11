@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.bo.NoticeBO;
 import com.shoppingMall.admin.domain.Item;
+import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.admin.domain.Notice;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
@@ -104,8 +105,15 @@ public class AdminController {
 			Model model) {
 		
 		Item itemInfo = itemBO.getItemByName(name);
+		int itemId = itemInfo.getId();
+		
+		List<ItemOption> optionList = itemBO.getItemOptionByItemId(itemId);	
+		
+		// COLOR 속성으로 알파벳 순서로 정렬
+		optionList.sort((o1, o2) -> o1.getColor().compareToIgnoreCase(o2.getColor()));
 		
 		model.addAttribute("itemInfo",itemInfo);
+		model.addAttribute("optionList",optionList);
 		
 		return "admin/item/detail";
 	}

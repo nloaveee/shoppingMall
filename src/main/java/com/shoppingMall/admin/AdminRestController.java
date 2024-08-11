@@ -129,19 +129,20 @@ public class AdminRestController {
 	// 상품 옵션 저장 
 	@PostMapping("/item/option-add")
 	public Map<String,Object> itemOptionAdd(
+			@RequestParam("itemId") int itemId,
 			@RequestParam("name") String name,
 			@RequestParam("size") String size,
 			@RequestParam("color") String color,
 			@RequestParam("stock") int stock) {
 		
-		boolean saveOption = itemBo.addItemOption(name, size, color,stock);
+		boolean saveOption = itemBo.addItemOption(itemId, name, size, color,stock);
 		
 		// 응답값
 		Map<String, Object> result = new HashMap<>();
 		if (saveOption == true) {
 			result.put("code", 200); 
 		} else {
-			result.put("error_message", "상품 옵션 등록에 실패했습니다.");
+			result.put("error_message", "상품에 동일한 옵션이 이미 저장 되어 있습니다. 다른 옵션으로 저장해주세요");
 		}
 		return result;
 		

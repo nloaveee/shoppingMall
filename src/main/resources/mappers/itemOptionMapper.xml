@@ -26,8 +26,11 @@
  			`itemId`
  			,`size`
  			,`color`
+ 			,`stock`
  		FROM
  			`item_option`
+ 		WHERE
+ 			`itemId` = #{itemId}
  	</select>
  
  
