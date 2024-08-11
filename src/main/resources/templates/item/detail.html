@@ -4,12 +4,71 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/mainLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="w-75 bg-light mb-3">
+	<div class="w-75 bg-light my-5 d-flex">
 		<!-- 상품 대표 이미지 -->
-		<div class="col-4 bg-success mr-3">
+		<div class="col-6 bg-success">
 			<div class="d-flex justify-content-center">
-				<img th:src="${itemInfo.imagePath}" alt="본문 이미지" width="300px">	
+				<img th:src="${item.imagePath}" alt="본문 이미지" width="300px">	
 			</div>	
+		</div>
+		
+		<!-- 상품 설명 & 옵션 -->
+		<div class="col-6 bg-danger">
+			<h3 th:text="${item.name}"></h3>
+			<hr>
+			<table class="table table-borderless">
+					<tr>
+						<th>판매가</th>
+						<td th:text="${item.price}" style="text-decoration: line-through;"></td>
+					</tr>
+					<tr>
+						<th>할인가</th>
+						<td th:text="${item.sale}"></td>
+					</tr>
+					<tr>
+						<th>COLOR</th>
+						<td>
+							<div class="d-flex">
+								<select id="color" class="form-control col-8">
+						            <option>-[필수] COLOR 선택-</option>
+						            <option value="FREE">FREE</option>
+						            <option value="S">S(90)</option>
+						            <option value="M">M(95)</option>
+						            <option value="L">L(100)</option>
+						        </select>
+					        </div>	
+						</td>
+					</tr>
+					<tr>
+						<th>SIZE</th>
+						<td>
+							<select id="size" class="form-control col-8">
+					            <option>-[필수] SIZE 선택-</option>
+					            <option value="FREE">FREE</option>
+					            <option value="S">S(90)</option>
+					            <option value="M">M(95)</option>
+					            <option value="L">L(100)</option>
+					        </select>
+						</td>
+					</tr>									
+			</table>
+			<hr>
+			<div>Total Price: </div>
+			
+			<!--  order / cart / wish button --> 
+			<div class="d-flex">
+				<div class="col-4">
+					<input type="button" class="order btn btn-dark w-100" value="ORDER">
+				</div>
+				<div class="col-4">
+					<input type="button" class="cart btn btn-light w-100" value="CART">
+				</div>
+				<div class="col-4">
+					<input type="button" class="wish btn btn-light w-100" value="WISH">
+				</div>		
+			</div>
+		
+		
 		</div>
 	
 	</div>

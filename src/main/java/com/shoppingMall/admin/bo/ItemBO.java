@@ -75,4 +75,8 @@ public class ItemBO {
 	public List<ItemOption> getItemOptionByItemId(int itemId) {
 		return itemOptionMapper.selectOptionList(itemId);
 	}
+	
+	public Item getItemByid(int itemId) {
+		return itemMapper.selectItemById(itemId);
+	}
 }

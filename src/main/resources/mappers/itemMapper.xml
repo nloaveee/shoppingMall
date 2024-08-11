@@ -78,5 +78,23 @@
  		WHERE
  			`name` like CONCAT('%',#{name},'%')
  	</select>
+ 	
+ 	<select id="selectItemById" resultType="com.shoppingMall.admin.domain.Item">
+ 		SELECT 
+ 			`id`
+ 			,`name`
+			,`content`
+			,`price`
+			,`sale`
+			,`category`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+ 		FROM 
+ 			`item`
+ 		WHERE
+ 			`id` = #{id}
+ 	
+ 	</select>
  
  </mapper>

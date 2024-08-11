@@ -4,13 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/mainLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<!-- 영상 목록 -->
+	
                 <section class="col-10 bg-light mb-4">
                     <div class="item-parent-box d-flex flex-wrap">
                         <div th:each="item : ${itemList}" class="d-flex justify-content-center">
                         	<div class="item-box text-center">
-	                            <a th:href="|/shop/item/item-detail-view?itemid=${item.id}|"><img th:src="${item.imagePath}" alt="상품 대표 이미지" class="w-75 h-75"></a>
-	                            <div><a th:href="|/shop/item/item-detail-view?itemid=${item.id}|" th:text="${item.name}" class="font-weight-bold mt-3 text-dark"></a></div>
+	                            <a th:href="|/shop/item/item-detail-view?itemid=${item.id}|"  class="item"><img th:src="${item.imagePath}" alt="상품 대표 이미지" class="w-75 h-75"></a>
+	                            <div><a th:href="|/shop/item/item-detail-view?itemid=${item.id}|" th:text="${item.name}" class="item font-weight-bold mt-3 text-dark" th:data-item-name="${item.name}"></a></div>
 	                            <del><div th:text="${item.price}" class="text-secondary"></div></del>
 	                            <div th:text="${item.sale}"></div>
                             </div>
@@ -21,6 +21,7 @@
 
 <th:block layout:fragment="script">
     <script>
+		
 
     </script>
 </th:block>

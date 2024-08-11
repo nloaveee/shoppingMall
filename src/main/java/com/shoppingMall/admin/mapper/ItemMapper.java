@@ -25,5 +25,7 @@ public interface ItemMapper {
 	public List<Item> selectItemList();
 	
 	public List<Item> selectItemListByName(String name);
+	
+	public Item selectItemById(int id);
 
 }
