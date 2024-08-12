@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingMall.common.FileManagerService;
 import com.shoppingMall.cs.entity.Inquiry;
+import com.shoppingMall.cs.entity.InquiryAnswer;
+import com.shoppingMall.cs.repository.AnswerRepository;
 import com.shoppingMall.cs.repository.InquiryRepository;
 
 import lombok.extern.java.Log;
@@ -18,9 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 public class InquiryBO {
 	@Autowired
 	private InquiryRepository inquiryRepository;
-	
+
 	@Autowired
 	private FileManagerService fileManagerService;
+	
+	@Autowired
+	private AnswerRepository answerRepository;
 	
 	public Inquiry addInquiry(String title, String name, String content, MultipartFile file) {
 		
@@ -90,6 +95,28 @@ public class InquiryBO {
 		if (inquiry.getImage() != null) {
 			fileManagerService.deleteFile(inquiry.getImage());
 		} 		
+	}
+	
+	public boolean insertInquiryCommentByInquiryId(int id, String comment) {
+		
+		InquiryAnswer answer = answerRepository.save(InquiryAnswer.builder()
+				.inquiryId(id)
+				.comment(comment)
+				.build());
+		
+		Inquiry inquiry = inquiryRepository.findById(id);
+		inquiry.setAnswer(true);		
+		inquiryRepository.save(inquiry);
+		
+		if (answer != null) {
+			return true;
+		} else {
+			return false;
+		}		
+	}
+	
+	public InquiryAnswer getInquiryAnswer(int id) {
+		return answerRepository.findByInquiryId(id);
 	}
 }
 

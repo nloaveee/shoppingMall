@@ -13,8 +13,8 @@
 		</div>
 		
 		<!-- 상품 설명 & 옵션 -->
-		<div class="col-6 bg-danger">
-			<h3 th:text="${item.name}"></h3>
+		<div class="col-6">
+			<h3 class="name" th:text="${item.name}"></h3>
 			<hr>
 			<table class="table table-borderless">
 					<tr>
@@ -35,12 +35,10 @@
 						</td>						
 					</tr>					
 			</table>
-			<hr>
-			<table id="orderTable">
+			<table id="orderTable" class="table"> 
 				<tbody>
-				
-				</tbody>
-			
+					
+				</tbody>			
 			</table>
 		
 			
@@ -67,30 +65,23 @@
     <script>
     
     	$(document).ready(function(){
+			
+    		// 상품 정보 가져오기
+    		$("#option").on('change',function(){
+    			
+    		});
     		
-    		 $("#option").on('change', function() {
-    	            let selectedOption = $("#option").val(); // 선택된 옵션
-    	            if (selectedOption) {
-    	                // 상품 정보 설정
-    	                let productName = "${item.name}";
-    	                let price = "${item.sale}";
-    	                let quantity = 1; // 기본 수량 1로 설정 (필요 시 변경 가능)
-
-    	                // 새로운 행 추가
-    	                let newRow = `
-    	                    <tr>
-    	                        <td>${productName}</td>
-    	                        <td>${selectedOption}</td>
-    	                        <td>${quantity}</td>
-    	                        <td>${price}</td>
-    	                        <hr>
-    	                    </tr>
-    	                `;
-    	                
-    	                // 테이블에 행 추가
-    	                $("#orderTable tbody").append(newRow);
-    	            }
-    	        });
+    		
+    		
+    		
+    		
+    		// order
+    		$(".order").on('click',function() {
+    			
+    			
+    			
+    			
+    		});
     		
     	}); // -------- document 끝
     		

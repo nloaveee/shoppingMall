@@ -15,6 +15,9 @@ import com.shoppingMall.admin.bo.NoticeBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.admin.domain.Notice;
+import com.shoppingMall.cs.bo.InquiryBO;
+import com.shoppingMall.cs.entity.Inquiry;
+import com.shoppingMall.cs.entity.InquiryAnswer;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -31,6 +34,10 @@ public class AdminController {
 	
 	@Autowired
 	private ItemBO itemBO;
+	
+	@Autowired
+	private InquiryBO inquiryBO;
+	
 	
 	// 메인 화면
 	@RequestMapping("/main")
@@ -115,8 +122,7 @@ public class AdminController {
 		return "admin/item/detail";
 	}
 	
-	
-	
+		
 	// 상품 검색 페이지 
 	@GetMapping("/item-search-view") 
 	public String itemSearchView(Model model,
@@ -127,5 +133,31 @@ public class AdminController {
 		model.addAttribute("searchItemList", searchItemList);
 		
 		return "admin/item/search";
+	}
+	
+	// 문의 사항 
+	@GetMapping("/inquiry-list-view")
+	public String inquiryListView(Model model) {
+		
+		List<Inquiry> inquiryList = inquiryBO.getInquiryList();
+		
+		model.addAttribute("inquiryList", inquiryList);
+		
+		return "admin/inquiry/list";
+	}
+	
+	// 문의 사항 상세 페이지
+	@GetMapping("/inquiry-detail-view")
+	public String inquiryDetailView(
+			@RequestParam("inquiryId") int id,
+			Model model) {
+
+		Inquiry inquiry = inquiryBO.getInquiryById(id);
+		InquiryAnswer answer = inquiryBO.getInquiryAnswer(id);
+		
+		model.addAttribute("inquiry", inquiry);
+		model.addAttribute("answer",answer);
+		
+		return "admin/inquiry/detail";
 	}
 }

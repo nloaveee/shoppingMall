@@ -13,6 +13,7 @@ import com.shoppingMall.admin.bo.NoticeBO;
 import com.shoppingMall.admin.domain.Notice;
 import com.shoppingMall.cs.bo.InquiryBO;
 import com.shoppingMall.cs.entity.Inquiry;
+import com.shoppingMall.cs.entity.InquiryAnswer;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -67,8 +68,10 @@ public class CsController {
 				) {
 			
 			Inquiry inquiry = inquiryBO.getInquiryById(id);
+			InquiryAnswer answer = inquiryBO.getInquiryAnswer(id);
 			
 			model.addAttribute("inquiry",inquiry);
+			model.addAttribute("answer",answer);
 			
 			return "cs/detail";
 		}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<div class="d-flex justify-content-center mt-5">
+			<h4 class="text-secondary">Q&A 작성</h4>
+		</div>
+		
+		<!-- 글 작성 -->
+		<table class="table my-3 w-100">
+			<tbody>
+				<tr>
+					<th class="bg-light w-25 text-center text-secondary">제목</th>
+					<td class="w-75"><input type="text" id="title" class="form-control" th:value="${inquiry.title}" readonly="readonly"></td>
+				</tr>
+				<tr>
+					<th class="bg-light text-center text-secondary">작성자</th>
+					<td class="w-75"><input type="text" id="name" class="form-control col-3" th:value="${inquiry.name}"  readonly="readonly"></td>
+				</tr>			
+			</tbody>		
+		</table>
+		<hr> 
+			<textarea rows="20" id="content" class="form-control" th:text="${inquiry.content}"  readonly="readonly"></textarea>
+		<hr>
+		
+		<!-- 이미지가 있을 때만 영역 노출 -->
+		<div class="my-3" th:if="${inquiry.image != null}">
+			<img th:src="${inquiry.image}" alt="본문 이미지" width="300px">
+		</div>
+		
+		<div>
+			<textarea  rows="7" id="comment-exist" class="w-100 form-control" th:text="${answer.comment}" th:if="${answer.comment !=null}" readonly="readonly"></textarea>		
+			<textarea  rows="7" id="comment-none" class="w-100 form-control" placeholder="답변을 입력하세요" th:unless="${answer.comment !=null}"></textarea>		
+			
+		</div>
+		
+		<div class="d-flex justify-content-between my-3">
+			<a href="/shop/admin/inquiry-list-view" class="btn btn-light">Q&A 목록</a>
+			<div>
+				<input type="hidden" id="inquiryId" th:value="${inquiry.id}">
+				<button type="button" id="commentBtn" class="btn btn-dark" th:unless="${answer.comment !=null}">답변 등록</button>
+				<button type="button" id="updateBtn" class="btn btn-dark" th:if="${answer.comment !=null}">수정</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		$(document).ready(function(){
+			
+			// 답변 등록
+			$("#commentBtn").on('click',function(){
+				
+				let inquiryId = $("#inquiryId").val();
+				let comment = $("#comment-none").val();
+				
+				
+				$.ajax ({
+					type: "post"
+					,url: "/shop/admin/inquiry/comment"
+					,data: {"inquiryId" : inquiryId ,"comment" : comment}
+				
+					,success:function(data) {
+						if (data.code == 200) {
+							alert("답변 등록에 성공 했습니다.");
+							return;
+						} 
+						else {
+							alert(data.error_message);
+						}
+					}
+					
+					, error:function(e) {
+						alert("답변 등록에 실패 했습니다.");
+					}					
+				});				
+			});	
+			
+			
+			// 답변 수정 
+			$("#updateBtn").on('click',function(){
+				
+				$("#comment-exist").readonly=false;
+				
+			});
+			
+			
+		});
+    </script>
+</th:block>

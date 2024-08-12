@@ -10,7 +10,7 @@
                         <div th:each="item : ${itemList}" class="d-flex justify-content-center">
                         	<div class="item-box text-center">
 	                            <a th:href="|/shop/item/item-detail-view?itemid=${item.id}|"  class="item"><img th:src="${item.imagePath}" alt="상품 대표 이미지" class="w-75 h-75"></a>
-	                            <div><a th:href="|/shop/item/item-detail-view?itemid=${item.id}|" th:text="${item.name}" class="item font-weight-bold mt-3 text-dark" th:data-item-name="${item.name}"></a></div>
+	                            <div><a th:href="|/shop/item/item-detail-view?itemid=${item.id}|" th:text="${item.name}" class="font-weight-bold mt-3 text-dark" th:data-item-name="${item.name}"></a></div>
 	                            <del><div th:text="${item.price}" class="text-secondary"></div></del>
 	                            <div th:text="${item.sale}"></div>
                             </div>

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.bo.NoticeBO;
+import com.shoppingMall.cs.bo.InquiryBO;
 
 
 
@@ -26,6 +27,9 @@ public class AdminRestController {
 	
 	@Autowired
 	private ItemBO itemBo;
+	
+	@Autowired
+	private InquiryBO inquiryBO;
 
 	/**
 	 * 공지사항 작성
@@ -148,16 +152,7 @@ public class AdminRestController {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// 상품 검색 
 //	@PostMapping("/item/search")
 //	public Map<String, Object> itemSearch(
@@ -176,5 +171,25 @@ public class AdminRestController {
 //		
 //		return result;
 //	}
+	
+	
+	//상품 문의 답변 
+	@PostMapping("/inquiry/comment")
+	public Map<String, Object> inquiryComment(
+			@RequestParam("inquiryId") int id,
+			@RequestParam("comment") String comment) {
+		
+		// db insert
+		boolean insertComment = inquiryBO.insertInquiryCommentByInquiryId(id,comment);
+		
+		Map<String, Object> result = new HashMap<>();
+		if (insertComment == true) {
+			result.put("code", 200);
+		} else {
+			result.put("error_message", "답변 등록에 실패했습니다.");
+		}
+		
+		return result;
+	}
  
 }
