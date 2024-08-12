@@ -107,10 +107,7 @@ public class AdminController {
 		Item itemInfo = itemBO.getItemByName(name);
 		int itemId = itemInfo.getId();
 		
-		List<ItemOption> optionList = itemBO.getItemOptionByItemId(itemId);	
-		
-		// COLOR 속성으로 알파벳 순서로 정렬
-		optionList.sort((o1, o2) -> o1.getColor().compareToIgnoreCase(o2.getColor()));
+		List<ItemOption> optionList = itemBO.getItemOptionListByItemId(itemId);	
 		
 		model.addAttribute("itemInfo",itemInfo);
 		model.addAttribute("optionList",optionList);

@@ -1,5 +1,7 @@
 package com.shoppingMall.item;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +27,12 @@ public class ItemController {
 			@RequestParam("itemid") int itemId,
 			Model model) {
 		
-		// 상품 상세 정보 가져오기 
-		
+		// 상품 상세 정보 가져오기 		
 		Item item = itemBO.getItemByid(itemId);
-		//ItemOption itemOption = itemBO.get
+		List<ItemOption> optionList = itemBO.getItemOptionListByItemId(itemId);
 		
 		model.addAttribute("item",item);
+		model.addAttribute("optionList",optionList);
 		
 		
 		return "item/detail";

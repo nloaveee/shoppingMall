@@ -32,6 +32,19 @@
  		WHERE
  			`itemId` = #{itemId}
  	</select>
+ 	
+ 	<select id="selectOptionById" parameterType="int" resultType="com.shoppingMall.admin.domain.ItemOption">
+ 		SELECT 
+ 			`itemId`
+ 			,`size`
+ 			,`color`
+ 			,`stock`
+ 		FROM
+ 			`item_option`
+ 		WHERE
+ 			`itemId` = #{itemId}
+ 	
+ 	</select>
  
  
  </mapper>

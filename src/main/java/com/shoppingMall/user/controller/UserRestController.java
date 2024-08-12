@@ -126,7 +126,13 @@ public class UserRestController {
 		return result;
 	}
 	
-	// 아이디 찾기 
+	/**
+	 * 아이디 찾기 
+	 * @param name
+	 * @param email
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/find-id")
 	public Map<String, Object> findId(
 			@RequestParam("name") String name,
@@ -149,7 +155,11 @@ public class UserRestController {
 	}
 	
 	
-	// 비밀번호 찾기 
+	/**
+	 * 비밀번호 찾기
+	 * @param email
+	 * @return
+	 */
 	@PostMapping("/find-pwd/sendEmail")
 	public String sendEmail(@RequestParam("email") String email) {
 		Mail mail = mailBO.createMail(email);

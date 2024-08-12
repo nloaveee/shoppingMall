@@ -21,5 +21,6 @@ public interface ItemOptionMapper {
 	public List<ItemOption> selectOptionList(
 			@Param("itemId") int itemId);
 	
+	public ItemOption selectOptionById(int itemId);
 	
 }
