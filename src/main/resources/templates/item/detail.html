@@ -14,7 +14,7 @@
 		
 		<!-- 상품 설명 & 옵션 -->
 		<div class="col-6">
-			<h3 class="name" th:text="${item.name}"></h3>
+			<h3 th:text="${item.name}"></h3>
 			<hr>
 			<table class="table table-borderless">
 					<tr>
@@ -28,13 +28,16 @@
 					<tr>
 						<th>OPTION</th>
 						<td>
-							<select id="option" class="form-control col-8">
+							<select id="option" class="form-control col-8" >
 					            <option>-[필수] OPTION 선택-</option>
-					            <option th:each="option : ${optionList}" th:value="|${option.color} - ${option.size}|" th:text="|${option.color} - ${option.size}|"></option>					          
+					            <option th:each="option : ${optionList}" th:value="|${option.color} - ${option.size}|" th:text="|${option.color} - ${option.size}|">
+					            </option>					          
 					        </select>
 						</td>						
 					</tr>					
-			</table>
+			</table>			
+			<input type="hidden" th:value="${item.name}" id="name">
+			<input type="hidden" th:value="${item.sale}" id="sale">
 			<table id="orderTable" class="table"> 
 				<tbody>
 					
@@ -47,13 +50,13 @@
 			<!--  order / cart / wish button --> 
 			<div class="d-flex mt-3">
 				<div class="col-4">
-					<input type="button" class="order btn btn-dark w-100" value="ORDER">
+					<a href="/shop/order/main-view"><button class="order btn btn-dark w-100">ORDER</button></a>
 				</div>
 				<div class="col-4">
-					<input type="button" class="cart btn btn-light w-100" value="CART">
+					<a href="/shop/cart/main-view"><button class="cart btn btn-light w-100">CART</button></a>
 				</div>
 				<div class="col-4">
-					<input type="button" class="wish btn btn-light w-100" value="WISH">
+					<a th:href="|/shop/user/mypage/wish?userId=${userId}|"><button class="wish btn btn-light w-100" th:if="|${userId != null}|">WISH</button></a>
 				</div>		
 			</div>		
 		</div>
@@ -69,19 +72,46 @@
     		// 상품 정보 가져오기
     		$("#option").on('change',function(){
     			
-    		});
+    			let option = $("select option:selected").val();    			
+    			let name = $("#name").val();
+    			let sale = $("#sale").val();
+    			
+    			let newRow = $('<tr>')
+    				.append('<td>'+name+'</td>')
+    				.append('<td>'+option+'</td>')
+    				.append('<td><input type="number" min="1"  max="10" step="1" value="1" id="itemStock"/>'+'</td>')
+    				.append('<td>'+sale+'</td>')
+    				.append('<td><button class="btn btn-light">삭제</button></td>')
+    				
+    			$("#orderTable tbody").append(newRow);
+
+    		}); // ------ 끝
     		
-    		
-    		
-    		
-    		
+    		    		
     		// order
     		$(".order").on('click',function() {
     			
-    			
-    			
-    			
-    		});
+   			  $('#orderTable tr').each(function() {
+   				      let name = $(this).find("td").eq(0).html();  
+   				      let option = $(this).find("td").eq(1).html();
+   				      let count = $(this).find("td").find("#itemStock").val();   				      
+   				      let sale = $(this).find("td").eq(3).html();
+
+   				      $.ajax({
+   				    	  type: "post"
+   				    	  ,url: "/shop/order/order"
+   				    	  ,data: {"name":name, "option":option, "count":count, "sale" : sale}
+   				      
+   				      	  ,success:function(data) {
+   				      		  if (data.code == 200) {
+   				      			  
+   				      		  }
+   				      	  }
+   				      	  
+   				    	  
+   				      });
+   				  });
+    		}); // ------ order 끝
     		
     	}); // -------- document 끝
     		

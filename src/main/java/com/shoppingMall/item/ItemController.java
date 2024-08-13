@@ -13,6 +13,8 @@ import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/shop/item")
@@ -25,14 +27,16 @@ public class ItemController {
 	@GetMapping("/item-detail-view")
 	public String itemDetailView(
 			@RequestParam("itemid") int itemId,
-			Model model) {
+			Model model,HttpSession session) {
 		
 		// 상품 상세 정보 가져오기 		
 		Item item = itemBO.getItemByid(itemId);
 		List<ItemOption> optionList = itemBO.getItemOptionListByItemId(itemId);
+		String userId = (String)session.getAttribute("userId");
 		
 		model.addAttribute("item",item);
 		model.addAttribute("optionList",optionList);
+		model.addAttribute("userId",userId);
 		
 		
 		return "item/detail";

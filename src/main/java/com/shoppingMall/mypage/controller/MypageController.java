@@ -57,7 +57,11 @@ public class MypageController {
 		return "mypage/profile";
 	}
 
-	
+	// 마이페이지 - 찜
+	@GetMapping("/mypage/wish")
+	public String wish() {
+		return "mypage/wish";
+	}
 	
 
 }
