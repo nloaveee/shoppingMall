@@ -44,4 +44,23 @@ public class MypageRestController {
 		
 		return result;
 	}
+	
+	// 찜 
+//	@PostMapping("/wish/add")
+//	public Map<String, Object> wishAdd(
+//			@RequestParam("name") String name,
+//			@RequestParam("option") String option){
+//		
+//		
+//		
+//		
+//		Map<String, Object> result = new HashMap<>();
+//		if (user != null) {
+//			result.put("code", 200);
+//		} else {			
+//			result.put("error_message", "일치하는 정보가 없습니다.");
+//		}
+//	
+//	return result;
+//	}
 }

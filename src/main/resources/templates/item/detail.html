@@ -56,7 +56,7 @@
 					<a href="/shop/cart/main-view"><button class="cart btn btn-light w-100">CART</button></a>
 				</div>
 				<div class="col-4">
-					<a th:href="|/shop/user/mypage/wish?userId=${userId}|"><button class="wish btn btn-light w-100" th:if="|${userId != null}|">WISH</button></a>
+					<button class="wish btn btn-light w-100" th:if="|${userId != null}|">WISH</button>
 				</div>		
 			</div>		
 		</div>
@@ -112,6 +112,43 @@
    				      });
    				  });
     		}); // ------ order 끝
+    		
+    		
+    		// wish에 담기 
+    		$(".wish").on('click',function(){
+    			$('#orderTable tr').each(function() {
+ 				      let name = $(this).find("td").eq(0).html();  
+ 				      let option = $(this).find("td").eq(1).html(); 				      
+
+ 				      $.ajax({
+ 				    	  type: "post"
+ 				    	  ,url: "/shop/user/mypage/wish/add"
+ 				    	  ,data: {"name":name, "option":option}
+ 				      
+ 				      	  ,success:function(data) {
+ 				      		  if (data.code == 200) {
+ 				      			Swal.fire({
+ 	    	    					icon: 'success',
+ 	    	    					title: 'ok', 	
+ 	    	    					text: '상품을 찜 하였습니다.',
+ 	    	    					confirmButtonColor: '#00008b',
+ 	    	    					confirmButtonText: '확인'
+ 	    	    				})
+ 				      		  }	else {
+ 		    						Swal.fire({
+ 		    	    					icon: 'error',
+ 		    	    					title: 'error',
+ 		    	    					text: '상품 찜 하기에 실패했습니다.',
+ 		    	    					confirmButtonColor: '#00008b',
+ 		    	    					confirmButtonText: '확인'
+ 		    	    				})
+ 		    					}
+ 				      	  }
+ 				      	  
+ 				    	  
+ 				      });    			
+    			});
+    		});
     		
     	}); // -------- document 끝
     		
