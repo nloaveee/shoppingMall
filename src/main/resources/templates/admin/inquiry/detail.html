@@ -31,18 +31,23 @@
 			<img th:src="${inquiry.image}" alt="본문 이미지" width="300px">
 		</div>
 		
+		<div class="d-flex mb-3 ">
+			<div>답변 작성일 : </div>
+			<div th:if="${inquiry.answer == true}" th:text="${#temporals.format(answer.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></div>
+		</div>		
+		
 		<div>
 			<textarea  rows="7" id="comment-exist" class="w-100 form-control" th:text="${answer.comment}" th:if="${answer.comment !=null}" readonly="readonly"></textarea>		
-			<textarea  rows="7" id="comment-none" class="w-100 form-control" placeholder="답변을 입력하세요" th:unless="${answer.comment !=null}"></textarea>		
-			
+			<textarea  rows="7" id="comment-none" class="w-100 form-control" placeholder="답변을 입력하세요" th:unless="${answer.comment !=null}"></textarea>					
 		</div>
 		
 		<div class="d-flex justify-content-between my-3">
 			<a href="/shop/admin/inquiry-list-view" class="btn btn-light">Q&A 목록</a>
-			<div>
+			<div>			
 				<input type="hidden" id="inquiryId" th:value="${inquiry.id}">
-				<button type="button" id="commentBtn" class="btn btn-dark" th:unless="${answer.comment !=null}">답변 등록</button>
-				<button type="button" id="updateBtn" class="btn btn-dark" th:if="${answer.comment !=null}">수정</button>
+	            <button type="button" id="commentBtn" class="btn btn-dark" th:unless="${answer.comment !=null}">답변 등록</button>
+	            <button type="button" id="updateBtn" class="btn btn-dark" th:if="${answer.comment !=null}">수정</button>
+	            <button type="button" id="saveBtn" class="btn btn-dark display-none">저장</button>
 			</div>
 		</div>
 	</div>
@@ -81,13 +86,40 @@
 			});	
 			
 			
-			// 답변 수정 
-			$("#updateBtn").on('click',function(){
-				
-				$("#comment-exist").readonly=false;
-				
-			});
-			
+			 // 수정 버튼 클릭 시
+            $("#updateBtn").on('click', function() {
+                $("#comment-exist").prop("readonly", false); // readonly 속성 제거
+                $("#updateBtn").hide(); // 수정 버튼 숨기기
+                $("#saveBtn").show(); // 저장 버튼 보이기
+            });
+
+            // 저장 버튼 클릭 시
+            $("#saveBtn").on('click', function() {
+                let inquiryId = $("#inquiryId").val();
+                let updatedComment = $("#comment-exist").val();
+
+                $.ajax({
+                    type: "post"
+                    ,url: "/shop/admin/inquiry/comment-update"
+                    ,data: { "inquiryId": inquiryId, "comment": updatedComment }
+                    
+                    ,success: function(data) {
+                        if (data.code == 200) {
+                            alert("답변 수정에 성공 했습니다.");
+                            $("#comment-exist").prop("readonly", true); 
+                            $("#saveBtn").hide();
+                            $("#updateBtn").show(); 
+                            return;
+                        } else {
+                            alert(data.error_message);
+                        }
+                    },
+                    error: function(e) {
+                        alert("수정에 실패했습니다.");
+                    }
+                });
+            });
+
 			
 		});
     </script>

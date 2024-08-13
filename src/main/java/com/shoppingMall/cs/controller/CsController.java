@@ -33,7 +33,7 @@ public class CsController {
 	@Autowired
 	private NoticeBO noticeBO;
 	
-	// Q&A 목록
+		// Q&A 목록
 		@GetMapping("/inquiry-list-view")
 		public String inquiryListView(
 				Model model) {

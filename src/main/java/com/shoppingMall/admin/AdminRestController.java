@@ -173,11 +173,16 @@ public class AdminRestController {
 //	}
 	
 	
-	//상품 문의 답변 
+	/**
+	 * 상품 문의 답변  
+	 * @param id
+	 * @param comment
+	 * @return
+	 */
 	@PostMapping("/inquiry/comment")
 	public Map<String, Object> inquiryComment(
 			@RequestParam("inquiryId") int id,
-			@RequestParam("comment") String comment) {
+			@RequestParam(value = "comment", required = false) String comment) {
 		
 		// db insert
 		boolean insertComment = inquiryBO.insertInquiryCommentByInquiryId(id,comment);
@@ -191,5 +196,26 @@ public class AdminRestController {
 		
 		return result;
 	}
+	
+	// 상품 문의 답변 수정 
+	@PostMapping("/inquiry/comment-update")
+	public Map<String, Object> commentUpdate(
+			@RequestParam("inquiryId") int id,
+			@RequestParam(value = "comment", required = false) String comment) {
+		
+		boolean updateComment = inquiryBO.updateInquiryCommentByInquiryId(id,comment);
+		
+		
+		Map<String, Object> result = new HashMap<>();
+		if (updateComment == true) {
+			result.put("code", 200);
+		} else {
+			result.put("error_message", "답변 수정에 실패했습니다.");
+		}
+		
+		return result;
+		
+	}
+	
  
 }

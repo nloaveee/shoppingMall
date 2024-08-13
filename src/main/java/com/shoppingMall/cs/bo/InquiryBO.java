@@ -118,5 +118,13 @@ public class InquiryBO {
 	public InquiryAnswer getInquiryAnswer(int id) {
 		return answerRepository.findByInquiryId(id);
 	}
+	
+	public boolean updateInquiryCommentByInquiryId(int id, String comment) {
+		InquiryAnswer answer = answerRepository.findByInquiryId(id);
+		answer.setComment(comment);
+		answerRepository.save(answer);
+		
+		return true;
+	}
 }
 
