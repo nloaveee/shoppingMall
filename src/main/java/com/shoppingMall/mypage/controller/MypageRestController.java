@@ -49,7 +49,9 @@ public class MypageRestController {
 //	@PostMapping("/wish/add")
 //	public Map<String, Object> wishAdd(
 //			@RequestParam("name") String name,
-//			@RequestParam("option") String option){
+//			@RequestParam("option") String option,
+//			HttpSession session){
+//		
 //		
 //		
 //		
