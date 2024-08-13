@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<header th:fragment="headerFragment">
-
-	<div class="header h-75">
-		<!-- 로고 영역 -->
-		<h1 class="logo d-flex justify-content-center align-items-center h-75">
-			<a href="/shop/main" class="text-secondary">logo</a>
-		</h1>
-		
-		<!-- 마이페이지 영역 -->
-		<div class="mypage-menu d-flex justify-content-end h-25">
-			<nav>
-				<ul class="nav">
-					<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-in-view" class="nav-link">LOGIN</a></li>
-					<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-up-view" class="nav-link">JOIN</a></li>
-					<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/mypage" class="nav-link">MYPAGE</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">CART</a></li>		
-					<li class="nav-item"><a href="#" class="nav-link">WISH</a></li>
-					<li class="nav-item"><a href="/shop/main/notice-list-view" class="nav-link">NOTICE</a></li>
-					<li class="nav-item"><a href="/shop/main/inquiry-list-view" class="nav-link">Q&A</a></li>
-					<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/sign-out" class="nav-link">LOGOUT</a></li>		
-				</ul>
-			</nav>
+	<div class="header w-100">
+		<div class=" h-75">
+			<!-- 로고 영역 -->
+			<h1 class="logo d-flex justify-content-center align-items-center h-75">
+				<a href="/shop/main" class="text-secondary">logo</a>
+			</h1>
+			
+			<!-- 마이페이지 영역 -->
+			<div class="mypage-menu d-flex justify-content-end h-25">
+				<nav>
+					<ul class="nav">
+						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-in-view" class="nav-link">LOGIN</a></li>
+						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-up-view" class="nav-link">JOIN</a></li>
+						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/mypage" class="nav-link">MYPAGE</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">CART</a></li>		
+						<li class="nav-item"><a href="#" class="nav-link">WISH</a></li>
+						<li class="nav-item"><a href="/shop/main/notice-list-view" class="nav-link">NOTICE</a></li>
+						<li class="nav-item"><a href="/shop/main/inquiry-list-view" class="nav-link">Q&A</a></li>
+						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/sign-out" class="nav-link">LOGOUT</a></li>		
+					</ul>
+				</nav>
+			</div>
 		</div>
-	</div>
-	<!-- 카테고리 영역 -->
-	<div class="h-25">
-		<div class="category-menu d-flex justify-content-center align-item-center bg-light">
-			<nav class="col-8">
-				<ul class="nav nav-fill">
-					<li class="nav-item"><a href="#" class="nav-link">ALL</a></li>
-					<li class="nav-item"><a href="" class="nav-link">Outer</a></li>
-					<li class="nav-item"><a href="/shop/main/top-view" class="nav-link">Top</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">Bottom</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">Dress</a></li>
-					<li class="nav-item"><a href="#" class="nav-link">Acc</a></li>
-				</ul>
-			</nav>
+		<!-- 카테고리 영역 -->
+		<div class="h-25">
+			<div class="category-menu d-flex justify-content-center align-item-center bg-light">
+				<nav class="col-8">
+					<ul class="nav nav-fill">
+						<li class="nav-item"><a href="#" class="nav-link">ALL</a></li>
+						<li class="nav-item"><a href="" class="nav-link">Outer</a></li>
+						<li class="nav-item"><a href="/shop/main/top-view" class="nav-link">Top</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">Bottom</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">Dress</a></li>
+						<li class="nav-item"><a href="#" class="nav-link">Acc</a></li>
+					</ul>
+				</nav>
+			</div>
 		</div>
 	</div>
 	</header>

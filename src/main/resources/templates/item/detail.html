@@ -50,7 +50,7 @@
 			<!--  order / cart / wish button --> 
 			<div class="d-flex mt-3">
 				<div class="col-4">
-					<a href="/shop/order/main-view"><button class="order btn btn-dark w-100">ORDER</button></a>
+					<button class="order btn btn-dark w-100">ORDER</button>
 				</div>
 				<div class="col-4">
 					<a href="/shop/cart/main-view"><button class="cart btn btn-light w-100">CART</button></a>
@@ -91,27 +91,33 @@
     		// order
     		$(".order").on('click',function() {
     			
-   			  $('#orderTable tr').each(function() {
-   				      let name = $(this).find("td").eq(0).html();  
-   				      let option = $(this).find("td").eq(1).html();
-   				      let count = $(this).find("td").find("#itemStock").val();   				      
-   				      let sale = $(this).find("td").eq(3).html();
-
-   				      $.ajax({
-   				    	  type: "post"
-   				    	  ,url: "/shop/order/order"
-   				    	  ,data: {"name":name, "option":option, "count":count, "sale" : sale}
-   				      
-   				      	  ,success:function(data) {
-   				      		  if (data.code == 200) {
-   				      			  
-   				      		  }
-   				      	  }
-   				      	  
-   				    	  
-   				      });
-   				  });
-    		}); // ------ order 끝
+	   			// 옵션을 선택하지 않은 경우
+	   	        if ($('#orderTable tbody tr').length == 0) {
+	   	            alert("옵션을 선택하세요.");
+	   	            location.reload();
+	   	            return; // 함수 종료
+	   	        }
+    			
+    			// 옵션 선택 & 주문
+	  			$('#orderTable tr').each(function() {
+  				     let name = $(this).find("td").eq(0).html();  
+  				     let option = $(this).find("td").eq(1).html();
+  				     let count = $(this).find("td").find("#itemStock").val();   				      
+  				     let sale = $(this).find("td").eq(3).html();
+  				      
+  				    $.ajax({
+  		                type: "post",
+  		                url: "/shop/order/order",
+  		                data: {"name":name, "option":option, "count":count, "sale" : sale},
+  		                success:function(data) {
+  		                    if (data.code == 200) {
+  		                        // 성공 처리
+  		                    }
+  		                }
+  		            });
+  		        });
+	  				 
+	   		}); // ------ order 끝
     		
     		
     		// wish에 담기 
