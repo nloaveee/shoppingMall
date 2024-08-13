@@ -30,7 +30,7 @@
 						<td>
 							<select id="option" class="form-control col-8" >
 					            <option>-[필수] OPTION 선택-</option>
-					            <option th:each="option : ${optionList}" th:value="|${option.color} - ${option.size}|" th:text="|${option.color} - ${option.size}|">
+					            <option th:each="option : ${optionList}" th:value="|${option.color} - ${option.size}|" th:text="|${option.color} - ${option.size}|" th:data-stock="${option.stock}">
 					            </option>					          
 					        </select>
 						</td>						
@@ -70,22 +70,24 @@
     	$(document).ready(function(){
 			
     		// 상품 정보 가져오기
-    		$("#option").on('change',function(){
-    			
-    			let option = $("select option:selected").val();    			
-    			let name = $("#name").val();
-    			let sale = $("#sale").val();
-    			
-    			let newRow = $('<tr>')
-    				.append('<td>'+name+'</td>')
-    				.append('<td>'+option+'</td>')
-    				.append('<td><input type="number" min="1"  max="10" step="1" value="1" id="itemStock"/>'+'</td>')
-    				.append('<td>'+sale+'</td>')
-    				.append('<td><button class="btn btn-light">삭제</button></td>')
-    				
-    			$("#orderTable tbody").append(newRow);
-
-    		}); // ------ 끝
+    	    $("#option").on('change', function() {
+    	        let selectedOption = $("select option:selected"); // 선택된 옵션
+    	        let optionText = selectedOption.text(); // 옵션 텍스트 출력
+    	        let name = $("#name").val(); 
+    	        let sale = $("#sale").val(); 
+    	        let stock = selectedOption.data('stock'); // 선택된 옵션 재고
+    	        
+    	        // 새로운 행을 생성
+    	        let newRow = $('<tr>')
+    	            .append('<td>' + name + '</td>')
+    	            .append('<td>' + optionText + '</td>')
+    	            .append('<td><input type="number" min="1" max="' + stock + '" step="1" value="1" class="itemStock"/></td>')
+    	            .append('<td>' + sale + '</td>')
+    	            .append('<td><button class="btn btn-light">삭제</button></td>');
+    	        
+    	        // 생성한 행을 테이블에 추가
+    	        $("#orderTable tbody").append(newRow);
+    	    });
     		
     		    		
     		// order
