@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingMall.common.PasswordEncryptor;
+import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -21,6 +22,9 @@ public class MypageRestController {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private WishBO wishBO;
 
 	@PostMapping("/profile-update")
 	public Map<String, Object> profileUpdate(
@@ -52,7 +56,8 @@ public class MypageRestController {
 //			@RequestParam("option") String option,
 //			HttpSession session){
 //		
-//		
+//		// db insert
+//		wishBO.addwish(name,option);
 //		
 //		
 //		

@@ -1,5 +1,6 @@
 package com.shoppingMall.order;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +15,7 @@ public class OrderRestController {
 	// 주문하기 
 //	@PostMapping("/order")
 //	public Map<String, Object> order(
-//			@RequestParam("name") String name,
-//			@RequestParam("option") String option,
-//			@RequestParam("count") int count,
-//			@RequestParam("sale") int sale) {
+//			@RequestParam("orderList") List<>) {
 //		
 //	}
 	
