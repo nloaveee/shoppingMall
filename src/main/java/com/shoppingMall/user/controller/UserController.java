@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shoppingMall.aop.TimeTrace;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 	
 	// 로그인
+	@TimeTrace
 	@GetMapping("/sign-in-view")
 	public String signInView() {
 		return "user/signIn";

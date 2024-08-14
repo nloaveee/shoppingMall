@@ -45,7 +45,11 @@
 			</table>
 		
 			
-			<div>Total Price: </div>
+			<div class="mx-2 d-flex justify-content-between">
+				<h5>Total Price:</h5> 
+				<h5 class="totalPrice"></h5>
+			</div>
+			 
 			
 			<!--  order / cart / wish button --> 
 			<div class="d-flex mt-3">
@@ -82,12 +86,41 @@
     	            .append('<td>' + name + '</td>')
     	            .append('<td>' + optionText + '</td>')
     	            .append('<td><input type="number" min="1" max="' + stock + '" step="1" value="1" class="itemStock"/></td>')
-    	            .append('<td>' + sale + '</td>')
-    	            .append('<td><button class="btn btn-light">삭제</button></td>');
-    	        
+    	            .append('<td class="itemSale">' + sale + '</td>')
+    	            .append('<td><button class="deleteBtn btn btn-light"><img src="/img/trash.png" width="20px"></button></td>');
+    	            	        
     	        // 생성한 행을 테이블에 추가
     	        $("#orderTable tbody").append(newRow);
-    	    });
+    	        
+    	        // input 구매 수량이 변할 때 마다 가격 부분 업데이트 및 totalprice 업데이트
+    	        newRow.find('.itemStock').on('input', function() {
+    	            updateTotalPrice(); // Total price 업데이트
+    	        });
+    	        
+    	        // 삭제 버튼 클릭 시 행 삭제 및 totalprice 업데이트
+    	        newRow.find(".deleteBtn").on('click', function() {
+    	            $(this).closest('tr').remove();
+    	            updateTotalPrice(); // Total price 업데이트
+    	        });
+    	        
+    	        // 초기 행 생성 할 때는 기본 값으로 넣어줌 
+    	        newRow.find('.itemSale').data('base-sale', sale);
+
+    	        // 총 가격을 업데이트하는 함수
+    	        function updateTotalPrice() {
+    	            let totalPrice = 0;
+    	            $("#orderTable tbody tr").each(function() {
+    	                let quantity = $(this).find('.itemStock').val();
+    	                let baseSale = $(this).find('.itemSale').data('base-sale');
+    	                totalPrice += baseSale * quantity;
+    	            });
+    	            $(".totalPrice").text(totalPrice+" "+"won");
+    	        }
+    	        
+    	        // 처음 로드 시 총 가격 초기화
+    	        updateTotalPrice();
+    	            	     	    	        
+    	    }); //--------- 옵션 가져오기 끝
     		
     		    		
     		// order
@@ -100,30 +133,57 @@
 	   	            return; // 함수 종료
 	   	        }
     			
+	   	    	let totalPrice = 0;
+	   	    	let orderList = [];
+
     			// 옵션 선택 & 주문
 	  			$('#orderTable tr').each(function() {
-  				     let name = $(this).find("td").eq(0).html();  
-  				     let option = $(this).find("td").eq(1).html();
-  				     let count = $(this).find("td").find("#itemStock").val();   				      
-  				     let sale = $(this).find("td").eq(3).html();
+  				    let name = $(this).find("td").eq(0).html();  
+  				    let option = $(this).find("td").eq(1).html();
+  				    let count = $(this).find("td").find(".itemStock").val();   				      
+  				    let sale = $(this).find("td").eq(3).html();
+  				    
+  				    // 리스트로 자료구조로 만들어서 컨트롤러로 보내기?
+					    orderList.push({
+					        name: name,
+					        option: option,
+					        count: count,
+					        sale: sale
+					    });
+  				   
+  				   	totalPrice = parseInt(sale) + parseInt(totalPrice); 
+	  			});
+    			
+    			$(".totalPrice").text(totalPrice);
+    			
+    			
   				      
-  				    $.ajax({
-  		                type: "post",
-  		                url: "/shop/order/order",
-  		                data: {"name":name, "option":option, "count":count, "sale" : sale},
-  		                success:function(data) {
-  		                    if (data.code == 200) {
-  		                        // 성공 처리
-  		                    }
-  		                }
-  		            });
-  		        });
+			    $.ajax({
+	                type: "post",
+	                url: "/shop/order/order",
+	                data: {"items":orderList, "totalPrice":totalPrice},
+	                success:function(data) {
+	                    if (data.code == 200) {
+	                        // 성공 처리
+	                    }
+	                }
+	            
+	        });
 	  				 
 	   		}); // ------ order 끝
     		
     		
     		// wish에 담기 
     		$(".wish").on('click',function(){
+    			
+	   			// 옵션을 선택하지 않은 경우
+	   	        if ($('#orderTable tbody tr').length == 0) {
+	   	            alert("옵션을 선택하세요.");
+	   	            location.reload();
+	   	            return; // 함수 종료
+	   	        }
+    			
+    			
     			$('#orderTable tr').each(function() {
  				      let name = $(this).find("td").eq(0).html();  
  				      let option = $(this).find("td").eq(1).html(); 				      
