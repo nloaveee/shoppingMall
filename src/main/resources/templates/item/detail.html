@@ -85,8 +85,10 @@
 			
     		// 상품 정보 가져오기
     	    $("#option").on('change', function() {
-    	        let color =$("#color option:selected"); // 선택된 옵션
-    	        let optionText = selectedOption.text(); // 옵션 텍스트 출력
+    	        let color =$("#color option:selected"); 
+    	        let size =$("#size option:selected"); 
+    	        let colorText = color.text(); // 옵션 텍스트 출력
+    	        let sizeText = size.text(); // 옵션 텍스트 출력
     	        let name = $("#name").val(); 
     	        let sale = $("#sale").val(); 
     	        let stock = selectedOption.data('stock'); // 선택된 옵션 재고
