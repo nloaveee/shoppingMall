@@ -89,4 +89,8 @@ public class ItemBO {
 	public ItemOption getItemOptionByItemId(int itemId) {
 		return itemOptionMapper.selectOptionById(itemId);
 	}
+	
+	public List<ItemOption> getItemOptionByItemIdColorSize(int itemId, String color, String size) {
+		return itemOptionMapper.selectOptionByItemIdColorSize(itemId,color,size);
+	}
 }

@@ -1,11 +1,15 @@
 package com.shoppingMall.mypage.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shoppingMall.mypage.bo.WishBO;
+import com.shoppingMall.mypage.entity.Wish;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -17,6 +21,9 @@ public class MypageController {
 	
 	@Autowired
 	private UserBO userBO;
+	
+	@Autowired
+	private WishBO wishBO;
 	
 	// 마이페이지 - 메인
 	@GetMapping("/mypage")
@@ -59,9 +66,19 @@ public class MypageController {
 
 	// 마이페이지 - 찜
 	@GetMapping("/mypage/wish")
-	public String wish() {
+	public String wish(
+			HttpSession session,
+			Model model) {
+		
+		String userId = (String)session.getAttribute("userId");
+		
+		List<Wish> wishList = wishBO.getWishListByUserId(userId);
+		model.addAttribute("wishList",wishList);
+		
 		return "mypage/wish";
 	}
+	
+	
 	
 
 }

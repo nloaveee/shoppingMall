@@ -26,25 +26,15 @@
 						<td th:text="${item.sale}"></td>
 					</tr>
 					<tr>
-						<th>COLOR</th>
+						<th>OPTION</th>
 						<td>
-							<select id="color" class="form-control col-8" >
-					            <option>-[필수] COLOR 선택-</option>
-					            <option th:each="option : ${optionList}" th:value="${option.color}" th:text="${option.color}" th:data-stock="${option.stock}">
+							<select id="option" class="form-control col-8" >
+					            <option>-[필수] OPTION 선택-</option>
+					            <option th:each="option : ${optionList}" th:value="|${option.color}/${option.size}" th:text="|${option.color}/${option.size}" th:data-stock="${option.stock}">
 					            </option>					          					        
 							</select>
 						</td>
-					</tr>
-					<tr>
-						<th>SIZE</th>
-						<td>
-							<select id="size" class="form-control col-8" >
-					            <option>-[필수] SIZE 선택-</option>
-					            <option th:each="option : ${optionList}" th:value="${option.size}" th:text="${option.size}" th:data-stock="${option.stock}">
-					            </option>					          
-					        </select>
-						</td>						
-					</tr>					
+					</tr>			
 			</table>			
 			<input type="hidden" th:value="${item.name}" id="name">
 			<input type="hidden" th:value="${item.sale}" id="sale">
@@ -70,7 +60,9 @@
 					<a href="/shop/cart/main-view"><button class="cart btn btn-light w-100">CART</button></a>
 				</div>
 				<div class="col-4">
-					<button class="wish btn btn-light w-100" th:if="|${userId != null}|">WISH</button>
+					<button class="wish btn btn-light w-100">WISH</button>
+					<input type="hidden" th:value="${userId}" id="userId">
+					<input type="hidden" th:value="${item.id}" id="itemId">
 				</div>		
 			</div>		
 		</div>
@@ -85,15 +77,11 @@
 			
     		// 상품 정보 가져오기
     	    $("#option").on('change', function() {
-    	        let color =$("#color option:selected"); 
-    	        let size =$("#size option:selected"); 
-    	        let colorText = color.text(); // 옵션 텍스트 출력
-    	        let sizeText = size.text(); // 옵션 텍스트 출력
+    	        let option =$("#option option:selected"); 
+    	        let optionText = option.text(); // 옵션 텍스트 출력
     	        let name = $("#name").val(); 
-    	        let sale = $("#sale").val(); 
-    	        let stock = selectedOption.data('stock'); // 선택된 옵션 재고
-    	        
-    	        alert(color);
+    	        let sale = parseInt($("#sale").val());
+    	        let stock = option.data('stock'); // 선택된 옵션 재고
     	        
     	        // 새로운 행을 생성
     	        let newRow = $('<tr>')
@@ -190,6 +178,24 @@
     		// wish에 담기 
     		$(".wish").on('click',function(){
     			
+    			let userId = $("#userId").val();
+    			let itemId = $("#itemId").val();
+    			
+    			// 로그인이 안되어 있는 경우 
+    			if (!userId) {
+    				Swal.fire({
+	    					icon: 'warning',
+	    					title: '로그인이 필요합니다.', 	
+	    					confirmButtonColor: '#00008b',
+	    					confirmButtonText: '확인'
+    				}).then((result) => {
+    				   if (result.isConfirmed) { // 확인 버튼 클릭 시 화면 이동
+    				      location.href = "/shop/user/sign-in-view";
+    				   }
+    				});
+    			  return;
+    			}
+    			
 	   			// 옵션을 선택하지 않은 경우
 	   	        if ($('#orderTable tbody tr').length == 0) {
 	   	            alert("옵션을 선택하세요.");
@@ -198,40 +204,38 @@
 	   	        }
     			
     			
-    			$('#orderTable tr').each(function() {
- 				      let name = $(this).find("td").eq(0).html();  
- 				      let option = $(this).find("td").eq(1).html(); 	
- 				      
- 				      alert(option);
-
- 				      $.ajax({
- 				    	  type: "post"
- 				    	  ,url: "/shop/user/mypage/wish/add"
- 				    	  ,data: {"name":name, "option":option}
- 				      
- 				      	  ,success:function(data) {
- 				      		  if (data.code == 200) {
- 				      			Swal.fire({
- 	    	    					icon: 'success',
- 	    	    					title: 'ok', 	
- 	    	    					text: '상품을 찜 하였습니다.',
- 	    	    					confirmButtonColor: '#00008b',
- 	    	    					confirmButtonText: '확인'
- 	    	    				})
- 				      		  }	else {
- 		    						Swal.fire({
- 		    	    					icon: 'error',
- 		    	    					title: 'error',
- 		    	    					text: '상품 찜 하기에 실패했습니다.',
- 		    	    					confirmButtonColor: '#00008b',
- 		    	    					confirmButtonText: '확인'
- 		    	    				})
- 		    					}
- 				      	  }
- 				      	  
- 				    	  
- 				      });    			
-    			});
+	    			$('#orderTable tr').each(function() { 				     
+	 				      let option = $(this).find("td").eq(1).html(); 	
+	 				      let [color, size] = option.split('/'); 	 				     
+	
+	 				      $.ajax({
+	 				    	  type: "post"
+	 				    	  ,url: "/shop/user/mypage/wish/add"
+	 				    	  ,data: {"color":color, "size":size, "itemId":itemId}
+	 				      
+	 				      	  ,success:function(data) {
+	 				      		  if (data.code == 200) {
+	 				      			Swal.fire({
+	 	    	    					icon: 'success',
+	 	    	    					title: 'ok', 	
+	 	    	    					text: '상품을 찜 하였습니다.',
+	 	    	    					confirmButtonColor: '#00008b',
+	 	    	    					confirmButtonText: '확인'
+	 	    	    				})
+	 				      		  }	else {
+	 		    						Swal.fire({
+	 		    	    					icon: 'error',
+	 		    	    					title: 'error',
+	 		    	    					text: '상품 찜 하기에 실패했습니다.',
+	 		    	    					confirmButtonColor: '#00008b',
+	 		    	    					confirmButtonText: '확인'
+	 		    	    				})
+	 		    					}
+	 				      	  }
+	 				      	  
+	 				    	  
+	 				      });    			
+	    			});
     		});
     		
     	}); // -------- document 끝

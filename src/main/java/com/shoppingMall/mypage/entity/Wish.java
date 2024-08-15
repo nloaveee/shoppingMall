@@ -1,10 +1,11 @@
 package com.shoppingMall.mypage.entity;
 
-import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CurrentTimestamp;
 
-import groovy.transform.builder.Builder;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.shoppingMall.admin.domain.ItemOption;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -30,16 +32,10 @@ public class Wish {
 	private int id;
 	
 	@Column(name="userId")
-	private int userId;
-	
-	@Column(name="itemId")
-	private int itemId;
+	private String userId;
 	
 	@Column(name="optionId")
 	private int optionId;
 	
-	@Column(name="createdAt")
-	@CurrentTimestamp
- 	private LocalDateTime createdAt;
 
 }
