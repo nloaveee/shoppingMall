@@ -1,6 +1,7 @@
 package com.shoppingMall.mypage.bo;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.shoppingMall.admin.bo.ItemBO;
 
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.mypage.entity.Wish;
+import com.shoppingMall.mypage.entity.WishItem;
 import com.shoppingMall.mypage.repository.WishRepository;
 @Service
 public class WishBO {
@@ -38,4 +40,6 @@ public class WishBO {
 	public List<Wish> getWishListByUserId(String userId) {
 		return wishRepository.findByUserId(userId);
 	}
+	
+	
 }

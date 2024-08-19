@@ -1,11 +1,5 @@
 package com.shoppingMall.mypage.entity;
 
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.shoppingMall.admin.domain.ItemOption;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
