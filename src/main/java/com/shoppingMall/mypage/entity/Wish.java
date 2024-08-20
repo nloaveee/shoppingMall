@@ -1,10 +1,13 @@
 package com.shoppingMall.mypage.entity;
 
+import com.shoppingMall.admin.domain.ItemOption;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,5 +34,4 @@ public class Wish {
 	@Column(name="optionId")
 	private int optionId;
 	
-
 }

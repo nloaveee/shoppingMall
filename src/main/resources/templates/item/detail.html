@@ -74,56 +74,52 @@
     <script>
     
     	$(document).ready(function(){
-			
-    		// 상품 정보 가져오기
-    	    $("#option").on('change', function() {
-    	        let option =$("#option option:selected"); 
-    	        let optionText = option.text(); // 옵션 텍스트 출력
-    	        let name = $("#name").val(); 
-    	        let sale = parseInt($("#sale").val());
-    	        let stock = option.data('stock'); // 선택된 옵션 재고
-    	        
-    	        // 새로운 행을 생성
-    	        let newRow = $('<tr>')
-    	            .append('<td>' + name + '</td>')
-    	            .append('<td>' + optionText + '</td>')
-    	            .append('<td><input type="number" min="1" max="' + stock + '" step="1" value="1" class="itemStock"/></td>')
-    	            .append('<td class="itemSale">' + sale + '</td>')
-    	            .append('<td><button class="deleteBtn btn btn-light"><img src="/img/trash.png" width="20px"></button></td>');
-    	            	        
-    	        // 생성한 행을 테이블에 추가
-    	        $("#orderTable tbody").append(newRow);
-    	        
-    	        // input 구매 수량이 변할 때 마다 가격 부분 업데이트 및 totalprice 업데이트
-    	        newRow.find('.itemStock').on('input', function() {
-    	            updateTotalPrice(); // Total price 업데이트
-    	        });
-    	        
-    	        // 삭제 버튼 클릭 시 행 삭제 및 totalprice 업데이트
-    	        newRow.find(".deleteBtn").on('click', function() {
-    	            $(this).closest('tr').remove();
-    	            updateTotalPrice(); // Total price 업데이트
-    	        });
-    	        
-    	        // 초기 행 생성 할 때는 기본 값으로 넣어줌 
-    	        newRow.find('.itemSale').data('base-sale', sale);
-
-    	        // 총 가격을 업데이트하는 함수
-    	        function updateTotalPrice() {
-    	            let totalPrice = 0;
-    	            $("#orderTable tbody tr").each(function() {
-    	                let quantity = $(this).find('.itemStock').val();
-    	                let baseSale = $(this).find('.itemSale').data('base-sale');
-    	                totalPrice += baseSale * quantity;
-    	            });
-    	            $(".totalPrice").text(totalPrice+" "+"won");
-    	        }
-    	        
-    	        // 처음 로드 시 총 가격 초기화
-    	        updateTotalPrice();
-    	            	     	    	        
-    	    }); //--------- 옵션 가져오기 끝
     		
+    		// 총 가격을 업데이트하는 함수
+    		function updateTotalPrice() {
+    		    let totalPrice = 0;
+    		    $("#orderTable tbody tr").each(function() {
+    		        let quantity = parseInt($(this).find('.itemStock').val(), 10); // 문자열을 숫자로 변환
+    		        let baseSale = $(this).find('.itemSale').data('base-sale');
+    		        totalPrice += baseSale * quantity;
+    		    });
+    		    $(".totalPrice").text(totalPrice + " won");
+    		}
+
+    		// 상품 정보 가져오기
+    		$("#option").on('change', function() {
+    		    let option = $("#option option:selected");
+    		    let optionText = option.text(); // 옵션 텍스트 출력
+    		    let name = $("#name").val();
+    		    let sale = parseInt($("#sale").val(), 10); // 숫자로 변환
+    		    let stock = option.data('stock'); // 선택된 옵션 재고
+    		    
+    		    // 새로운 행을 생성
+    		    let newRow = $('<tr>')
+    		        .append('<td>' + name + '</td>')
+    		        .append('<td>' + optionText + '</td>')
+    		        .append('<td><input type="number" min="1" max="' + stock + '" step="1" value="1" class="itemStock"/></td>')
+    		        .append('<td class="itemSale" data-base-sale="' + sale + '">' + sale + '</td>')
+    		        .append('<td><button class="deleteBtn btn btn-light"><img src="/img/trash.png" width="20px"></button></td>');
+    		        
+    		    // 생성한 행을 테이블에 추가
+    		    $("#orderTable tbody").append(newRow);
+    		    
+    		    // input 구매 수량이 변할 때마다 가격 부분 업데이트 및 totalprice 업데이트
+    		    newRow.find('.itemStock').on('input', function() {
+    		        updateTotalPrice(); // Total price 업데이트
+    		    });
+    		    
+    		    // 삭제 버튼 클릭 시 행 삭제 및 totalprice 업데이트
+    		    newRow.find(".deleteBtn").on('click', function() {
+    		        $(this).closest('tr').remove();
+    		        updateTotalPrice(); // Total price 업데이트
+    		    });
+    		    
+    		    // 총 가격을 업데이트
+    		    updateTotalPrice();
+    		});
+
     		    		
     		// order
     		$(".order").on('click',function() {
@@ -135,9 +131,9 @@
 	   	            return; // 함수 종료
 	   	        }
     			
-	   	    	let totalPrice = 0;
-	   	    	let orderList = [];
-
+				let totalPrice = 0;
+	   	    	let orderList = [];	   	    	
+	   	    	
     			// 옵션 선택 & 주문
 	  			$('#orderTable tr').each(function() {
   				    let name = $(this).find("td").eq(0).html();  
@@ -153,11 +149,12 @@
 					        sale: sale
 					    });
   				   
-  				   	totalPrice = parseInt(sale) + parseInt(totalPrice); 
+  				   	totalPrice;
 	  			});
     			
     			$(".totalPrice").text(totalPrice);
     			
+    			alert(totalPrice);
     			
   				      
 			    $.ajax({

@@ -1,18 +1,16 @@
 package com.shoppingMall.mypage.bo;
 
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shoppingMall.admin.bo.ItemBO;
-
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.mypage.entity.Wish;
-import com.shoppingMall.mypage.entity.WishItem;
 import com.shoppingMall.mypage.repository.WishRepository;
+
 @Service
 public class WishBO {
 
@@ -21,6 +19,8 @@ public class WishBO {
 	
 	@Autowired
 	private ItemBO itemBO;
+	
+
 	
 	public boolean addWish(String userId, String size, String color, int itemId) {
 		
@@ -41,5 +41,6 @@ public class WishBO {
 		return wishRepository.findByUserId(userId);
 	}
 	
+
 	
 }
