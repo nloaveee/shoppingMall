@@ -75,102 +75,122 @@
     
     	$(document).ready(function(){
     		
-    		// 총 가격을 업데이트하는 함수
-    		function updateTotalPrice() {
-    		    let totalPrice = 0;
-    		    $("#orderTable tbody tr").each(function() {
-    		        let quantity = parseInt($(this).find('.itemStock').val(), 10); // 문자열을 숫자로 변환
-    		        let baseSale = $(this).find('.itemSale').data('base-sale');
-    		        totalPrice += baseSale * quantity;
-    		    });
-    		    $(".totalPrice").text(totalPrice + " won");
-    		}
 
-    		// 상품 정보 가져오기
-    		$("#option").on('change', function() {
-    		    let option = $("#option option:selected");
-    		    let optionText = option.text(); // 옵션 텍스트 출력
-    		    let name = $("#name").val();
-    		    let sale = parseInt($("#sale").val(), 10); // 숫자로 변환
-    		    let stock = option.data('stock'); // 선택된 옵션 재고
-    		    
-    		    // 새로운 행을 생성
-    		    let newRow = $('<tr>')
-    		        .append('<td>' + name + '</td>')
-    		        .append('<td>' + optionText + '</td>')
-    		        .append('<td><input type="number" min="1" max="' + stock + '" step="1" value="1" class="itemStock"/></td>')
-    		        .append('<td class="itemSale" data-base-sale="' + sale + '">' + sale + '</td>')
-    		        .append('<td><button class="deleteBtn btn btn-light"><img src="/img/trash.png" width="20px"></button></td>');
-    		        
-    		    // 생성한 행을 테이블에 추가
-    		    $("#orderTable tbody").append(newRow);
-    		    
-    		    // input 구매 수량이 변할 때마다 가격 부분 업데이트 및 totalprice 업데이트
-    		    newRow.find('.itemStock').on('input', function() {
-    		        updateTotalPrice(); // Total price 업데이트
-    		    });
-    		    
-    		    // 삭제 버튼 클릭 시 행 삭제 및 totalprice 업데이트
-    		    newRow.find(".deleteBtn").on('click', function() {
-    		        $(this).closest('tr').remove();
-    		        updateTotalPrice(); // Total price 업데이트
-    		    });
-    		    
-    		    // 총 가격을 업데이트
-    		    updateTotalPrice();
-    		});
+    	    // 상품 정보 가져오기
+    	    $("#option").on('change', function() {
+    	        let option = $("#option option:selected");
+    	        let optionText = option.text(); 
+    	        let name = $("#name").val();
+    	        let sale = parseInt($("#sale").val(), 10); 
+    	        let stock = option.data('stock');
+    	        
+    	        // 새로운 행을 생성
+    	        let newRow = $('<tr>')
+    	            .append('<td>' + name + '</td>')
+    	            .append('<td>' + optionText + '</td>')
+    	            .append('<td><input type="number" min="1" max="' + stock + '" step="1" value="1" class="itemStock"/></td>')
+    	            .append('<td class="itemSale" data-base-sale="' + sale + '">' + sale + ' won</td>')
+    	            .append('<td><button class="deleteBtn btn btn-light"><img src="/img/trash.png" width="20px"></button></td>');
+    	            
+    	        // 생성한 행을 테이블에 추가
+    	        $("#orderTable tbody").append(newRow);
+    	        
+    	        // input 구매 수량이 변할 때마다 가격 부분 업데이트 및 totalprice 업데이트
+    	        newRow.find('.itemStock').on('input', function() {
+    	            updateTotalPrice(); 
+    	        });
+    	        
+    	        // 삭제 버튼 클릭 시 행 삭제 및 totalprice 업데이트
+    	        newRow.find(".deleteBtn").on('click', function() {
+    	            $(this).closest('tr').remove();
+    	            updateTotalPrice();
+    	        });
+    	        
+    	        // 총 가격 업데이트
+    	        updateTotalPrice();
+    	    });
+    	    
+    		// 총 가격 업데이트
+    	    function updateTotalPrice() {
+    	        let totalPrice = 0;
+    	        $("#orderTable tbody tr").each(function() {
+    	            let quantity = parseInt($(this).find('.itemStock').val(), 10); // 문자열을 숫자로 변환
+    	            let baseSale = $(this).find('.itemSale').data('base-sale');
+    	            
+    	            // 개별 상품의 총 가격 계산
+    	            let itemTotal = baseSale * quantity;
+    	            $(this).find('.itemSale').text(itemTotal + " won"); 
+    	            
+    	            totalPrice += itemTotal; 
+    	        });
+    	        
+    	        $(".totalPrice").text(totalPrice + " won");
+    	        return totalPrice; 
+    	    }
 
-    		    		
-    		// order
-    		$(".order").on('click',function() {
-    			
-	   			// 옵션을 선택하지 않은 경우
-	   	        if ($('#orderTable tbody tr').length == 0) {
-	   	            alert("옵션을 선택하세요.");
-	   	            location.reload();
-	   	            return; // 함수 종료
-	   	        }
-    			
-				let totalPrice = 0;
-	   	    	let orderList = [];	   	    	
-	   	    	
-    			// 옵션 선택 & 주문
-	  			$('#orderTable tr').each(function() {
-  				    let name = $(this).find("td").eq(0).html();  
-  				    let option = $(this).find("td").eq(1).html();
-  				    let count = $(this).find("td").find(".itemStock").val();   				      
-  				    let sale = $(this).find("td").eq(3).html();
-  				    
-  				    // 리스트로 자료구조로 만들어서 컨트롤러로 보내기?
-					    orderList.push({
-					        name: name,
-					        option: option,
-					        count: count,
-					        sale: sale
-					    });
-  				   
-  				   	totalPrice;
-	  			});
-    			
-    			$(".totalPrice").text(totalPrice);
-    			
-    			alert(totalPrice);
-    			
-  				      
-			    $.ajax({
-	                type: "post",
-	                url: "/shop/order/order",
-	                data: {"items":orderList, "totalPrice":totalPrice},
-	                success:function(data) {
-	                    if (data.code == 200) {
-	                        // 성공 처리
-	                    }
-	                }
-	            
-	        });
-	  				 
-	   		}); // ------ order 끝
     		
+    		$(".order").on('click',function(){
+    			
+    			// 옵션을 선택하지 않은 경우
+    	        if ($('#orderTable tbody tr').length == 0) {
+    	            alert("옵션을 선택하세요.");
+    	            return;
+    	        }   
+    			
+    			// 로그인 확인
+                $.ajax({
+                    type: "get" 
+                    , url: "/shop/order/checkLogin"
+                    
+                    , success: function(response) {
+                        if (response.loggedIn) {
+    						// 로그인인 경우
+                            
+                            let orderList = []; 
+                            let totalPrice = updateTotalPrice(); 
+
+                            // 옵션 선택 & 주문
+                            $('#orderTable tbody tr').each(function() {
+                                let name = $(this).find("td").eq(0).html();  
+                                let option = $(this).find("td").eq(1).html();
+                                let count = $(this).find(".itemStock").val();   				      
+                                let sale = $(this).find("td").eq(3).html();
+                                
+                                // list로 보내기 
+                                orderList.push({
+                                    name: name,
+                                    option: option,
+                                    count: count,
+                                    sale: sale
+                                });
+                            });
+
+                            $(".totalPrice").text(totalPrice + " won");
+
+                            $.ajax({
+                                type: "post",
+                                url: "/shop/order/order",
+                                data: {"items": orderList, "totalPrice": totalPrice},
+                                success: function(data) {
+                                    if (data.code == 200) {                                   
+    									location.href = "/shop/order/order-form-view"; 
+                                    }
+                                }
+                            });
+
+                        } else {
+                            // 비로그인인 경우
+                            alert("로그인을 해주세요");
+                            location.href = "/shop/user/sign-in-view";
+                        }
+                    },
+                    error: function() {
+                        alert("로그인 상태 확인 중 오류가 발생했습니다.");
+                    }
+                }); 
+    		});
+    	    
+        }); // ------ order 끝
     		
     		// wish에 담기 
     		$(".wish").on('click',function(){
@@ -233,9 +253,8 @@
 	 				    	  
 	 				      });    			
 	    			});
-    		});
+    		}); // -------- document 끝
     		
-    	}); // -------- document 끝
     		
  
 

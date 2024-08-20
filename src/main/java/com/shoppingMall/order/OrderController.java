@@ -1,10 +1,13 @@
 package com.shoppingMall.order;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.shoppingMall.user.bo.UserBO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -14,9 +17,23 @@ public class OrderController {
 	
 
 	// 주문 메인 
-	@RequestMapping("/order-form-view")
+	@GetMapping("/order-form-view")
 	public String orderFormView() {
 				
 		return "order/orderForm";
+	}
+	
+	// 주문시 로그인 여부 확인 
+	@GetMapping("/checkLogin")
+	public ResponseEntity<Map<String, Object>> checkLogin(HttpSession session) {
+	    Map<String, Object> response = new HashMap<>();
+	    String loggedInUser = (String) session.getAttribute("userId");
+	    
+	    if (loggedInUser != null) {
+	        response.put("loggedIn", true);
+	    } else {
+	        response.put("loggedIn", false);
+	    }
+	    return ResponseEntity.ok(response);
 	}
 }

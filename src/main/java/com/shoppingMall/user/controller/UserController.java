@@ -32,7 +32,6 @@ public class UserController {
 		public String signOut(
 				HttpSession session) {
 			session.removeAttribute("userId");
-			session.removeAttribute("loginId");
 			session.removeAttribute("name");
 			session.removeAttribute("email");
 			session.removeAttribute("phone");
