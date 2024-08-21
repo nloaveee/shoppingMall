@@ -60,6 +60,19 @@
  			AND `color` = #{color}
  			AND `size` = #{size}
  	</select>
+ 	
+ 	<select id="selectOptionListByItemId" parameterType="int" resultType="com.shoppingMall.admin.domain.ItemOption">
+	 	SELECT 
+	 			`id`
+	 			,`itemId`
+	 			,`size`
+	 			,`color`
+	 			,`stock`
+ 		FROM
+ 			`item_option`
+ 		WHERE 
+ 			`id`= #{id}
+ 	</select>
  
  
  </mapper>

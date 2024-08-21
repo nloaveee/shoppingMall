@@ -1,5 +1,6 @@
 package com.shoppingMall.admin.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.admin.mapper.ItemMapper;
 import com.shoppingMall.admin.mapper.ItemOptionMapper;
 import com.shoppingMall.common.FileManagerService;
+import com.shoppingMall.mypage.entity.WishView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,6 +52,7 @@ public class ItemBO {
 		
 		return itemMapper.selectItemListByName(name);
 	}
+	
 	
 	public Item getItemByName(String name) {
 		return itemMapper.selectItemByName(name);
@@ -93,4 +96,21 @@ public class ItemBO {
 	public List<ItemOption> getItemOptionByItemIdColorSize(int itemId, String color, String size) {
 		return itemOptionMapper.selectOptionByItemIdColorSize(itemId,color,size);
 	}
+	
+//	public List<WishView> generateOptionViewListByoptionId(int optionId) {
+//		List<WishView> optionViewList = new ArrayList<>();
+//		
+//		List<ItemOption> optionList = itemOptionMapper.selectOptionListByItemId(optionId);
+//		
+//		for (ItemOption option: optionList) {
+//			WishView wishView = new WishView();
+//			
+//			wishView.setItemOption(option.getId());
+//			
+//			optionViewList.add(wishView);
+//					
+//		}
+//		
+//		return optionViewList;
+//	}
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.order.bo.OrderBO;
+import com.shoppingMall.order.entity.Order;
 import com.shoppingMall.user.entity.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,24 +27,24 @@ public class OrderRestController {
 	private OrderBO orderBO;
 
 	// 주문하기
-	@PostMapping("/order")
-	public Map<String, Object> order(
-			@RequestParam("items") List<Item> orderList, 
-			@RequestParam("totalPrice") int totalPrice,
-			HttpSession session) {
-		
-		String userId = (String)session.getAttribute("userId");
-		
-		// db insert
-		orderBO.addOrder(userId, orderList, totalPrice );
-		
-		
-		
-
-	    Map<String, Object> result = new HashMap<>();
-	    result.put("code", 200);
-	    return result;
-	}
+//	@PostMapping("/order")
+//	public Map<String, Object> order(
+//			@RequestParam("items") List<Order> orderList, 
+//			@RequestParam("totalPrice") int totalPrice,
+//			HttpSession session) {
+//		
+//		String userId = (String)session.getAttribute("userId");
+//		
+//		// db insert
+//		orderBO.addOrder(userId, orderList, totalPrice );
+//		
+//		
+//		
+//
+//	    Map<String, Object> result = new HashMap<>();
+//	    result.put("code", 200);
+//	    return result;
+//	}
 
 
 	

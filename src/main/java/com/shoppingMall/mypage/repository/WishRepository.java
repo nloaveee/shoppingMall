@@ -9,4 +9,6 @@ import com.shoppingMall.mypage.entity.Wish;
 public interface WishRepository extends JpaRepository<Wish, Integer>{
 
 	public List<Wish> findByUserId(String userId);
+	
+	public List<Wish> getByUserId(String userId);
 }

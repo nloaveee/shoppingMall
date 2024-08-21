@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shoppingMall.admin.domain.ItemOption;
+import com.shoppingMall.mypage.entity.WishView;
 
 @Mapper
 public interface ItemOptionMapper {
@@ -27,5 +28,7 @@ public interface ItemOptionMapper {
 			@Param("itemId") int itemId,
 			@Param("color") String color,
 			@Param("size") String size);
+	
+	public List<ItemOption> selectOptionListByItemId(int id);
 	
 }
