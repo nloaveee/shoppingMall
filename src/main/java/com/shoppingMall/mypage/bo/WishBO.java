@@ -31,7 +31,7 @@ public class WishBO {
 	
 	public boolean addWish(String userId, String size, String color, int itemId) {
 		
-		List<ItemOption> optionList = itemBO.getItemOptionByItemIdColorSize(itemId, color, size);
+		List<ItemOption> optionList = itemBO.getItemOptionListByItemIdColorSize(itemId, color, size);
 		
 		for(ItemOption option:optionList) {
 			int optionId = option.getId();
@@ -48,49 +48,7 @@ public class WishBO {
 		return wishRepository.findByUserId(userId);
 	}
 	
-//	public List<WishView> generateWishViewList(String userId) {
-//		List<WishView> wishViewList = new ArrayList<>();
-//		
-//		List<Wish> wishList = getWishListByUserId(userId);
-//		
-//		for(Wish wish : wishList) {
-//			WishView wishview = new WishView();
-//			
-//			wishview.setWish(wish);
-//			
-//			// 회원
-//			User user = userBO.getUserByUserId(wishview.getUser().getUserId());
-//			wishview.setUser(user);
-//			
-//			// 아이템
-//			List<WishView> wishItemList = generateWishViewItemListByUserId(wish.getUserId());
-//			wishview.setItem(wishItemList);
-//			
-//			// 옵션 		
-//			List<WishView> wishOptionList = itemBO.generateOptionViewListByoptionId(wish.getOptionId());
-//			wishview.setItemOption(wishOptionList);
-//			
-//		}
-//	}
-	
-	public List<WishView> generateWishViewItemListByUserId(String userId) {
-		List<WishView> wishViewItemList = new ArrayList<>();
-		
-		// wish 아이템 가져오기 
-		List<Wish> wishList = wishRepository.getByUserId(userId);
-		
-		// 반복문 순회 
-		for (Wish wish: wishList) {
-			WishView wishView = new WishView();
-			
-			User user = userBO.getUserByUserId(wish.getUserId());
-			wishView.setUser(user);
-			
-			wishViewItemList.add(wishView);
-		}
-		return wishViewItemList;
-	}
-	 
+
 
 	
 }

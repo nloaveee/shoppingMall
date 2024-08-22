@@ -46,6 +46,23 @@
  	
  	</select>
  	
+ 	
+ 	<select id="selectOptionListByItemIdColorSize" parameterType="map" resultType="com.shoppingMall.admin.domain.ItemOption">
+ 		SELECT 
+ 			`id`
+ 			,`itemId`
+ 			,`size`
+ 			,`color`
+ 			,`stock`
+ 		FROM
+ 			`item_option`
+ 		WHERE 
+ 			`itemId`= #{itemId}
+ 			AND `color` = #{color}
+ 			AND `size` = #{size}
+ 	
+ 	</select>
+ 	
  	<select id="selectOptionByItemIdColorSize" parameterType="map" resultType="com.shoppingMall.admin.domain.ItemOption">
  		SELECT 
  			`id`

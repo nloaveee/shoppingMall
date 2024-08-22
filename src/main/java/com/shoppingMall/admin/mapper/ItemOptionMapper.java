@@ -24,7 +24,12 @@ public interface ItemOptionMapper {
 	
 	public ItemOption selectOptionById(int itemId);
 	
-	public List<ItemOption> selectOptionByItemIdColorSize(
+	public List<ItemOption> selectOptionListByItemIdColorSize (
+			@Param("itemId") int itemId,
+			@Param("color") String color,
+			@Param("size") String size);
+	
+	public ItemOption selectOptionByItemIdColorSize(
 			@Param("itemId") int itemId,
 			@Param("color") String color,
 			@Param("size") String size);

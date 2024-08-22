@@ -9,6 +9,7 @@ import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.order.entity.Order;
+import com.shoppingMall.order.entity.OrderList;
 import com.shoppingMall.order.repository.OrderRepository;
 
 @Service
@@ -19,31 +20,29 @@ public class OrderBO {
 	
 	@Autowired
 	private ItemBO itemBO;
+	
+	public void addOrder(String userId, List<OrderList> orderList) {
+		
+		for(OrderList order: orderList) {						
+			Item item = itemBO.getItemByName(order.getName());
+			
+			String[] optionPart = order.getOption().split("\\/");
+			String color = optionPart.length>0 ? optionPart[0].trim() : "";
+			String size = optionPart.length>1 ? optionPart[1].trim() : "";
+			ItemOption option = itemBO.getItemOptionByItemIdColorSize(item.getId(),color , size);
+			
+			orderRepository.save(Order.builder()
+					.userId(userId)
+					.itemId(item.getId())
+					.optionId(option.getId())
+					.price(order.getSale())
+					.itemCount(order.getCount())
+					.build());
+			
+	    }
+		
+	}
+	
 
-//	public Order addOrder (String userId, List<Item> orderList, int totalPrice) {
-//		
-//		for (Item orderItem: orderList) {
-//			
-//			Item item = itemBO.getItemByName();
-//			ItemOption option = itemBO.getItemOptionByItemId(item.getId());
-//			
-//			orderRepository.save(Order.builder()
-//					.userId(userId)
-//					.itemId(item.getId())
-//					.optionId(option.getId())
-//					.totalPrice(totalPrice)
-//					.itemCount(orderItem.getItemCount())
-//					.build());
-//			
-//			
-//			orderItem.getName();
-//		}
-//		
-//		orderRepository.save(Order.builder()
-//				.userId(userId)
-//				.itemId(totalPrice)
-//				.build());
-//		
-//		
-//	}
+	
 }

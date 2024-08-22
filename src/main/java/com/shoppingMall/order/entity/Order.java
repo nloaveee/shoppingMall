@@ -20,7 +20,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name="order")
+@Table(name="orders")
 @Builder
 @Getter
 @AllArgsConstructor
@@ -39,12 +39,11 @@ public class Order {
 	
 	@Column(name="itemId")
 	private int itemId;
-	
+
 	@Column(name="optionId")
 	private int optionId;
 	
-	@Column(name="totalPrice")
-	private int totalPrice;
+	private int price;
 	
 	@Column(name="itemCount")
 	private int itemCount;

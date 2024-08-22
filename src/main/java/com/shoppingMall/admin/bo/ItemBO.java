@@ -93,24 +93,12 @@ public class ItemBO {
 		return itemOptionMapper.selectOptionById(itemId);
 	}
 	
-	public List<ItemOption> getItemOptionByItemIdColorSize(int itemId, String color, String size) {
+	public List<ItemOption> getItemOptionListByItemIdColorSize(int itemId, String color, String size) {
+		return itemOptionMapper.selectOptionListByItemIdColorSize(itemId,color,size);
+	}
+	
+	public ItemOption getItemOptionByItemIdColorSize(int itemId, String color, String size) {
 		return itemOptionMapper.selectOptionByItemIdColorSize(itemId,color,size);
 	}
 	
-//	public List<WishView> generateOptionViewListByoptionId(int optionId) {
-//		List<WishView> optionViewList = new ArrayList<>();
-//		
-//		List<ItemOption> optionList = itemOptionMapper.selectOptionListByItemId(optionId);
-//		
-//		for (ItemOption option: optionList) {
-//			WishView wishView = new WishView();
-//			
-//			wishView.setItemOption(option.getId());
-//			
-//			optionViewList.add(wishView);
-//					
-//		}
-//		
-//		return optionViewList;
-//	}
 }

@@ -51,7 +51,7 @@ public class MypageController {
 		
 	    // address를 나누는 코드
 		// $ 기호를 기준으로 나누기
-		String[] addressParts = user.getAddress().split("\\$");
+		String[] addressParts = user.getAddress().split("\\&");
 		String postCode = addressParts.length > 0 ? addressParts[0].trim() : "";
 		String address = addressParts.length > 1 ? addressParts[1].trim() : "";
 		String detailAddress = addressParts.length > 2 ? addressParts[2].trim() : "";
