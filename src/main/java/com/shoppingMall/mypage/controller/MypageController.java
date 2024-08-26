@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.Wish;
-import com.shoppingMall.mypage.entity.WishView;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 

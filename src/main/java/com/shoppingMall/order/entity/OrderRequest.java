@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class OrderRequest {
 
-	private List<OrderList> orderList;
+	private List<OrderItem> orderItem;
 	private int totalPrice;
 }

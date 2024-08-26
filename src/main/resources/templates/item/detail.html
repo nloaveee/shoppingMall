@@ -61,7 +61,7 @@
 					<a href="/shop/cart/main-view"><button class="cart btn btn-light w-100">CART</button></a>
 				</div>
 				<div class="col-4">
-					<a href="/shop/user/mypage/wish-view"><button class="wish btn btn-light w-100">WISH</button></a>
+					<button class="wish btn btn-light w-100">WISH</button>
 					<input type="hidden" th:value="${userId}" id="userId">
 					<input type="hidden" th:value="${item.id}" id="itemId">
 				</div>		
@@ -76,7 +76,6 @@
     
     	$(document).ready(function(){
     		
-
     	    // 상품 정보 가져오기
     	    $("#option").on('change', function() {
     	        let option = $("#option option:selected");
@@ -109,13 +108,15 @@
     	        
     	        // 총 가격 업데이트
     	        updateTotalPrice();
-    	    });
+    	    });  //----------------------- 상품 정보 가져오기 끝
+    	    
+    	    
     	    
     		// 총 가격 업데이트
     	    function updateTotalPrice() {
     	        let totalPrice = 0;
     	        $("#orderTable tbody tr").each(function() {
-    	            let quantity = parseInt($(this).find('.itemStock').val(), 10); // 문자열을 숫자로 변환
+    	            let quantity = parseInt($(this).find('.itemStock').val(), 10); 
     	            let baseSale = $(this).find('.itemSale').data('base-sale');
     	            
     	            // 개별 상품의 총 가격 계산
@@ -127,11 +128,12 @@
     	        
     	        $(".totalPrice").text(totalPrice);
     	        return totalPrice; 
-    	    }
+    	    } // ------------------ 총 가격 업데이트 끝
 
+    	    
     		
-    		$(".order").on('click',function(e){    		
-    			e.preventDefault();
+    		$(".order").on('click',function(){    
+    			
     			// 옵션을 선택하지 않은 경우
     	        if ($('#orderTable tbody tr').length == 0) {
     	            alert("옵션을 선택하세요.");
@@ -140,7 +142,7 @@
     	        } 
     			
                 let totalPrice = updateTotalPrice(); 
-                let orderList= [];
+                let orderitem= [];
 
                 // 옵션 선택 & 주문
                 $('#orderTable tbody tr').each(function() {
@@ -154,7 +156,7 @@
 
                 
              // list로 보내기 
-                orderList.push({
+                orderitem.push({
                     name: name,
                     option: option,
                     count: count,
@@ -170,7 +172,7 @@
                     url: "/shop/order/order",
                     contentType: "application/json",
                     data: JSON.stringify({
-                        orderList: orderList, 
+                        orderItem: orderItem, 
                         totalPrice: totalPrice 
                     }),
                     success: function(data) {
@@ -181,10 +183,11 @@
                 });
             });
     	    
-        }); // ------ order 끝
+        	}); // ------ order 끝
     		
     		// wish에 담기 
-    		$(".wish").on('click',function(){
+    		$(".wish").on('click',function(e){
+    			e.preventDefault();
     			
     			let userId = $("#userId").val();
     			let itemId = $("#itemId").val();
@@ -211,15 +214,29 @@
 	   	            return; // 함수 종료
 	   	        }
     			
-    			
+	   	     	let wishList= [];
+	   			
 	    			$('#orderTable tr').each(function() { 				     
-	 				      let option = $(this).find("td").eq(1).html(); 	
-	 				      let [color, size] = option.split('/'); 	 				     
+	    				let name = $(this).find("td").eq(0).html();  
+	                    let option = $(this).find("td").eq(1).html();
+	                    let count = $(this).find(".itemStock").val();   				      
+	                    let sale = $(this).find("td").eq(3).html();		  
+	                    
+	                 // list로 보내기 
+	                    wishList.push({
+	                        name: name,
+	                        option: option,
+	                        count: count,
+	                        sale: sale
+	                    });
 	
 	 				      $.ajax({
 	 				    	  type: "post"
 	 				    	  ,url: "/shop/user/mypage/wish/add"
-	 				    	  ,data: {"color":color, "size":size, "itemId":itemId}
+	 				    	  ,contentType: "application/json"
+	 				    	  ,data: JSON.stringify({
+	 				    		 wishList: wishList
+	 		                    })
 	 				      
 	 				      	  ,success:function(data) {
 	 				      		  if (data.code == 200) {

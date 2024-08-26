@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shoppingMall.admin.domain.ItemOption;
-import com.shoppingMall.mypage.entity.WishView;
 
 @Mapper
 public interface ItemOptionMapper {

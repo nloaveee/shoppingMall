@@ -29,6 +29,9 @@ public class Wish {
 	@Column(name="userId")
 	private String userId;
 	
+	@Column(name="itemId") 
+	private int itemId;
+	
 	@Column(name="optionId")
 	private int optionId;
 	

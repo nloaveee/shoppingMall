@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class OrderList {
+public class OrderItem {
 
 	private String name;
 	private String option;

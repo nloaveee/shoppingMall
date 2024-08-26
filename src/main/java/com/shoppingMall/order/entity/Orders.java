@@ -28,7 +28,7 @@ import lombok.ToString;
 @ToString
 @Setter
 @DynamicUpdate
-public class Order {
+public class Orders {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

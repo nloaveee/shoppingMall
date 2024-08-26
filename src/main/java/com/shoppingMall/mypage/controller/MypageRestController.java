@@ -1,10 +1,12 @@
 package com.shoppingMall.mypage.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shoppingMall.common.PasswordEncryptor;
 import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.Wish;
+import com.shoppingMall.mypage.entity.WishList;
+import com.shoppingMall.mypage.entity.WishRequest;
+import com.shoppingMall.order.entity.OrderItem;
+import com.shoppingMall.order.entity.OrderRequest;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -53,19 +59,17 @@ public class MypageRestController {
 	// 찜 
 	@PostMapping("/wish/add")
 	public Map<String, Object> wishAdd(
-			@RequestParam("size") String size,
-			@RequestParam("color") String color,
-			@RequestParam("itemId") int itemId,
+			@RequestBody WishRequest request,
 			HttpSession session){
 		
 		String userId = (String)session.getAttribute("userId");
 		
-		// db insert
-		boolean wishAdd = wishBO.addWish(userId, size, color, itemId);
+		List<WishList> wishList = request.getWishList();
 		
+		List<WishList> wishAdd = wishBO.addWish(wishList,userId);
 				
 		Map<String, Object> result = new HashMap<>();
-		if (wishAdd == true) {
+		if (wishAdd != null) {
 			result.put("code", 200);
 		} else {			
 			result.put("error_message", "찜 하는데 실패했습니다.");

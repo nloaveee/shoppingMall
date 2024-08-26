@@ -12,7 +12,7 @@ import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.admin.mapper.ItemMapper;
 import com.shoppingMall.admin.mapper.ItemOptionMapper;
 import com.shoppingMall.common.FileManagerService;
-import com.shoppingMall.mypage.entity.WishView;
+
 
 import lombok.extern.slf4j.Slf4j;
 

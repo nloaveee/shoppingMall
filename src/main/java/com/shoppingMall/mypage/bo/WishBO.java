@@ -11,10 +11,8 @@ import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.mypage.entity.Wish;
-import com.shoppingMall.mypage.entity.WishView;
+import com.shoppingMall.mypage.entity.WishList;
 import com.shoppingMall.mypage.repository.WishRepository;
-import com.shoppingMall.user.bo.UserBO;
-import com.shoppingMall.user.entity.User;
 
 @Service
 public class WishBO {
@@ -25,30 +23,30 @@ public class WishBO {
 	@Autowired
 	private ItemBO itemBO;
 	
-	@Autowired
-	private UserBO userBO;
 	
 	
-	public boolean addWish(String userId, String size, String color, int itemId) {
+	public List<WishList> addWish(List<WishList> wishList,String userId) {
+	
+		List<WishList> userWishList = new ArrayList<>();
 		
-		List<ItemOption> optionList = itemBO.getItemOptionListByItemIdColorSize(itemId, color, size);
-		
-		for(ItemOption option:optionList) {
-			int optionId = option.getId();
+		for (WishList wish: wishList) {
+			
+			Item item = itemBO.getItemByName(wish.getName());
+			
+			String[] optionPart = wish.getOption().split("\\/");
+			String color = optionPart.length>0 ? optionPart[0].trim() : "";
+			String size = optionPart.length>1 ? optionPart[1].trim() : "";
+			ItemOption option = itemBO.getItemOptionByItemIdColorSize(item.getId(),color , size);
+			
 			wishRepository.save(Wish.builder()
 					.userId(userId)
-					.optionId(optionId)
+					.itemId(option.getItemId())
+					.optionId(option.getId())
 					.build());
+			
+			userWishList.add(wish);
 		}
-		
-		return true;				
+		return userWishList;
 	}
-	
-	public List<Wish> getWishListByUserId(String userId) {
-		return wishRepository.findByUserId(userId);
-	}
-	
-
-
 	
 }

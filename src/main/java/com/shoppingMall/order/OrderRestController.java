@@ -17,8 +17,8 @@ import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.order.bo.OrderBO;
-import com.shoppingMall.order.entity.Order;
-import com.shoppingMall.order.entity.OrderList;
+import com.shoppingMall.order.entity.Orders;
+import com.shoppingMall.order.entity.OrderItem;
 import com.shoppingMall.order.entity.OrderRequest;
 import com.shoppingMall.user.entity.User;
 
@@ -33,23 +33,22 @@ public class OrderRestController {
 		
 
 	// 주문하기
-	@PostMapping("/order")
-	public Map<String, Object> order(
-			@RequestBody OrderRequest request,
-	        HttpSession session) {
-	    
-	    String userId = (String) session.getAttribute("userId");
-	    
-	    List<OrderList> orderList = request.getOrderList();
-	    
-	    orderBO.addOrder(userId,orderList);
-	    
-	    
-	    Map<String, Object> result = new HashMap<>();
-	    result.put("code", 200);
-
-	    return result;
-	}
+//	@PostMapping("/order")
+//	public Map<String, Object> order(
+//			@RequestBody OrderRequest request,
+//	        HttpSession session) {
+//	    
+//	    String userId = (String) session.getAttribute("userId");
+//	    
+//	    List<OrderItem> orderItem = request.getOrderItem();
+//	    
+//	    orderBO.addOrder(userId,orderItem);	    
+//	    
+//	    Map<String, Object> result = new HashMap<>();
+//	    result.put("code", 200);
+//
+//	    return result;
+//	}
 
 
 	
