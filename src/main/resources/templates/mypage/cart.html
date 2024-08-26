@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75 bg-success">
+		<div class="d-flex justify-content-center my-4">
+			<h4 class="text-secondary">장바구니</h4>
+		</div>
+		
+		<!-- 상품 -->
+		<table class="table">
+			<thead>
+				<tr>	
+					<th>
+						<input type="checkbox" >
+					</th>
+					<th>이미지</th>
+					<th>상품정보</th>
+					<th>수량</th>
+					<th>가격</th>
+					<th>선택</th>
+				</tr>			
+			</thead>
+			<tbody>
+				<tr th:each="item : ${cartList}">
+					<td th:text="item.item.name"></td>
+				</tr>			
+			</tbody>
+		
+		</table>
+	
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

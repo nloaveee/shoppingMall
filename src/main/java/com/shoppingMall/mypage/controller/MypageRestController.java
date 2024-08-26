@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingMall.common.PasswordEncryptor;
+import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
+import com.shoppingMall.mypage.entity.CartItem;
 import com.shoppingMall.mypage.entity.Wish;
 import com.shoppingMall.mypage.entity.WishList;
 import com.shoppingMall.mypage.entity.WishRequest;
@@ -32,6 +34,9 @@ public class MypageRestController {
 	
 	@Autowired
 	private WishBO wishBO;
+	
+	@Autowired
+	private CartBO cartBO;
 
 	@PostMapping("/profile-update")
 	public Map<String, Object> profileUpdate(
@@ -76,5 +81,24 @@ public class MypageRestController {
 		}
 	
 	return result;
+	}
+	
+	// 카트
+	@PostMapping("/cart/add")
+	public Map<String, Object> cartAdd(	
+			@RequestBody List<CartItem> cartList,
+	        HttpSession session) {
+
+	    Map<String, Object> result = new HashMap<>();
+	    String userId = (String) session.getAttribute("userId");
+
+	    if (userId == null) {
+	        result.put("code", 401);
+	        return result;
+	    }
+	    
+	    result = cartBO.addCart(userId, cartList);	    
+
+	    return result;
 	}
 }

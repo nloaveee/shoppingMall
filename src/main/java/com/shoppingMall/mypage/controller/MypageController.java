@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
+import com.shoppingMall.mypage.entity.CartItem;
 import com.shoppingMall.mypage.entity.Wish;
+import com.shoppingMall.order.entity.OrderItem;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -24,6 +28,9 @@ public class MypageController {
 	
 	@Autowired
 	private WishBO wishBO;
+	
+	@Autowired
+	private CartBO cartBO;
 	
 	// 마이페이지 - 메인
 	@GetMapping("/mypage")
@@ -77,6 +84,18 @@ public class MypageController {
 //		return "mypage/wish";
 //	}
 	
+	
+	// 마이페이지 - 카트
+	@GetMapping("/mypage/cart-view")
+	public String cartView(
+			HttpSession session,
+			Model model) {
+		
+		String userId =(String) session.getAttribute("userId");
+
+		
+		return "mypage/cart";
+	}
 	
 	
 
