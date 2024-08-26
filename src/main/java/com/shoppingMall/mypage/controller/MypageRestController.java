@@ -15,11 +15,7 @@ import com.shoppingMall.common.PasswordEncryptor;
 import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.CartItem;
-import com.shoppingMall.mypage.entity.Wish;
-import com.shoppingMall.mypage.entity.WishList;
-import com.shoppingMall.mypage.entity.WishRequest;
-import com.shoppingMall.order.entity.OrderItem;
-import com.shoppingMall.order.entity.OrderRequest;
+import com.shoppingMall.mypage.entity.WishItem;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -64,23 +60,15 @@ public class MypageRestController {
 	// 찜 
 	@PostMapping("/wish/add")
 	public Map<String, Object> wishAdd(
-			@RequestBody WishRequest request,
-			HttpSession session){
-		
-		String userId = (String)session.getAttribute("userId");
-		
-		List<WishList> wishList = request.getWishList();
-		
-		List<WishList> wishAdd = wishBO.addWish(wishList,userId);
-				
-		Map<String, Object> result = new HashMap<>();
-		if (wishAdd != null) {
-			result.put("code", 200);
-		} else {			
-			result.put("error_message", "찜 하는데 실패했습니다.");
-		}
-	
-	return result;
+			@RequestBody List<WishItem> wishList,
+	        HttpSession session) {
+
+	    Map<String, Object> result = new HashMap<>();
+	    String userId = (String) session.getAttribute("userId");
+	    
+	    result = wishBO.addWish(userId, wishList);	    
+
+	    return result;
 	}
 	
 	// 카트

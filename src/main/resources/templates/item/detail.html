@@ -185,14 +185,13 @@
     	    
         	}); // ------ order 끝
     		
-    		// wish에 담기 
-    		$(".wish").on('click',function(e){
-    			e.preventDefault();
-    			
-    			let userId = $("#userId").val();
-    			let itemId = $("#itemId").val();
-    			
-    			// 로그인이 안되어 있는 경우 
+    		
+        	
+    		// 찜하기
+    		$(".wish").on('click', function() {
+    		    let userId = $("#userId").val();
+    		    
+    		    // 로그인이 안되어 있는 경우 
     			if (!userId) {
     				Swal.fire({
 	    					icon: 'warning',
@@ -206,62 +205,64 @@
     				});
     			  return;
     			}
-    			
-	   			// 옵션을 선택하지 않은 경우
-	   	        if ($('#orderTable tbody tr').length == 0) {
-	   	            alert("옵션을 선택하세요.");
-	   	            location.reload();
-	   	            return; // 함수 종료
-	   	        }
-    			
-	   	     	let wishList= [];
-	   			
-	    			$('#orderTable tr').each(function() { 				     
-	    				let name = $(this).find("td").eq(0).html();  
-	                    let option = $(this).find("td").eq(1).html();
-	                    let count = $(this).find(".itemStock").val();   				      
-	                    let sale = $(this).find("td").eq(3).html();		  
-	                    
-	                 // list로 보내기 
-	                    wishList.push({
-	                        name: name,
-	                        option: option,
-	                        count: count,
-	                        sale: sale
-	                    });
-	
-	 				      $.ajax({
-	 				    	  type: "post"
-	 				    	  ,url: "/shop/user/mypage/wish/add"
-	 				    	  ,contentType: "application/json"
-	 				    	  ,data: JSON.stringify({
-	 				    		 wishList: wishList
-	 		                    })
-	 				      
-	 				      	  ,success:function(data) {
-	 				      		  if (data.code == 200) {
-	 				      			Swal.fire({
-	 	    	    					icon: 'success',
-	 	    	    					title: 'ok', 	
-	 	    	    					text: '상품을 찜 하였습니다.',
-	 	    	    					confirmButtonColor: '#00008b',
-	 	    	    					confirmButtonText: '확인'
-	 	    	    				})
-	 				      		  }	else {
-	 		    						Swal.fire({
-	 		    	    					icon: 'error',
-	 		    	    					title: 'error',
-	 		    	    					text: '상품 찜 하기에 실패했습니다.',
-	 		    	    					confirmButtonColor: '#00008b',
-	 		    	    					confirmButtonText: '확인'
-	 		    	    				})
-	 		    					}
-	 				      	  }
-	 				      	  
-	 				    	  
-	 				      });    			
-	    			});
-    			});
+
+    		    // 옵션을 선택하지 않은 경우
+    		    if ($('#orderTable tbody tr').length == 0) {
+    		        alert("옵션을 선택하세요.");
+    		        location.reload();
+    		        return; // 함수 종료
+    		    }
+
+    		    let wishList = [];
+
+    		    $('#orderTable tr').each(function() {
+    		        let itemId = $("#itemId").val();
+    		        let option = $(this).find("td").eq(1).html();   		
+   		       
+    		        // wishList 배열에 추가
+    		        wishList.push({
+    		            itemId: itemId,
+    		            option: option,
+    		        });
+    		    });
+
+    		    $.ajax({
+    		        type: "post",
+    		        url: "/shop/user/mypage/wish/add",
+    		        contentType: "application/json",
+    		        data: JSON.stringify(wishList), 
+    		        success:function(data) {
+			      		  if (data.code == 200) {
+			      			Swal.fire({
+   	    					icon: 'success',
+   	    					title: 'ok', 	
+   	    					text: '상품을 찜 하였습니다.',
+   	    					confirmButtonColor: '#00008b',
+   	    					confirmButtonText: '확인'
+   	    				})
+			      		  }	else if (data.code == 501) {
+	    		                Swal.fire({
+	    		                    icon: 'warning',
+	    		                    title: 'warning',
+	    		                    text: '상품을 이미 찜 하였습니다.',
+	    		                    confirmButtonColor: '#00008b',
+	    		                    confirmButtonText: '확인'
+	    		                })
+			      		  } 
+			      		  else {
+	    						Swal.fire({
+	    	    					icon: 'error',
+	    	    					title: 'error',
+	    	    					text: '상품 찜 하기에 실패했습니다.',
+	    	    					confirmButtonColor: '#00008b',
+	    	    					confirmButtonText: '확인'
+	    	    				})
+	    					}
+			      	  } // ------------- success 끝
+	 				      	  	 				    	  
+	 			   }); // ------- ajax 끝   
+        			
+        		}); //------------장바구니 끝
         	
         	
     		// 장바구니 담기
