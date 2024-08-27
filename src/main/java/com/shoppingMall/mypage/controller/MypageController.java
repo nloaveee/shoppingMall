@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.CartItem;
+import com.shoppingMall.mypage.entity.CartView;
 import com.shoppingMall.mypage.entity.Wish;
 import com.shoppingMall.order.entity.OrderItem;
 import com.shoppingMall.user.bo.UserBO;
@@ -93,6 +94,9 @@ public class MypageController {
 		
 		String userId =(String) session.getAttribute("userId");
 
+		List<CartView> cartViewList = cartBO.generateCartViewList(userId);
+		
+		model.addAttribute("cartViewList",cartViewList);
 		
 		return "mypage/cart";
 	}

@@ -129,24 +129,42 @@
     	        $(".totalPrice").text(totalPrice);
     	        return totalPrice; 
     	    } // ------------------ 총 가격 업데이트 끝
+    	  
+        	
+        	// 주문하기
+    		$(".order").on('click', function(e) {
+    			e.preventDefault();
+    			
+    		    let userId = $("#userId").val();
+    		    
+    		    // 로그인이 안되어 있는 경우 
+    			if (!userId) {
+    				Swal.fire({
+	    					icon: 'warning',
+	    					title: '로그인이 필요합니다.', 	
+	    					confirmButtonColor: '#00008b',
+	    					confirmButtonText: '확인'
+    				}).then((result) => {
+    				   if (result.isConfirmed) { // 확인 버튼 클릭 시 화면 이동
+    				      location.href = "/shop/user/sign-in-view";
+    				   }
+    				});
+    			  return;
+    			}
 
-    	    
-    		
-    		$(".order").on('click',function(){    
-    			
-    			// 옵션을 선택하지 않은 경우
-    	        if ($('#orderTable tbody tr').length == 0) {
-    	            alert("옵션을 선택하세요.");
-    	           	
-    	            return;
-    	        } 
-    			
+    		    // 옵션을 선택하지 않은 경우
+    		    if ($('#orderTable tbody tr').length == 0) {
+    		        alert("옵션을 선택하세요.");
+    		        location.reload();
+    		        return; // 함수 종료
+    		    }
+
                 let totalPrice = updateTotalPrice(); 
-                let orderitem= [];
+                let orderList= [];
 
                 // 옵션 선택 & 주문
                 $('#orderTable tbody tr').each(function() {
-                    let name = $(this).find("td").eq(0).html();  
+                	let itemId = $("#itemId").val(); 
                     let option = $(this).find("td").eq(1).html();
                     let count = $(this).find(".itemStock").val();   				      
                     let sale = $(this).find("td").eq(3).html();
@@ -155,35 +173,29 @@
                 $(".totalPrice").text(totalPrice + " won");
 
                 
-             // list로 보내기 
-                orderitem.push({
-                    name: name,
+                // list로 보내기 
+                orderList.push({
+                    itemId : itemId,
                     option: option,
                     count: count,
                     sale: sale
                 });
-             
-             
-                $(".totalPrice").text(totalPrice + " won");
 
-                
-                $.ajax({
-                    type: "post",
-                    url: "/shop/order/order",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        orderItem: orderItem, 
-                        totalPrice: totalPrice 
-                    }),
-                    success: function(data) {
+    		    $.ajax({
+    		        type: "post",
+    		        url: "/shop/user/mypage/wish/add",
+    		        contentType: "application/json",
+    		        data: JSON.stringify(orderList), 
+    		        success: function(data) {
                         if (data.code == 200) {                                   
     						location.href = "/shop/order/order-form-view"; 
-                        }
-                    }
+                        }                  			    
+			      	  } // ------------- success 끝
+	 				      	  	 				    	  
+	 			   }); // ------- ajax 끝   
                 });
-            });
-    	    
-        	}); // ------ order 끝
+        			
+        	}); //------------주문하기 끝
     		
     		
         	
@@ -262,7 +274,7 @@
 	 				      	  	 				    	  
 	 			   }); // ------- ajax 끝   
         			
-        		}); //------------장바구니 끝
+        		}); //------------찜하기 끝
         	
         	
     		// 장바구니 담기

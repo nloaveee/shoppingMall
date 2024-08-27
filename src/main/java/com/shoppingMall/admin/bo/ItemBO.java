@@ -1,6 +1,7 @@
 package com.shoppingMall.admin.bo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,15 +76,20 @@ public class ItemBO {
 	}
 	
 	// 상품 옵션 리스트 select
+
+
 	public List<ItemOption> getItemOptionListByItemId(int itemId) {
-		
-		List<ItemOption> optionList = itemOptionMapper.selectOptionList(itemId);
-		
-		// COLOR 속성으로 알파벳 순서로 정렬
-		optionList.sort((o1, o2) -> o1.getColor().compareToIgnoreCase(o2.getColor()));
-		
-		return optionList;
+	    
+	    List<ItemOption> optionList = itemOptionMapper.selectOptionList(itemId);
+	    
+	    // COLOR 속성으로 알파벳 순서로 정렬
+	    optionList.sort((o1, o2) -> o1.getColor().compareToIgnoreCase(o2.getColor()));
+	    
+	    return optionList;
 	}
+
+	
+	
 	
 	public Item getItemByid(int itemId) {
 		return itemMapper.selectItemById(itemId);

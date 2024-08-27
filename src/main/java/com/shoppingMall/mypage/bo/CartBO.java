@@ -13,7 +13,11 @@ import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.mypage.entity.Cart;
 import com.shoppingMall.mypage.entity.CartItem;
+import com.shoppingMall.mypage.entity.CartView;
+import com.shoppingMall.mypage.repository.CartItemRepository;
 import com.shoppingMall.mypage.repository.CartRepository;
+import com.shoppingMall.user.bo.UserBO;
+import com.shoppingMall.user.entity.User;
 
 
 @Service
@@ -23,7 +27,14 @@ public class CartBO {
 	private CartRepository cartRepository;
 	
 	@Autowired
+	private CartItemRepository cartItemRepository;
+	
+	@Autowired
 	private ItemBO itemBO;
+	
+	@Autowired
+	private UserBO userBO;
+	
 	
 	public Map<String, Object> addCart(String userId, List<CartItem> cartList) {
 		
@@ -57,6 +68,41 @@ public class CartBO {
 	        
 	        result.put("code", 200); // 성공
 			return result;
-		}
+	}
 	
+	public List<Cart> getCartList() {
+		return cartRepository.findAll();
+	}
+	
+	
+	public List<CartView> generateCartViewList(String userId) {
+		List<CartView> cartViewList = new ArrayList<>();
+		
+		
+		List<Cart> cartList = getCartList();
+		
+		for (Cart cart : cartList) {
+			CartView cartView = new CartView();
+			
+			cartView.setCart(cart);
+			
+			User user = userBO.getUserByUserId(userId);
+			cartView.setUser(user);
+			
+			List<CartItem> cartItemList = getCartItemListByCartId(cart.getId());
+			cartView.setCartItemList(cartItemList);
+			
+			cartViewList.add(cartView);
+			
+		}
+		
+		return cartViewList;
+	}
+	
+	public List<CartItem> getCartItemListByCartId(int cartId) {
+		return cartItemRepository.findCartItemByCartId(cartId);		
+	}
+
+	
+
 }

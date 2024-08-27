@@ -80,6 +80,7 @@ public class MypageRestController {
 	    Map<String, Object> result = new HashMap<>();
 	    String userId = (String) session.getAttribute("userId");
 
+	    // 비로그인
 	    if (userId == null) {
 	        result.put("code", 401);
 	        return result;

@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
+import com.shoppingMall.mypage.entity.CartItem;
 import com.shoppingMall.order.bo.OrderBO;
 import com.shoppingMall.order.entity.Orders;
 import com.shoppingMall.order.entity.OrderItem;
-import com.shoppingMall.order.entity.OrderRequest;
 import com.shoppingMall.user.entity.User;
 
 import jakarta.servlet.http.HttpSession;
@@ -33,22 +33,24 @@ public class OrderRestController {
 		
 
 	// 주문하기
-//	@PostMapping("/order")
-//	public Map<String, Object> order(
-//			@RequestBody OrderRequest request,
-//	        HttpSession session) {
-//	    
-//	    String userId = (String) session.getAttribute("userId");
-//	    
-//	    List<OrderItem> orderItem = request.getOrderItem();
-//	    
-//	    orderBO.addOrder(userId,orderItem);	    
-//	    
-//	    Map<String, Object> result = new HashMap<>();
-//	    result.put("code", 200);
-//
-//	    return result;
-//	}
+	@PostMapping("/order")
+	public Map<String, Object> order(
+			@RequestBody List<OrderItem> orderList,
+	        HttpSession session) {
+	    
+	    Map<String, Object> result = new HashMap<>();
+	    String userId = (String) session.getAttribute("userId");
+
+	    // 비로그인
+	    if (userId == null) {
+	        result.put("code", 401);
+	        return result;
+	    }
+	    
+	    result = orderBO.addOrder(userId, orderList);	    
+
+	    return result;
+	}
 
 
 	

@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 public class OrderItem {
 
-	private String name;
+	private int itemId;
 	private String option;
 	private int count;
 	private int sale;
