@@ -6,13 +6,13 @@
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	<div class="w-75">
 		<div class="d-flex justify-content-center my-4">
-			<h4 class="text-secondary">장바구니</h4>
+			<h4>CART</h4>
 		</div>
 		
 		<!-- 상품 -->
-		<table class="table text-center">
+		<table class="cartTable table mt-5 text-center">
 			<thead>
-				<tr>	
+				<tr class="bg-light">	
 					<th>
 						<input type="checkbox" id="selectAll">
 					</th>
@@ -36,7 +36,7 @@
 			            <!-- 상품 이름 -->
 			            <span th:text="${cartItem.item.name}"></span><br>
 			            <!-- 옵션 정보 -->
-			            <span th:text="|[옵션:  ${cartItem.itemOption.size} / ${cartItem.itemOption.color}]|" ></span>
+			            <span th:text="|[옵션:  ${cartItem.itemOption.color} / ${cartItem.itemOption.size}]|" ></span>
 			        </td>
 			        <td th:each="cartItem : ${cartView.cartItemList}">
 			            <!-- 상품 수량 -->
@@ -54,8 +54,14 @@
 			            <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-cart-id="${cartView.cart.id}">
 			        </td>
 			    </tr>  			    	      
-			</tbody>			
+			</tbody>		
 		</table>
+		
+		<hr>
+		<div class="d-flex justify-content-end">
+			<h5>합계 : </h5>
+			<h5 class="totalPrice ml-3"></h5>
+		</div>
 		
 		
 		<!-- 주문 btn -->
@@ -76,6 +82,18 @@
     
    	$(document).ready(function(){
    		
+   	    // 상품 천 단위 구분
+   	    function formatPrice(price) {
+   	        return parseFloat(price).toLocaleString();
+   	    }
+
+
+   	    $(".itemSale").each(function() {
+   	        let baseSale = $(this).data('base-sale');
+   	        $(this).text(formatPrice(baseSale));
+   	     	updateTotalPrice(); 
+   	    });
+   		
    		// 상품 전체 선택/해제
    		$("#selectAll").on('click',function(){
    			let isChecked = $(this).prop('checked');
@@ -83,17 +101,18 @@
    		}); // ------ 상품 전체 선택/해제 끝
    		   		
    		
+   		// input 구매 수량이 변할 때 마다 가격 업데이트 
+   		$(".itemStock").on('input',function(){   			
+   			updateTotalPrice();   			
+   		});
+   		
    		// 수량 변경
         $(".stockBtn").on('click', function(){
             
             let row = $(this).closest('tr');
             let quantity = row.find('.itemStock').val();
             let cartId = row.find('.itemStock').data('cart-id');
-            
-            row.find('.itemStock').on('input', function() {
-                updateTotalPrice();
-            });
-            
+                        
             updateTotalPrice();
            
             $.ajax({
@@ -111,21 +130,22 @@
             }); // --------- AJAX 끝
         }); // ------------ 수량 변경 끝
         
-     // 총 가격 업데이트
+     	// 총 가격 업데이트
         function updateTotalPrice() {
             let totalPrice = 0;
-            $("#orderTable tbody tr").each(function() {
+            $(".cartTable tbody tr").each(function() {
                 let quantity = parseInt($(this).find('.itemStock').val(), 10); 
                 let baseSale = $(this).find('.itemSale').data('base-sale');
                 
                 // 개별 상품의 총 가격 계산
                 let itemTotal = baseSale * quantity;
-                $(this).find('.itemSale').text(itemTotal); 
+                $(this).find('.itemSale').text(formatPrice(itemTotal)); 
                 
                 totalPrice += itemTotal; 
+            
             });
             
-            $(".totalPrice").text(totalPrice);
+            $(".totalPrice").text(formatPrice(totalPrice));
             return totalPrice; 
         } // ------------------ 총 가격 업데이트 끝
         

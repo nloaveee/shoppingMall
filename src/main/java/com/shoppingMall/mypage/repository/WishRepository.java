@@ -14,4 +14,6 @@ public interface WishRepository extends JpaRepository<Wish, Integer>{
 	public List<Wish> getByUserId(String userId);
 	
 	public Wish findByUserIdAndItemIdAndOptionId(String uerId, int itemId, int optionId);
+	
+	public void deleteByUserId(String userId);
 }

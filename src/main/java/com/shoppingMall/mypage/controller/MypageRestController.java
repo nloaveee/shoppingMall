@@ -16,6 +16,7 @@ import com.shoppingMall.common.PasswordEncryptor;
 import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.CartItem;
+import com.shoppingMall.mypage.entity.Wish;
 import com.shoppingMall.mypage.entity.WishItem;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
@@ -85,6 +86,37 @@ public class MypageRestController {
 
 	    return result;		
 	}
+	
+	// 찜 상품 전체 삭제 
+	@DeleteMapping("/wish/deleteAll")
+	public Map<String, Object> wishDeleteAll(
+			HttpSession session
+			) {
+		
+		String userId = (String) session.getAttribute("userId");
+			    
+		wishBO.deleteWishItemByUserId(userId);	    
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+
+	    return result;		
+	}
+	
+	// 찜 상품 선택 삭제 
+	@DeleteMapping("wish/deleteSelected")
+	public Map<String, Object> wishDeleteSelected(
+			@RequestBody List<Integer> wishIds,
+	        HttpSession session) {
+
+	    String userId = (String) session.getAttribute("userId");
+	    Map<String, Object> result = new HashMap<>();	   
+	    
+	    result = wishBO.deleteWishItemByWishId(wishIds);
+	    	    
+	    return result;
+	}
+	 
 	
 	// 장바구니
 	@PostMapping("/cart/add")

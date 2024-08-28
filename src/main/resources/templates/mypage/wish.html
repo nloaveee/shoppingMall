@@ -35,21 +35,33 @@
 		                <!-- 상품 이름 -->
 		                <span th:text="${wishItem.item.name}"></span><br>
 		                <!-- 옵션 정보 -->
-		                <span th:text="|[옵션: ${wishItem.itemOption.size} / ${wishItem.itemOption.color}]|"></span>
+		                <span th:text="|[옵션: ${wishItem.itemOption.color} / ${wishItem.itemOption.size}]|"></span>
 		            </td>
 		            <td th:each="wishItem : ${wishView.wishItemList}">
 		                <!-- 상품 가격 -->
 		                <span th:text="${wishItem.item.price}" style="text-decoration: line-through;"></span><br>
 		                <span th:text="${wishItem.item.sale}" class="itemSale" th:data-base-sale="${wishItem.item.sale}"></span>
 		            </td>
-		            <td>
-		                <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER"><br>
-		                <input type="button" class="addCartBtn btn btn-dark btn-sm my-1" value="ADD CART"><br>
+		            <td th:each="wishItem : ${wishView.wishItemList}">
+		                <input type="button" class="orderBtn btn btn-secondary btn-sm" value="ORDER"><br>
+		                <input type="button" class="addCartBtn btn btn-light btn-sm my-1" value="ADD CART" th:data-item-id="${wishView.wish.itemId}" th:data-option="|${wishItem.itemOption.color}/${wishItem.itemOption.size}|"><br>
 		                <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-wish-id="${wishView.wish.id}">
 		            </td>
 		        </tr>              	      
 			</tbody>					
 		</table>
+		
+		<!-- 하단 부분 -->
+		<div class="d-flex justify-content-between align-items-center">
+			<div>
+				<span>선택상품을</span>
+				<button id="selectedDeleteBtn"class="btn btn-secondary btn-sm">x 삭제하기</button>
+			</div>
+			<div>
+				<button class="btn btn-dark">전체상품주문</button>
+				<button id="allDeletebtn" class="btn btn-secondary">관심상품 비우기</button>			
+			</div>
+		</div>
 	
 	</div>
 </section>
@@ -58,6 +70,19 @@
     <script>
     
     	$(document).ready(function(){
+    		
+       	    // 상품 천 단위 구분
+       	    function formatPrice(price) {
+       	        return parseFloat(price).toLocaleString();
+       	    }
+
+
+       	    $(".itemSale").each(function() {
+       	        let baseSale = $(this).data('base-sale');
+       	        $(this).text(formatPrice(baseSale));
+       	     	updateTotalPrice(); 
+       	    });
+       		
     		
        		// 상품 전체 선택/해제
        		$("#selectAll").on('click',function(){
@@ -78,6 +103,7 @@
                          if (data.code == 200) {                    	 
                          // 페이지에서 해당 행 제거
                          $(this).closest('tr').remove();
+                         alert("관심상품이 삭제되었습니다.")
                          location.reload();
                          }
                      },
@@ -87,6 +113,102 @@
                  });
               
             }); // ----------- 상품 삭제 끝
+            
+            // wish 상품 장바구니 담기 
+            $(".addCartBtn").on('click',function(){
+            	let itemId = $(this).data('item-id');
+            	let option = $(this).data('option');
+            	
+            	let cartList = [];
+            	
+            	cartList.push({
+		            itemId: itemId,
+		            option: option,
+		            quantity: 1
+		        });
+            	
+            	$.ajax({
+                    type: 'POST',
+                    url: '/shop/user/mypage/cart/add',
+                    contentType: "application/json",
+    		        data: JSON.stringify(cartList), 
+                    success: function(data) {
+                        if (data.code == 200) {                    	 
+                        	alert("상품을 장바구니에 담았습니다.");
+                        	location.reload();
+                        }
+                        else if (data.code == 501){
+                        	alert("상품이 이미 장바구니에 추가되어 있습니다.");
+                        }
+                    },
+                    error: function(e) {
+                   	alert(data.error_message);
+                    }
+                });
+            	
+            }); // ------ 장바구니 담기 
+            
+            
+            // wish 전체 지우기
+            $("#allDeletebtn").on('click',function(){
+            	
+            	if(confirm("모든 관심상품을 비우시겠습니까?")) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/shop/user/mypage/wish/deleteAll',
+                        success: function(data) {
+                            if (data.code == 200) {
+                                $("tbody").empty();
+                                alert("모든 관심상품이 삭제되었습니다.");
+                            }
+                        },
+                        error: function(e) {
+                            alert("관심상품 삭제에 실패했습니다.");
+                        }
+                    });
+                }
+            	            	
+            }); // ----------wish 전체 지우기 끝
+            
+            // 선택 wish 지우기 
+            $("#selectedDeleteBtn").on('click',function(){
+
+                let selectedItems = $(".itemCheckbox:checked");
+                
+                if(selectedItems.length == 0) {
+                    alert("삭제할 상품을 선택하세요.");
+                    return;
+                }
+                
+
+                let wishIds = [];
+                
+                selectedItems.each(function() {
+                    let wishId = $(this).closest('tr').find(".deleteBtn").data("wish-id");
+                    wishIds.push(wishId);
+                });
+
+                
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/shop/user/mypage/wish/deleteSelected',
+    		        contentType: "application/json",
+    		        data: JSON.stringify(wishIds), 
+                    success: function(data) {
+                        if (data.code == 200) {
+                            // 성공적으로 삭제된 경우 선택된 행들을 페이지에서 제거합니다.
+                            selectedItems.closest('tr').remove();
+                            alert("선택된 관심상품이 삭제되었습니다.");
+                        }
+                    },
+                    error: function(e) {
+                        alert("선택된 관심상품 삭제에 실패했습니다.");
+                    }
+                });
+            	
+            	
+            }); // ------------ 선택 wish 지우기
+            
     		
     	}); // ------- document 끝
 

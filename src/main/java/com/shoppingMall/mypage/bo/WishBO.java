@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
@@ -18,6 +20,8 @@ import com.shoppingMall.mypage.entity.WishView;
 import com.shoppingMall.mypage.repository.WishRepository;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
+
+
 
 @Service
 public class WishBO {
@@ -63,6 +67,7 @@ public class WishBO {
 	        result.put("code", 200); // 성공
 			return result;
 		}
+		
 	
 	public Map<String, Object> addCartItemWish(String userId, int itemId, int optionId) {
 		
@@ -96,6 +101,8 @@ public class WishBO {
 			User user = userBO.getUserByUserId(userId);
 			wishView.setUser(user);
 			
+			wishView.setWish(wish);
+			
 			List<WishItem> wishItemList = new ArrayList<>();
 			
 			WishItem wishItemObj = new WishItem();
@@ -123,6 +130,23 @@ public class WishBO {
 	
 	public void deleteWishItem(int wishId) {
 		wishRepository.deleteById(wishId);
+	}
+	
+	@Transactional
+	public void deleteWishItemByUserId(String userId) {
+		wishRepository.deleteByUserId(userId);
+	}
+	
+	@Transactional
+	public Map<String, Object> deleteWishItemByWishId(List<Integer> wishIds) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		for (Integer wishId : wishIds) {			
+			wishRepository.deleteById(wishId);			
+		}
+		result.put("code", 200);
+		return result;
 	}
 	
 }
