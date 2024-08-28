@@ -10,7 +10,7 @@
 			<h4 class="mt-4">WISH</h4>
 		</div>
 		
-		<table class="table mt-5 text-center">
+		<table class="wishTable table mt-5 text-center">
 			<thead>
 				<tr class="bg-light">		
 					<th>
@@ -80,10 +80,9 @@
        	    $(".itemSale").each(function() {
        	        let baseSale = $(this).data('base-sale');
        	        $(this).text(formatPrice(baseSale));
-       	     	updateTotalPrice(); 
        	    });
-       		
-    		
+       	    
+  		    		
        		// 상품 전체 선택/해제
        		$("#selectAll").on('click',function(){
        			let isChecked = $(this).prop('checked');

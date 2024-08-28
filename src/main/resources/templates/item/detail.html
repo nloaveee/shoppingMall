@@ -19,12 +19,12 @@
 			<table class="table table-borderless">
 					<tr>
 						<th>PRICE</th>
-						<td th:text="${item.price}" style="text-decoration: line-through;"></td>
+						<td th:text="${item.price}" style="text-decoration: line-through;" class="itemPrice"  th:data-base-price="${item.price}"></td>
 					</tr>
 					<tr>
 						<th>SALE</th>
-						<td th:text="${item.sale}"></td>
-					</tr>
+						<td th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></td>
+					</tr> 
 					<tr>
 						<th>OPTION</th>
 						<td>
@@ -54,8 +54,7 @@
 			<!--  order / cart / wish button --> 
 			<div class="d-flex mt-3">
 				<div class="col-4">
-					<a href="/shop/order/order-form-view" th:if="${userId != null}"><button class="order btn btn-dark w-100">ORDER</button></a>
-					<a href="/shop/user/sign-in-view" th:unless="${userId != null}"><button class="order btn btn-dark w-100">ORDER</button></a>
+					<button class="order btn btn-dark w-100">ORDER</button>	
 				</div>
 				<div class="col-4">
 					<button class="cart btn btn-light w-100">CART</button>
@@ -75,6 +74,21 @@
     <script>
     
     	$(document).ready(function(){
+    		
+       	    // 상품 천 단위 구분
+       	    function formatPrice(price) {
+       	        return parseFloat(price).toLocaleString();
+       	    }
+
+       	    $(".itemSale").each(function() {
+       	        let baseSale = $(this).data('base-sale');
+       	        $(this).text(formatPrice(baseSale));
+       	    });
+       	    
+       	    $(".itemPrice").each(function() {
+       	        let basePrice = $(this).data('base-price');
+       	        $(this).text(formatPrice(basePrice));
+       	    });
     		
     	    // 상품 정보 가져오기
     	    $("#option").on('change', function() {
@@ -121,12 +135,12 @@
     	            
     	            // 개별 상품의 총 가격 계산
     	            let itemTotal = baseSale * quantity;
-    	            $(this).find('.itemSale').text(itemTotal); 
+    	            $(this).find('.itemSale').text(formatPrice(itemTotal)); 
     	            
     	            totalPrice += itemTotal; 
     	        });
     	        
-    	        $(".totalPrice").text(totalPrice);
+    	        $(".totalPrice").text(formatPrice(totalPrice));
     	        return totalPrice; 
     	    } // ------------------ 총 가격 업데이트 끝
     	  
@@ -165,10 +179,10 @@
                 // 옵션 선택 & 주문
                 $('#orderTable tbody tr').each(function() {
                 	let itemId = $("#itemId").val(); 
-                    let option = $(this).find("td").eq(1).html();
+                    let option = $(this).find("td").eq(1).text();
                     let count = $(this).find(".itemStock").val();   				      
-                    let sale = $(this).find("td").eq(3).html();
-                
+                    let sale = $(this).find("td").eq(3).text().replace(/,/g, '');
+
 
                 $(".totalPrice").text(totalPrice + " won");
 
@@ -183,7 +197,7 @@
 
     		    $.ajax({
     		        type: "post",
-    		        url: "/shop/user/mypage/wish/add",
+    		        url: "/shop/order/add",
     		        contentType: "application/json",
     		        data: JSON.stringify(orderList), 
     		        success: function(data) {

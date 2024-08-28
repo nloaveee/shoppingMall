@@ -48,8 +48,8 @@
 			            <span th:text="${cartItem.item.price}" style="text-decoration: line-through;"></span><br>
 			            <span th:text="${cartItem.item.sale}" class="itemSale" th:data-base-sale="${cartItem.item.sale}"></span>
 			        </td>
-			        <td>
-			            <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER" th:data-item-id="${cartView.cart.itemId}" th:data-option-id="${cartView.cart.optionId}"><br>
+			        <td th:each="cartItem : ${cartView.cartItemList}">
+			            <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER" th:data-item-id="${cartView.cart.itemId}" th:data-option="|${cartItem.itemOption.color}/${cartItem.itemOption.size}"><br>
 			            <input type="button" class="wishBtn btn btn-light btn-sm my-1" value="WISH" th:data-item-id="${cartView.cart.itemId}" th:data-option-id="${cartView.cart.optionId}"><br>
 			            <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-cart-id="${cartView.cart.id}">
 			        </td>
@@ -149,7 +149,40 @@
             return totalPrice; 
         } // ------------------ 총 가격 업데이트 끝
         
-        
+        // 장바구니 상품 개별 주문
+        $(".orderBtn").on('click',function(){
+            let itemId = $(this).data('item-id');
+            let option = $(this).data('option');
+            
+            let row = $(this).closest('tr'); 
+            let count = row.find(".itemStock").val(); 
+            let sale = row.find(".itemSale").text().replace(/,/g, '');
+            
+            let orderList = [];
+            
+            orderList.push({
+                itemId : itemId,
+                option: option,
+                count: count,
+                sale: sale
+            });
+
+		    $.ajax({
+		        type: "post",
+		        url: "/shop/order/add",
+		        contentType: "application/json",
+		        data: JSON.stringify(orderList), 
+		        success: function(data) {
+                    if (data.code == 200) {                                   
+						location.href = "/shop/order/order-form-view"; 
+						row.closest('tr').remove();
+                    }                  			    
+		      	  } // ------------- success 끝
+ 				      	  	 				    	  
+ 			   }); // ------- ajax 끝
+            
+        	
+        }); // ------------ 상품 바로 주문
         
      	// 장바구니 상품 삭제 
         $(".deleteBtn").on('click', function(){

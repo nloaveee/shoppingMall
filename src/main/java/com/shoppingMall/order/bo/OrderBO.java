@@ -45,11 +45,12 @@ public class OrderBO {
 		            		.price(item.getSale())
 		            		.itemCount(item.getCount())
 		                    .build();
-	
+		            
 		            // DB에 저장
 		            orderRepository.save(order);
+	
 		        }
-		        
+		        		        
 		        result.put("code", 200); // 성공
 				return result;
 			}

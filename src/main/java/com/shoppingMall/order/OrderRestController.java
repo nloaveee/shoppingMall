@@ -33,19 +33,13 @@ public class OrderRestController {
 		
 
 	// 주문하기
-	@PostMapping("/order")
-	public Map<String, Object> order(
+	@PostMapping("/add")
+	public Map<String, Object> orderAdd(
 			@RequestBody List<OrderItem> orderList,
 	        HttpSession session) {
 	    
 	    Map<String, Object> result = new HashMap<>();
 	    String userId = (String) session.getAttribute("userId");
-
-	    // 비로그인
-	    if (userId == null) {
-	        result.put("code", 401);
-	        return result;
-	    }
 	    
 	    result = orderBO.addOrder(userId, orderList);	    
 

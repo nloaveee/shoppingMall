@@ -11,8 +11,8 @@
                         	<div class="item-box text-center">
 	                            <a th:href="|/shop/item/item-detail-view?itemid=${item.id}|"  class="item"><img th:src="${item.imagePath}" alt="상품 대표 이미지" class="w-75 h-75"></a>
 	                            <div><a th:href="|/shop/item/item-detail-view?itemid=${item.id}|" th:text="${item.name}" class="font-weight-bold mt-3 text-dark" th:data-item-name="${item.name}"></a></div>
-	                            <del><div th:text="${item.price}" class="text-secondary"></div></del>
-	                            <div th:text="${item.sale}"></div>
+	                            <del><div th:text="${item.price}" class="itemPrice text-secondary" th:data-base-price="${item.price}"></div></del>
+	                            <div th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></div>
                             </div>
                         </div>
                     </div>
@@ -21,6 +21,26 @@
 
 <th:block layout:fragment="script">
     <script>
+    
+    $(document).ready(function(){
+    	
+    	
+   	    // 상품 천 단위 구분
+   	    function formatPrice(price) {
+   	        return parseFloat(price).toLocaleString();
+   	    }
+
+   	    $(".itemSale").each(function() {
+   	        let baseSale = $(this).data('base-sale');
+   	        $(this).text(formatPrice(baseSale));
+   	    });
+   	    
+   	    $(".itemPrice").each(function() {
+   	        let basePrice = $(this).data('base-price');
+   	        $(this).text(formatPrice(basePrice));
+   	    });
+    	
+    });
 
     </script>
 </th:block>
