@@ -4,15 +4,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/mainLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="w-75 bg-info">
+	<div class="w-75">
 		<!-- wish  -->
 		<div class=" d-flex justify-content-center">
 			<h4 class="mt-4">WISH</h4>
 		</div>
 		
-		<table class="table mt-5">
+		<table class="table mt-5 text-center">
 			<thead>
-				<tr class="bg-light">				
+				<tr class="bg-light">		
+					<th>
+						<input type="checkbox" id="selectAll">
+					</th>		
 					<th class="text-secondary">이미지</th>
 					<th class="text-secondary">상품정보</th>
 					<th class="text-secondary">판매가</th>
@@ -20,12 +23,32 @@
 				</tr>
 			</thead>			
 			<tbody>
-				<tr th:each="wish:${wishList}">
-					<td th:text="${wish.optionId.color}"></td>
-				
-				</tr>
-				
-			</tbody>		
+		        <tr th:each="wishView : ${wishViewList}">
+		            <td>
+		                <input type="checkbox" class="itemCheckbox">
+		            </td>
+		            <td th:each="wishItem : ${wishView.wishItemList}">
+		                <!-- 상품 이미지 -->
+		                <img th:src="${wishItem.item.imagePath}" alt="상품 이미지" style="width: 100px; height: auto;">
+		            </td>
+		            <td th:each="wishItem : ${wishView.wishItemList}">
+		                <!-- 상품 이름 -->
+		                <span th:text="${wishItem.item.name}"></span><br>
+		                <!-- 옵션 정보 -->
+		                <span th:text="|[옵션: ${wishItem.itemOption.size} / ${wishItem.itemOption.color}]|"></span>
+		            </td>
+		            <td th:each="wishItem : ${wishView.wishItemList}">
+		                <!-- 상품 가격 -->
+		                <span th:text="${wishItem.item.price}" style="text-decoration: line-through;"></span><br>
+		                <span th:text="${wishItem.item.sale}" class="itemSale" th:data-base-sale="${wishItem.item.sale}"></span>
+		            </td>
+		            <td>
+		                <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER"><br>
+		                <input type="button" class="addCartBtn btn btn-dark btn-sm my-1" value="ADD CART"><br>
+		                <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-wish-id="${wishView.wish.id}">
+		            </td>
+		        </tr>              	      
+			</tbody>					
 		</table>
 	
 	</div>
@@ -33,6 +56,39 @@
 
 <th:block layout:fragment="script">
     <script>
+    
+    	$(document).ready(function(){
+    		
+       		// 상품 전체 선택/해제
+       		$("#selectAll").on('click',function(){
+       			let isChecked = $(this).prop('checked');
+       			$(".itemCheckbox").prop('checked',isChecked);   			
+       		}); // ------ 상품 전체 선택/해제 끝
+       		
+       		
+         	// wish 상품 삭제 
+            $(".deleteBtn").on('click', function(){
+                let wishId = $(this).data('wish-id');                
+
+                 $.ajax({
+                     type: 'DELETE',
+                     url: '/shop/user/mypage/wish/delete',
+                     data : {"wishId" : wishId},
+                     success: function(data) {
+                         if (data.code == 200) {                    	 
+                         // 페이지에서 해당 행 제거
+                         $(this).closest('tr').remove();
+                         location.reload();
+                         }
+                     },
+                     error: function(e) {
+                    	alert(data.error_message);
+                     }
+                 });
+              
+            }); // ----------- 상품 삭제 끝
+    		
+    	}); // ------- document 끝
 
     </script>
 </th:block>

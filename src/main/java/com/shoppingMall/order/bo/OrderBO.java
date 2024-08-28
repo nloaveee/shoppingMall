@@ -55,5 +55,17 @@ public class OrderBO {
 			}
 		
 
-	
+//	public Map<String, Object> addCartOrder(String userId, int itemId, int optionId, int quantity) {
+//		
+//		Map<String, Object> result = new HashMap<>(); 
+//				
+//		orderRepository.save(Orders.builder()
+//				.userId(userId)
+//				.itemId(itemId)
+//				.optionId(optionId)
+//				.price()
+//				.itemCount(quantity)
+//				.build());
+//	}
+// 	
 }

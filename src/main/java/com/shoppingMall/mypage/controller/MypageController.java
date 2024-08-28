@@ -14,6 +14,7 @@ import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.CartItem;
 import com.shoppingMall.mypage.entity.CartView;
 import com.shoppingMall.mypage.entity.Wish;
+import com.shoppingMall.mypage.entity.WishView;
 import com.shoppingMall.order.entity.OrderItem;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
@@ -73,17 +74,18 @@ public class MypageController {
 	}
 
 	// 마이페이지 - 찜
-//	@GetMapping("/mypage/wish-view")
-//	public String wish(
-//			HttpSession session,
-//			Model model) {
-//		
-//		String userId = (String)session.getAttribute("userId");
-//		
-//		List<WishView> wishViewList = wishBO.generateWishViewList(userId);
-//		
-//		return "mypage/wish";
-//	}
+	@GetMapping("/mypage/wish-view")
+	public String wish(
+			HttpSession session,
+			Model model) {
+		
+		String userId = (String)session.getAttribute("userId");
+		
+	    List<WishView> wishViewList = wishBO.generateWishViewList(userId);
+	    model.addAttribute("wishViewList", wishViewList);
+		
+		return "mypage/wish";
+	}
 	
 	
 	// 마이페이지 - 카트

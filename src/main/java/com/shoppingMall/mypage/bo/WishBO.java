@@ -12,11 +12,12 @@ import org.springframework.stereotype.Service;
 import com.shoppingMall.admin.bo.ItemBO;
 import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
-import com.shoppingMall.mypage.entity.Cart;
-import com.shoppingMall.mypage.entity.CartItem;
 import com.shoppingMall.mypage.entity.Wish;
 import com.shoppingMall.mypage.entity.WishItem;
+import com.shoppingMall.mypage.entity.WishView;
 import com.shoppingMall.mypage.repository.WishRepository;
+import com.shoppingMall.user.bo.UserBO;
+import com.shoppingMall.user.entity.User;
 
 @Service
 public class WishBO {
@@ -27,8 +28,10 @@ public class WishBO {
 	@Autowired
 	private ItemBO itemBO;
 	
+	@Autowired
+	private UserBO userBO;
 	
-public Map<String, Object> addWish(String userId, List<WishItem> wishList) {
+	public Map<String, Object> addWish(String userId, List<WishItem> wishList) {
 		
 		Map<String, Object> result = new HashMap<>(); 
 	        for (WishItem item : wishList) {
@@ -60,5 +63,66 @@ public Map<String, Object> addWish(String userId, List<WishItem> wishList) {
 	        result.put("code", 200); // 성공
 			return result;
 		}
+	
+	public Map<String, Object> addCartItemWish(String userId, int itemId, int optionId) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		Wish existingWish = wishRepository.findByUserIdAndItemIdAndOptionId(userId, itemId, optionId);
+				
+        if (existingWish != null) {
+            result.put("code", 500); // 이미 있는 경우
+            return result;
+        }
+        
+        wishRepository.save(Wish.builder()
+        		.userId(userId)
+        		.itemId(itemId)
+        		.optionId(optionId)        		       		
+        		.build());
+        
+        result.put("code", 200);
+        return result;
+	}
+	
+	public List<WishView> generateWishViewList(String userId) {
+		List<WishView> wishViewList = new ArrayList<>(); 
+		
+		List<Wish> wishList = getWishItemByUserId(userId);
+		
+		for (Wish wish : wishList) {
+			WishView wishView = new WishView();
+			
+			User user = userBO.getUserByUserId(userId);
+			wishView.setUser(user);
+			
+			List<WishItem> wishItemList = new ArrayList<>();
+			
+			WishItem wishItemObj = new WishItem();
+			wishItemObj.setItemId(wish.getItemId());
+			
+			Item item = itemBO.getItemByid(wish.getItemId());
+			wishItemObj.setItem(item);
+			
+			ItemOption option = itemBO.getitemOptionByOptionId(wish.getOptionId()); // Option 정보 가져오기
+			wishItemObj.setItemOption(option);
+			
+			wishItemList.add(wishItemObj);
+			
+			wishView.setWishItemList(wishItemList);
+			
+			wishViewList.add(wishView);
+		}
+		
+		return wishViewList;
+	}
+	
+	public List<Wish> getWishItemByUserId(String userId) {
+		return wishRepository.findByUserId(userId);
+	}
+	
+	public void deleteWishItem(int wishId) {
+		wishRepository.deleteById(wishId);
+	}
 	
 }

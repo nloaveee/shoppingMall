@@ -16,7 +16,7 @@
 						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-up-view" class="nav-link">JOIN</a></li>
 						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/mypage" class="nav-link">MYPAGE</a></li>
 						<li class="nav-item"><a href="/shop/user/mypage/cart-view" class="nav-link">CART</a></li>		
-						<li class="nav-item"><a href="#" class="nav-link">WISH</a></li>
+						<li class="nav-item"><a href="/shop/user/mypage/wish-view" class="nav-link">WISH</a></li>
 						<li class="nav-item"><a href="/shop/main/notice-list-view" class="nav-link">NOTICE</a></li>
 						<li class="nav-item"><a href="/shop/main/inquiry-list-view" class="nav-link">Q&A</a></li>
 						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/sign-out" class="nav-link">LOGOUT</a></li>		

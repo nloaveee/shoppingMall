@@ -121,5 +121,23 @@ public class CartBO {
 		cartRepository.deleteById(cartId);
 	}
 	
+	public Map<String, Object> updateCartItemQuantity (int cartId, int quantity) {
+		
+		Map<String, Object> result = new HashMap<>(); 
+		
+		Cart cart = cartRepository.findById(cartId);
+		
+		if (cart != null) {
+			cart.setQuantity(quantity);
+			cartRepository.save(cart);
+			result.put("code", 200);
+			return result;
+		} else {
+			result.put("code", 500);
+		}
+		return result;		
+		
+	}
+	
 
 }

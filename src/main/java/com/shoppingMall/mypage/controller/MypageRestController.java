@@ -72,6 +72,20 @@ public class MypageRestController {
 	    return result;
 	}
 	
+	// 찜 상품 삭제 
+	@DeleteMapping("/wish/delete")
+	public Map<String, Object> wishItemDelete(
+			@RequestParam("wishId") int wishId
+			) {
+			    
+		wishBO.deleteWishItem(wishId);	    
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+
+	    return result;		
+	}
+	
 	// 장바구니
 	@PostMapping("/cart/add")
 	public Map<String, Object> cartAdd(	
@@ -97,14 +111,41 @@ public class MypageRestController {
 	public Map<String, Object> cartItemDelete(
 			@RequestParam("cartId") int cartId
 			) {
+			    
+		cartBO.deleteCartItem(cartId);	    
 		
 		Map<String, Object> result = new HashMap<>();
-	    
-		cartBO.deleteCartItem(cartId);	    
-	    
 		result.put("code", 200);
 
-	    return result;
+	    return result;		
+	}
+	
+	// 장바구니 상품 찜하기 
+	@PostMapping("/cart/wish-add")
+	public Map<String, Object> cartWishAdd(
+			@RequestParam("itemId") int itemId,
+			@RequestParam("optionId") int optionId,
+			HttpSession session) {
 		
+		String userId = (String) session.getAttribute("userId");
+		
+		Map<String, Object> result = new HashMap<>();
+		result = wishBO.addCartItemWish(userId,itemId,optionId);
+			
+		return result;
+		
+	}
+	
+	// 장바구니 상품 수량 변경 
+	@PostMapping("/cart/quantity-update")
+	public Map<String, Object> quantityUpdate(
+			@RequestParam("cartId") int cartId,
+			@RequestParam("quantity") int quantity) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result = cartBO.updateCartItemQuantity(cartId,quantity);
+		
+		return result;
 	}
 }
