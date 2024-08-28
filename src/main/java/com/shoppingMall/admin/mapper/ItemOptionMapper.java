@@ -35,4 +35,6 @@ public interface ItemOptionMapper {
 	
 	public List<ItemOption> selectOptionListByItemId(int id);
 	
+	public ItemOption selectOptionByOptionId(int optionId);
+	
 }

@@ -9,6 +9,8 @@ import com.shoppingMall.mypage.entity.CartItem;
 
 public interface CartRepository extends JpaRepository<Cart, Integer>{
 	
-	public Cart findByUserIdAndItemIdAndOptionId(String uerId, int itemId, int optionId);
+	public Cart findByUserIdAndItemIdAndOptionId(String userId, int itemId, int optionId);
+	
+	public List<Cart> findByUserId (String userId);
 	
 }

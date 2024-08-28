@@ -4,17 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/mainLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
-	<div class="w-75 bg-success">
+	<div class="w-75">
 		<div class="d-flex justify-content-center my-4">
 			<h4 class="text-secondary">장바구니</h4>
 		</div>
 		
 		<!-- 상품 -->
-		<table class="table">
+		<table class="table text-center">
 			<thead>
 				<tr>	
 					<th>
-						<input type="checkbox" >
+						<input type="checkbox" id="selectAll">
 					</th>
 					<th>이미지</th>
 					<th>상품정보</th>
@@ -24,11 +24,38 @@
 				</tr>			
 			</thead>
 			<tbody>
-				<tr th:each="cartItem : ${cartViewList}">
-					<td th:text="item.item.name"></td>
-				</tr>			
+			    <tr th:each="cartView : ${cartViewList}">
+			        <td>
+			            <input type="checkbox" class="itemCheckbox">
+			        </td>
+			        <td th:each="cartItem : ${cartView.cartItemList}">
+			            <!-- 상품 이미지 -->
+			            <img th:src="${cartItem.item.imagePath}" alt="상품 이미지" style="width: 100px; height: auto;">
+			        </td>
+			        <td th:each="cartItem : ${cartView.cartItemList}">
+			            <!-- 상품 이름 -->
+			            <span th:text="${cartItem.item.name}" th:data-item-id="${cartItem.item.id}"></span><br>
+			            <!-- 옵션 정보 -->
+			            <span th:text="|[옵션:  ${cartItem.itemOption.size} / ${cartItem.itemOption.color}]|" th:data-option-id="${cartItem.itemOption.id}"></span>
+			        </td>
+			        <td th:each="cartItem : ${cartView.cartItemList}">
+			            <!-- 상품 수량 -->
+			            <input type="number" min="1" th:max="${cartItem.itemOption.stock}" step="1" th:value="${cartItem.quantity}" class="itemStock" data-cart-id="${cartItem.id}"/><br>
+			            <input type="button" class="stockBtn btn btn-light btn-sm mt-2" value="변경">
+			        </td>
+			        <td th:each="cartItem : ${cartView.cartItemList}">
+			            <!-- 상품 가격 -->
+			            <span th:text="${cartItem.item.price}" style="text-decoration: line-through;"></span><br>
+			            <span th:text="${cartItem.item.sale}"></span>
+			        </td>
+			        <td>
+			            <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER"><br>
+			            <input type="button" class="wishBtn btn btn-light btn-sm my-1" value="WISH"><br>
+			            <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-cart-id="${cartView.cart.id}">
+			        </td>
+			    </tr>            
 			</tbody>
-		
+			
 		</table>
 	
 	</div>
@@ -36,6 +63,99 @@
 
 <th:block layout:fragment="script">
     <script>
+    
+   	$(document).ready(function(){
+   		
+   		// 상품 전체 선택/해제
+   		$("#selectAll").on('click',function(){
+   			let isChecked = $(this).prop('checked');
+   			$(".itemCheckbox").prop('checked',isChecked);   			
+   		}); // ------ 상품 전체 선택/해제 끝
+   		
+   		// 수량 변경
+        $(".stockBtn").on('click', function(){
+            
+            let row = $(this).closest('tr');
+            let quantity = row.find('.itemStock').val();
+            let cartId = row.find('.itemStock').data('cart-id');
+            
+           
+            $.ajax({
+            	type: 'POST',
+                url: '/update-cart',                 
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    cartId: cartId,
+                    quantity: quantity
+                }),
+                success: function(response) {
+                    alert('수량이 성공적으로 업데이트되었습니다!');
+                    // 성공적으로 업데이트된 후 필요한 추가 작업을 수행할 수 있습니다.
+                },
+                error: function(xhr, status, error) {
+                    alert('수량 업데이트 중 오류가 발생했습니다.');
+                    console.error('Error:', error);
+                }
+            }); // --------- AJAX 끝
+        }); // ------------ 수량 변경 끝
+        
+        
+        
+     	// 장바구니 상품 삭제 
+        $(".deleteBtn").on('click', function(){
+            let cartId = $(this).data('cart-id'); 
+
+             $.ajax({
+                 type: 'DELETE',
+                 url: '/shop/user/mypage/cart/delete',
+                 data : {"cartId" : cartId},
+                 success: function(data) {
+                     if (data.code == 200) {                    	 
+                     // 페이지에서 해당 행 제거
+                     $(this).closest('tr').remove();
+                     location.reload();
+                     }
+                 },
+                 error: function(e) {
+                	alert(data.error_message);
+                 }
+             });
+          
+        }); // ----------- 상품 삭제 끝
+        
+     	// 장바구니 상품 찜하기
+        $(".wishBtn").on('click', function(){
+            let itemId = $(this).data('item-id'); 
+            let optionId = $(this).data('option-id');
+
+             $.ajax({
+                 type: 'POST',
+                 url: '/shop/user/mypage/cart/wish-add',
+                 data : {"itemId" : itemId, "optionId":optionId},
+                 success: function(data) {
+                     if (data.code == 200) {                    	 
+   						Swal.fire({
+   	    					icon: 'success',
+   	    					title: 'ok', 	
+   	    					text: '상품을 찜 하였습니다',
+   	    					confirmButtonColor: '#00008b',
+   	    					confirmButtonText: '확인'
+   	    				}).then((result) => {
+   	    				   if (result.isConfirmed) {
+   	    				      location.reload();
+   	    				   }
+   	    				});
+                     }
+                 },
+                 error: function(e) {
+                	alert(data.error_message);
+                 }
+             });
+          
+        }); // ----------- 상품 찜하기 끝
+   		
+   		
+   	}); // -----------documnet 끝
 
     </script>
 </th:block>

@@ -90,6 +90,19 @@
  		WHERE 
  			`id`= #{id}
  	</select>
+ 	
+ 	<select id="selectOptionByOptionId" resultType="com.shoppingMall.admin.domain.ItemOption">
+ 	    SELECT 
+	 			`id`
+	 			,`itemId`
+	 			,`size`
+	 			,`color`
+	 			,`stock`
+ 		FROM
+ 			`item_option`
+ 		WHERE 
+ 			`id`= #{cartId}
+ 	</select>
  
  
  </mapper>

@@ -9,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shoppingMall.admin.bo.ItemBO;
-
+import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 import com.shoppingMall.mypage.entity.Cart;
 import com.shoppingMall.mypage.entity.CartItem;
 import com.shoppingMall.mypage.entity.CartView;
-import com.shoppingMall.mypage.repository.CartItemRepository;
 import com.shoppingMall.mypage.repository.CartRepository;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
@@ -26,8 +25,6 @@ public class CartBO {
 	@Autowired
 	private CartRepository cartRepository;
 	
-	@Autowired
-	private CartItemRepository cartItemRepository;
 	
 	@Autowired
 	private ItemBO itemBO;
@@ -76,33 +73,53 @@ public class CartBO {
 	
 	
 	public List<CartView> generateCartViewList(String userId) {
-		List<CartView> cartViewList = new ArrayList<>();
-		
-		
-		List<Cart> cartList = getCartList();
-		
-		for (Cart cart : cartList) {
-			CartView cartView = new CartView();
-			
-			cartView.setCart(cart);
-			
-			User user = userBO.getUserByUserId(userId);
-			cartView.setUser(user);
-			
-			List<CartItem> cartItemList = getCartItemListByCartId(cart.getId());
-			cartView.setCartItemList(cartItemList);
-			
-			cartViewList.add(cartView);
-			
-		}
-		
-		return cartViewList;
-	}
-	
-	public List<CartItem> getCartItemListByCartId(int cartId) {
-		return cartItemRepository.findCartItemByCartId(cartId);		
+	    List<CartView> cartViewList = new ArrayList<>();
+	    
+	    // 사용자 ID에 해당하는 모든 Cart 가져오기
+	    List<Cart> cartList = getCartItemByUserId(userId);
+	    
+	    for (Cart cart : cartList) {
+	        CartView cartView = new CartView();
+	        
+	        cartView.setCart(cart);
+	        
+	        User user = userBO.getUserByUserId(userId);
+	        cartView.setUser(user);
+	        
+	        // CartItem 리스트 생성
+	        List<CartItem> cartItemList = new ArrayList<>();
+	        
+	        // 현재 Cart에 해당하는 CartItem 생성
+	        CartItem cartItemObj = new CartItem();
+	        cartItemObj.setCartId(cart.getId());
+	        
+	        // Item 정보 설정
+	        Item item = itemBO.getItemByid(cart.getItemId());
+	        cartItemObj.setItem(item);
+	        
+	        // Option 정보 설정
+	        ItemOption option = itemBO.getitemOptionByOptionId(cart.getOptionId()); // Option 정보 가져오기
+	        cartItemObj.setItemOption(option);
+	        
+	        cartItemObj.setQuantity(cart.getQuantity());
+	        
+	        cartItemList.add(cartItemObj);
+	        
+	        cartView.setCartItemList(cartItemList);
+	        
+	        cartViewList.add(cartView);
+	    }
+	    
+	    return cartViewList;
 	}
 
+	public List<Cart> getCartItemByUserId(String userId) {
+	    return cartRepository.findByUserId(userId);
+	}
+	
+	public void deleteCartItem(int cartId) {
+		cartRepository.deleteById(cartId);
+	}
 	
 
 }

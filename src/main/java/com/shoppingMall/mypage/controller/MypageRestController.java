@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,7 +72,7 @@ public class MypageRestController {
 	    return result;
 	}
 	
-	// 카트
+	// 장바구니
 	@PostMapping("/cart/add")
 	public Map<String, Object> cartAdd(	
 			@RequestBody List<CartItem> cartList,
@@ -89,5 +90,21 @@ public class MypageRestController {
 	    result = cartBO.addCart(userId, cartList);	    
 
 	    return result;
+	}
+	
+	// 장바구니 상품 삭제 
+	@DeleteMapping("/cart/delete")
+	public Map<String, Object> cartItemDelete(
+			@RequestParam("cartId") int cartId
+			) {
+		
+		Map<String, Object> result = new HashMap<>();
+	    
+		cartBO.deleteCartItem(cartId);	    
+	    
+		result.put("code", 200);
+
+	    return result;
+		
 	}
 }

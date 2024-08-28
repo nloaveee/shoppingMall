@@ -107,4 +107,8 @@ public class ItemBO {
 		return itemOptionMapper.selectOptionByItemIdColorSize(itemId,color,size);
 	}
 	
+	public ItemOption getitemOptionByOptionId(int optionId) {
+		return itemOptionMapper.selectOptionByOptionId(optionId);
+	}
+	
 }

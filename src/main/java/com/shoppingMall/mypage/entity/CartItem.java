@@ -12,15 +12,14 @@ import lombok.ToString;
 
 @Data
 @ToString
-@Entity
 public class CartItem {
 	
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private int cartId;
 	 private int itemId;
 	 private String option;
 	 private int quantity;
+	 
+	 private Item item;
+	 private ItemOption itemOption;
 
 }
