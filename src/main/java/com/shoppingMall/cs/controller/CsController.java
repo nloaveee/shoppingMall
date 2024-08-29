@@ -68,7 +68,7 @@ public class CsController {
 				) {
 			
 			Inquiry inquiry = inquiryBO.getInquiryById(id);
-			InquiryAnswer answer = inquiryBO.getInquiryAnswer(id);
+			InquiryAnswer answer = inquiryBO.getInquiryAnswer(id);			
 			
 			model.addAttribute("inquiry",inquiry);
 			model.addAttribute("answer",answer);

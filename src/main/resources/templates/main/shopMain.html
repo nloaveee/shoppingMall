@@ -5,11 +5,11 @@
       layout:decorate="~{layout/mainLayout}">
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	
-                <section class="col-10 bg-light mb-4">
-                    <div class="item-parent-box d-flex flex-wrap">
+                <section class="col-10 mb-4">
+                    <div class="item-parent-box d-flex flex-wrap mt-5">
                         <div th:each="item : ${itemList}" class="d-flex justify-content-center">
                         	<div class="item-box text-center">
-	                            <a th:href="|/shop/item/item-detail-view?itemid=${item.id}|"  class="item"><img th:src="${item.imagePath}" alt="상품 대표 이미지" class="w-75 h-75"></a>
+	                            <a th:href="|/shop/item/item-detail-view?itemid=${item.id}|"  class="item"><img th:src="${item.imagePath}" alt="상품 대표 이미지" class="w-50 h-50"></a>
 	                            <div><a th:href="|/shop/item/item-detail-view?itemid=${item.id}|" th:text="${item.name}" class="font-weight-bold mt-3 text-dark" th:data-item-name="${item.name}"></a></div>
 	                            <del><div th:text="${item.price}" class="itemPrice text-secondary" th:data-base-price="${item.price}"></div></del>
 	                            <div th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></div>

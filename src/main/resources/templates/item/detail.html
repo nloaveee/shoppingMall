@@ -6,7 +6,7 @@
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	<div class="w-75 bg-light my-5 d-flex">
 		<!-- 상품 대표 이미지 -->
-		<div class="col-6 bg-success">
+		<div class="col-6">
 			<div class="d-flex justify-content-center">
 				<img th:src="${item.imagePath}" alt="본문 이미지" width="400px">	
 			</div>	
@@ -24,6 +24,10 @@
 					<tr>
 						<th>SALE</th>
 						<td th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></td>
+					</tr> 
+					<tr>
+						<th>CONTENT</th>
+						<td th:text="${item.content}" class="itemContent"></td>
 					</tr> 
 					<tr>
 						<th>OPTION</th>

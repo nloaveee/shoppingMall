@@ -12,14 +12,14 @@
 			<div class="mypage-menu d-flex justify-content-end h-25">
 				<nav>
 					<ul class="nav">
-						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-in-view" class="nav-link">LOGIN</a></li>
-						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-up-view" class="nav-link">JOIN</a></li>
-						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/mypage" class="nav-link">MYPAGE</a></li>
-						<li class="nav-item"><a href="/shop/user/mypage/cart-view" class="nav-link">CART</a></li>		
-						<li class="nav-item"><a href="/shop/user/mypage/wish-view" class="nav-link">WISH</a></li>
-						<li class="nav-item"><a href="/shop/main/notice-list-view" class="nav-link">NOTICE</a></li>
-						<li class="nav-item"><a href="/shop/main/inquiry-list-view" class="nav-link">Q&A</a></li>
-						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/sign-out" class="nav-link">LOGOUT</a></li>		
+						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-in-view" class="nav-link text-dark">LOGIN</a></li>
+						<li class="nav-item" th:if="${session.userId == null}"><a href="/shop/user/sign-up-view" class="nav-link text-dark">JOIN</a></li>
+						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/mypage" class="nav-link text-dark">MYPAGE</a></li>
+						<li class="nav-item"><a href="/shop/user/mypage/cart-view" class="nav-link text-dark">CART</a></li>		
+						<li class="nav-item"><a href="/shop/user/mypage/wish-view" class="nav-link text-dark">WISH</a></li>
+						<li class="nav-item"><a href="/shop/main/notice-list-view" class="nav-link text-dark">NOTICE</a></li>
+						<li class="nav-item"><a href="/shop/main/inquiry-list-view" class="nav-link text-dark">Q&A</a></li>
+						<li class="nav-item" th:unless="${session.userId == null}"><a href="/shop/user/sign-out" class="nav-link text-dark">LOGOUT</a></li>		
 					</ul>
 				</nav>
 			</div>
@@ -29,12 +29,12 @@
 			<div class="category-menu d-flex justify-content-center align-item-center bg-light">
 				<nav class="col-8">
 					<ul class="nav nav-fill">
-						<li class="nav-item"><a href="#" class="nav-link">ALL</a></li>
-						<li class="nav-item"><a href="" class="nav-link">Outer</a></li>
-						<li class="nav-item"><a href="/shop/main/top-view" class="nav-link">Top</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">Bottom</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">Dress</a></li>
-						<li class="nav-item"><a href="#" class="nav-link">Acc</a></li>
+						<li class="nav-item"><a href="#" class="nav-link text-dark">ALL</a></li>
+						<li class="nav-item"><a href="" class="nav-link text-dark">Outer</a></li>
+						<li class="nav-item"><a href="/shop/main/top-view" class="nav-link text-dark">Top</a></li>
+						<li class="nav-item"><a href="#" class="nav-link text-dark">Bottom</a></li>
+						<li class="nav-item"><a href="#" class="nav-link text-dark">Dress</a></li>
+						<li class="nav-item"><a href="#" class="nav-link text-dark">Acc</a></li>
 					</ul>
 				</nav>
 			</div>
