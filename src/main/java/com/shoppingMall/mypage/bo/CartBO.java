@@ -1,11 +1,15 @@
 package com.shoppingMall.mypage.bo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shoppingMall.admin.bo.ItemBO;
@@ -116,6 +120,7 @@ public class CartBO {
 	public List<Cart> getCartItemByUserId(String userId) {
 	    return cartRepository.findByUserId(userId);
 	}
+		
 	
 	public void deleteCartItem(int cartId) {
 		cartRepository.deleteById(cartId);
@@ -137,6 +142,36 @@ public class CartBO {
 		}
 		return result;		
 		
+	}
+	
+	// 페이징 정보 필드 (limit)
+	private static final int POST_MAX_SIZE = 4;
+	
+	// input: 로그인 된 사람의 userId
+	// output: List<Post> 
+	public List<Cart> getCartItemsByUserId(String userId, Integer standardId, String direction) {
+        Pageable pageable = PageRequest.of(0, POST_MAX_SIZE);
+
+        List<Cart> cartList;
+        if ("prev".equals(direction)) {
+            cartList = cartRepository.findCartListByUserId(userId, standardId, direction, pageable);
+            Collections.reverse(cartList); // Reverse for pagination "prev"
+        } else {
+            cartList = cartRepository.findCartListByUserId(userId, standardId, direction, pageable);
+        }
+
+        return cartList;
+    }
+	
+	
+	public boolean isPrevLastPageByUserId(String userId, int prevId) {
+		 Cart maxPostId = cartRepository.findTopIdByUserIdOrderByIdDesc(userId);		 
+		 return maxPostId.getId() == prevId; // 같으면 마지막
+	}
+	
+	public boolean isNextLastPageByUserId(String userId, int nextId) {
+	    Cart minPostId = cartRepository.findTopIdByUserIdOrderByIdAsc(userId);
+	    return minPostId.getId() == nextId; // 같으면 마지막
 	}
 	
 

@@ -57,6 +57,12 @@
 			</tbody>		
 		</table>
 		
+		<!-- 페이징 -->
+		<div class="text-center">
+			<a th:if="${prevId != 0}" th:href="|/shop/user/mypage/cart-view?prevId=${prevId}|" class="mr-5 text-dark">&lt;&lt; 이전</a>
+			<a th:if="${nextId != 0}" th:href="|/shop/user/mypage/cart-view?nextId=${nextId}|" class="text-dark">다음 &gt;&gt;</a>
+		</div>
+		
 		<hr>
 		<div class="d-flex justify-content-end">
 			<h5>합계 : </h5>
