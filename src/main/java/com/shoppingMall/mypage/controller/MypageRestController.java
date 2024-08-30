@@ -16,7 +16,6 @@ import com.shoppingMall.common.PasswordEncryptor;
 import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.CartItem;
-import com.shoppingMall.mypage.entity.Wish;
 import com.shoppingMall.mypage.entity.WishItem;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;

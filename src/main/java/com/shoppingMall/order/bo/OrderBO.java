@@ -1,5 +1,6 @@
 package com.shoppingMall.order.bo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shoppingMall.admin.bo.ItemBO;
-
+import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.admin.domain.ItemOption;
 
 import com.shoppingMall.order.entity.OrderItem;
-
+import com.shoppingMall.order.entity.OrderView;
 import com.shoppingMall.order.entity.Orders;
 import com.shoppingMall.order.repository.OrderRepository;
 
@@ -54,6 +55,11 @@ public class OrderBO {
 		        result.put("code", 200); // 성공
 				return result;
 			}
+	
+	
+	public List<Orders> getOrdersByUserId(String userId) {
+		return orderRepository.findByUserId(userId);
+	}
 		
 
 //	public Map<String, Object> addCartOrder(String userId, int itemId, int optionId, int quantity) {

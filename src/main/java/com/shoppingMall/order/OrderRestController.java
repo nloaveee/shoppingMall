@@ -41,30 +41,11 @@ public class OrderRestController {
 	    Map<String, Object> result = new HashMap<>();
 	    String userId = (String) session.getAttribute("userId");
 	    
-	    result = orderBO.addOrder(userId, orderList);	    
-
+	    result = orderBO.addOrder(userId, orderList);	
+	    
+	    session.setAttribute("oderList", orderList);
+	    
 	    return result;
-	}
-	
-	// cart 개별 상품 주문 
-//	@PostMapping("/cart-order")
-//	public Map<String, Object> cartOrder(
-//			@RequestParam("itemId") int itemId,
-//			@RequestParam("optionId") int optionId,
-//			@RequestParam("quantity") int quantity,
-//			HttpSession session
-//			) {
-//		
-//		Map<String, Object> result = new HashMap<>();
-//		String userId = (String) session.getAttribute("userId");
-//		
-//		orderBO.addCartOrder(userId,itemId,optionId);
-//		
-//		
-//		
-//	}
-	
-
-
+	}	
 	
 }

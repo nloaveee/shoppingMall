@@ -3,6 +3,7 @@ package com.shoppingMall.mypage.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,11 +17,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer>{
 	public List<Cart> findByUserId (String userId);
 	
 	public Cart findById(int cartId);
-	
-	public Cart findTopIdByUserIdOrderByIdDesc(String userId);
-	
-	public Cart findTopIdByUserIdOrderByIdAsc(String userId);
-	
-	public List<Cart> findCartListByUserId(String userId, Integer standardId, String direction,  Pageable pageable);
+
 	
 }

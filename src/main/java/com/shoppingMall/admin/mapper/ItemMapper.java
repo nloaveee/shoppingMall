@@ -27,5 +27,15 @@ public interface ItemMapper {
 	public List<Item> selectItemListByName(String name);
 	
 	public Item selectItemById(int id);
+	
+	public List<Item> selectItemListAll(
+			@Param("standardId") Integer standardId,
+			@Param("direction") String direction,
+			@Param("limit") int limit);
+	
+	// 페이징 마지막 검사
+	public int selectIdAsSort(
+			@Param("sort") String sort);
+	
 
 }

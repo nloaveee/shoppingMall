@@ -1,7 +1,6 @@
 package com.shoppingMall.admin.bo;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +51,7 @@ public class ItemBO {
 	public List<Item> getItemListByName(String name) {
 		
 		return itemMapper.selectItemListByName(name);
-	}
-	
+	}	
 	
 	public Item getItemByName(String name) {
 		return itemMapper.selectItemByName(name);
@@ -75,8 +73,6 @@ public class ItemBO {
         return true;
 	}
 	
-	// 상품 옵션 리스트 select
-
 
 	public List<ItemOption> getItemOptionListByItemId(int itemId) {
 	    
@@ -88,9 +84,6 @@ public class ItemBO {
 	    return optionList;
 	}
 
-	
-	
-	
 	public Item getItemByid(int itemId) {
 		return itemMapper.selectItemById(itemId);
 	}
@@ -110,5 +103,46 @@ public class ItemBO {
 	public ItemOption getitemOptionByOptionId(int optionId) {
 		return itemOptionMapper.selectOptionByOptionId(optionId);
 	}
+	
+	
+	private static final int ITEM_MAX_SIZE = 6;
+	public List<Item> getItemList(Integer prevId,Integer nextId) {
+		
+		Integer standardId = null; // 기준 
+		String direction = null; // 방향 
+		
+		if (prevId != null) { // 2) 이전			
+			standardId = prevId;
+			direction = "prev";
+			
+			List<Item> itemList = itemMapper.selectItemListAll(standardId, direction, ITEM_MAX_SIZE);
+			// [5 6 7] -> [7 6 5]
+			Collections.reverse(itemList); // postList의 결과를 뒤집고 저장까지 해준다
+					
+			return itemList;
+					
+		} else if ( nextId != null) { // 1) 다음
+			standardId = nextId;
+			direction = "next";
+		}
+		
+		// 3) 페이징 x, 1) 다음
+		return itemMapper.selectItemListAll(standardId, direction, ITEM_MAX_SIZE);
+	}
+	
+	// 이전 페이지의 마지막인가?
+	public boolean isPrevLastPage(int prevId) {
+		// 제일 큰 숫자를 가져오기 위해서 desc 정렬을 한다.
+		int maxPostId = itemMapper.selectIdAsSort("DESC");
+		return maxPostId == prevId; // 같으면 마지막
+	}
+	
+	// 다음 페이지의 마지막인가?
+	public boolean isNextLastPage(int nextId) {
+		// 제일 작은 숫자를 가져오기 위해서 asc 정렬을 한다.
+		int minPostId = itemMapper.selectIdAsSort("ASC"); 
+		return minPostId == nextId;
+	}
+	
 	
 }

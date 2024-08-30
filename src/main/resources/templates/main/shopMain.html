@@ -14,8 +14,13 @@
 	             <del><div th:text="${item.price}" class="itemPrice text-secondary" th:data-base-price="${item.price}"></div></del>
 	             <div th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></div>
 	            </div>
-	        </div>
-	    </div>	   
+	        </div>	      	        
+	    </div>	 
+	    <!-- 페이징 -->
+		<div class="text-center">
+			<a th:if="${prevId != 0}" th:href="|/shop/main?prevId=${prevId}|" class="mr-5 text-dark">&lt;&lt; 이전</a>
+			<a th:if="${nextId != 0}" th:href="|/shop/main?nextId=${nextId}|" class="text-dark">다음 &gt;&gt;</a>
+		</div>   	   
 	</section>
 </section>
 
