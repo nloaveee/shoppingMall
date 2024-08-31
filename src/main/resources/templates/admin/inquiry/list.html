@@ -8,29 +8,35 @@
 		<h4 class="text-dark">문의 사항</h4>
 
 		<div class="mt-4">
-		<table class="table table-bold text-center">
-			<thead>
-				<tr>
-					<th>NO.</th>
-					<th>제목</th>
-					<th>작성자</th>					
-					<th>작성일</th>
-					<th>수정일</th>				
-					<th>답변</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="inquiry,status : ${inquiryList}">
-					<td th:text="${status.count}"></td>
-					<td><b><a th:href="|/shop/admin/inquiry-detail-view?inquiryId=${inquiry.id}|" th:text="${inquiry.title}" class="text-dark"></a></b></td>
-					<td th:text="${inquiry.name}"></td>
-					<td th:text="${#temporals.format(inquiry.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
-					<td th:text="${#temporals.format(inquiry.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
-					<td th:text="${inquiry.answer}"></td>
-				</tr>
-			</tbody>
-		</table>
-		
+		<div class="cartTableHeader">
+			<table class="table table-bold text-center">
+				<thead>
+					<tr>
+						<th>NO.</th>
+						<th>제목</th>
+						<th>작성자</th>					
+						<th>작성일</th>
+						<th>수정일</th>				
+						<th>답변</th>
+					</tr>
+				</thead>
+			 </table>
+		 </div>
+		 <!-- 테이블 바디 (스크롤) -->
+	    <div class="scrollTableBody">
+	        <table class="table text-center">		
+				<tbody>
+					<tr th:each="inquiry,status : ${inquiryList}">
+						<td th:text="${status.count}"></td>
+						<td><b><a th:href="|/shop/admin/inquiry-detail-view?inquiryId=${inquiry.id}|" th:text="${inquiry.title}" class="text-dark"></a></b></td>
+						<td th:text="${inquiry.name}"></td>
+						<td th:text="${#temporals.format(inquiry.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+						<td th:text="${#temporals.format(inquiry.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+						<td th:text="${inquiry.answer}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>		
 	</div>
 	</div>
 </section>

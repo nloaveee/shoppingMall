@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shoppingMall.mypage.bo.CartBO;
 import com.shoppingMall.mypage.bo.WishBO;
@@ -93,8 +94,7 @@ public class MypageController {
 	// 마이페이지 - 카트
 	@GetMapping("/mypage/cart-view")
 	public String cartView(
-			HttpSession session,
-			Model model) {
+			HttpSession session,Model model) {
 		
 		String userId =(String) session.getAttribute("userId");
 		

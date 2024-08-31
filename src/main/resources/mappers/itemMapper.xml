@@ -98,38 +98,38 @@
  	</select>
  	
  	<select id="selectItemListAll" parameterType="map" resultType="com.shoppingMall.admin.domain.Item">
- 		 SELECT 
-        `id`,
-        `name`,
-        `content`,
-        `price`,
-        `sale`,
-        `category`,
-        `imagePath`,
-        `createdAt`,
-        `updatedAt`
-    FROM
-        `item`
-    <where>
-        <if test="direction == 'next'">
-        <![CDATA[
-            AND `id` < #{standardId}
-        ]]>
-        </if>
-        
-        <if test="direction == 'prev'">
-        <![CDATA[
-            AND `id` > #{standardId}
-        ]]>
-        </if>
-    </where>
-    
-    <if test="direction != null">
-    ORDER BY `id` DESC
-    </if>
-    
-    <!-- #{}는 ``가 포함되어 있어서 limit은 ${}로 ``가 안들어있는걸로 해줘야 한다. -->    
-    LIMIT ${limit}
+	 	SELECT 
+	        `id`,
+	        `name`,
+	        `content`,
+	        `price`,
+	        `sale`,
+	        `category`,
+	        `imagePath`,
+	        `createdAt`,
+	        `updatedAt`
+	    FROM
+	        `item`
+	     WHERE 1=1
+	        <if test="direction == 'next'">
+	        <![CDATA[
+	            AND `id` < #{standardId}
+	        ]]>
+	        ORDER BY `id` DESC
+	        </if>
+	        
+	        <if test="direction == 'prev'">
+	        <![CDATA[
+	            AND `id` > #{standardId}
+	        ]]>
+	        </if>
+	    
+		    <if test="direction == null">
+		    ORDER BY `id` DESC
+		    </if>
+	    
+	    <!-- #{}는 ``가 포함되어 있어서 limit은 ${}로 ``가 안들어있는걸로 해줘야 한다. -->    
+	    LIMIT ${limit}
  	</select>
  	
  	<select id="selectIdAsSort"  resultType="int">

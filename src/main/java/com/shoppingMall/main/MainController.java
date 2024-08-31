@@ -34,20 +34,17 @@ public class MainController {
 		
 		String userId = (String)session.getAttribute("userId");
 		
-		List<Item> itemList = itemBO.getItemList();		
-		model.addAttribute("itemList",itemList);
-		
 		// DB 조회 => item 목록
 		List<Item> pagingItemList = itemBO.getItemList(prevIdParam, nextIdParam);
 		int prevId = 0;
 		int nextId = 0;
-		if (pagingItemList.isEmpty() == false) { // 글 목록이 비어있지 않을 때 페이징 정보 세팅 
+		if (pagingItemList.isEmpty() == false) { // item 비어있지 않을 때 페이징 정보 세팅 
 			prevId = pagingItemList.get(0).getId(); // 첫번째칸 id
 			nextId = pagingItemList.get(pagingItemList.size() - 1).getId(); // 마지막칸 id 	
 			
 			// 이전 방향의 끝인가? => 끝이면 0으로 세팅 
-			// prevId == 유저가 쓴 post 테이블의 제일 큰 숫자와 같으면 이전의 끝페이지 
-			if (itemBO.isPrevLastPage(prevId)) { // true가 온 경우
+			// prevId == 유저가 쓴 item 테이블의 제일 큰 숫자와 같으면 이전의 끝페이지 
+			if (itemBO.isPrevLastPage( prevId)) { // true가 온 경우
 				prevId = 0;
 			}
 			
@@ -58,6 +55,7 @@ public class MainController {
 			}
 		}
 	
+		model.addAttribute("pagingItemList" ,pagingItemList);
 		model.addAttribute("prevId",prevId);
 		model.addAttribute("nextId",nextId);
 		

@@ -44,3 +44,8 @@ html, body {
 	margin-top: 130px;
 }
 
+.scrollTableBody {
+	max-height: 630px; 
+	overflow-y: auto;
+}
+

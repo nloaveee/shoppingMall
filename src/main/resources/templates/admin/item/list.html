@@ -30,33 +30,43 @@
 				</div>
 			</div>
 			<div class="mt-4">
-				<table class="table table-bold text-center">
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>이미지</th>
-							<th>상품명</th>
-							<th>상품가격</th>
-							<th>카테고리</th>
-							<th>생성일</th>							
-							<th>수정일</th>													
-						</tr>
-					</thead>				
-					<tbody>
-						<tr th:each="item,status: ${itemList}" >
-							<td th:text="${status.count}"></td>
-							<td><img th:src="${item.imagePath}" alt="대표 이미지" width="100px"></td>
-							<td><b><a th:href="|/shop/admin/item-detail-view?name=${item.name}|" th:text="${item.name}" class="optionAdd text-dark " th:data-item-id="${item.id}"></a></b></td>
-							<td>
-								<div th:text="${item.price}" style="text-decoration: line-through;"></div>
-								<div th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></div>
-							</td>
-							<td th:text="${item.category}"></td>
-							<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
-							<td th:text="${#temporals.format(item.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
-						</tr>						
-					</tbody>				
-				</table>
+				<div class="cartTableWrapper">
+		    		<!-- 테이블 헤더 (고정) -->
+	    			<div class="cartTableHeader">
+						<table class="table table-bold text-center">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>이미지</th>
+									<th>상품명</th>
+									<th>상품가격</th>
+									<th>카테고리</th>
+									<th>생성일</th>							
+									<th>수정일</th>													
+								</tr>
+							</thead>	
+						 </table>
+	    			</div>		
+		    		<!-- 테이블 바디 (스크롤) -->
+				    <div class="scrollTableBody">
+				        <table class="table text-center">	
+							<tbody>
+								<tr th:each="item,status: ${itemList}" >
+									<td th:text="${status.count}"></td>
+									<td><img th:src="${item.imagePath}" alt="대표 이미지" width="100px"></td>
+									<td><b><a th:href="|/shop/admin/item-detail-view?name=${item.name}|" th:text="${item.name}" class="optionAdd text-dark " th:data-item-id="${item.id}"></a></b></td>
+									<td>
+										<div th:text="${item.price}" style="text-decoration: line-through;"></div>
+										<div th:text="${item.sale}" class="itemSale" th:data-base-sale="${item.sale}"></div>
+									</td>
+									<td th:text="${item.category}"></td>
+									<td th:text="${#temporals.format(item.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+									<td th:text="${#temporals.format(item.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+								</tr>						
+							</tbody>				
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>		
 	</div>

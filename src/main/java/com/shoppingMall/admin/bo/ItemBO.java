@@ -105,7 +105,9 @@ public class ItemBO {
 	}
 	
 	
-	private static final int ITEM_MAX_SIZE = 6;
+	
+	// 페이징
+	private static final int ITEM_MAX_SIZE = 12;
 	public List<Item> getItemList(Integer prevId,Integer nextId) {
 		
 		Integer standardId = null; // 기준 
@@ -117,7 +119,7 @@ public class ItemBO {
 			
 			List<Item> itemList = itemMapper.selectItemListAll(standardId, direction, ITEM_MAX_SIZE);
 			// [5 6 7] -> [7 6 5]
-			Collections.reverse(itemList); // postList의 결과를 뒤집고 저장까지 해준다
+			Collections.reverse(itemList); 
 					
 			return itemList;
 					

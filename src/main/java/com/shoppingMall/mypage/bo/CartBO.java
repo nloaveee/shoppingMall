@@ -74,9 +74,8 @@ public class CartBO {
 	
 	public List<Cart> getCartList() {
 		return cartRepository.findAll();
+
 	}
-	
-	
 	public List<CartView> generateCartViewList(String userId) {
 	    List<CartView> cartViewList = new ArrayList<>();
 	    

@@ -10,58 +10,63 @@
 		</div>
 		
 		<!-- 상품 -->
-		<table class="cartTable table mt-5 text-center">
-			<thead>
-				<tr class="bg-light">	
-					<th>
-						<input type="checkbox" id="selectAll">
-					</th>
-					<th>이미지</th>
-					<th>상품정보</th>
-					<th>수량</th>
-					<th>가격</th>
-					<th>선택</th>
-				</tr>			
-			</thead>
-			<tbody>
-			    <tr th:each="cartView : ${cartViewList}">
-			        <td>
-			            <input type="checkbox" class="itemCheckbox">
-			        </td>
-			        <td th:each="cartItem : ${cartView.cartItemList}">
-			            <!-- 상품 이미지 -->
-			            <img th:src="${cartItem.item.imagePath}" alt="상품 이미지" style="width: 100px; height: auto;">
-			        </td>
-			        <td th:each="cartItem : ${cartView.cartItemList}">
-			            <!-- 상품 이름 -->
-			            <span th:text="${cartItem.item.name}"></span><br>
-			            <!-- 옵션 정보 -->
-			            <span th:text="|[옵션:  ${cartItem.itemOption.color} / ${cartItem.itemOption.size}]|" ></span>
-			        </td>
-			        <td th:each="cartItem : ${cartView.cartItemList}">
-			            <!-- 상품 수량 -->
-			            <input type="number" min="1" th:max="${cartItem.itemOption.stock}" step="1" th:value="${cartItem.quantity}" class="itemStock" th:data-cart-id="${cartItem.cartId}"/><br>
-			            <input type="button" class="stockBtn btn btn-light btn-sm mt-2" value="변경">
-			        </td>
-			        <td th:each="cartItem : ${cartView.cartItemList}">
-			            <!-- 상품 가격 -->
-			            <span th:text="${cartItem.item.price}" style="text-decoration: line-through;"></span><br>
-			            <span th:text="${cartItem.item.sale}" class="itemSale" th:data-base-sale="${cartItem.item.sale}"></span>
-			        </td>
-			        <td th:each="cartItem : ${cartView.cartItemList}">
-			            <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER" th:data-item-id="${cartView.cart.itemId}" th:data-option="|${cartItem.itemOption.color}/${cartItem.itemOption.size}"><br>
-			            <input type="button" class="wishBtn btn btn-light btn-sm my-1" value="WISH" th:data-item-id="${cartView.cart.itemId}" th:data-option-id="${cartView.cart.optionId}"><br>
-			            <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-cart-id="${cartView.cart.id}">
-			        </td>
-			    </tr>  			    	      
-			</tbody>		
-		</table>
-		
-		<!-- 페이징 -->
-		<div class="text-center">
-			<a th:if="${prevId != 0}" th:href="|/shop/user/mypage/cart-view?prevId=${prevId}|" class="mr-5 text-dark">&lt;&lt; 이전</a>
-			<a th:if="${nextId != 0}" th:href="|/shop/user/mypage/cart-view?nextId=${nextId}|" class="text-dark">다음 &gt;&gt;</a>
+		<div class="cartTableWrapper">
+		    <!-- 테이블 헤더 (고정) -->
+		    <div class="cartTableHeader">
+		        <table class="table text-center">
+		            <thead>
+		                <tr class="bg-light">    
+		                    <th>
+		                        <input type="checkbox" id="selectAll">
+		                    </th>
+		                    <th>이미지</th>
+		                    <th>상품정보</th>
+		                    <th>수량</th>
+		                    <th>가격</th>
+		                    <th>선택</th>
+		                </tr>            
+		            </thead>
+		        </table>
+		    </div>
+		    <!-- 테이블 바디 (스크롤) -->
+		    <div class="scrollTableBody">
+		        <table class="table text-center">
+		            <tbody>
+		                <tr th:each="cartView : ${cartViewList}">
+		                    <td>
+		                        <input type="checkbox" class="itemCheckbox">
+		                    </td>
+		                    <td th:each="cartItem : ${cartView.cartItemList}">
+		                        <!-- 상품 이미지 -->
+		                        <img th:src="${cartItem.item.imagePath}" alt="상품 이미지" style="width: 100px; height: auto;">
+		                    </td>
+		                    <td th:each="cartItem : ${cartView.cartItemList}">
+		                        <!-- 상품 이름 -->
+		                        <span th:text="${cartItem.item.name}"></span><br>
+		                        <!-- 옵션 정보 -->
+		                        <span th:text="|[옵션:  ${cartItem.itemOption.color} / ${cartItem.itemOption.size}]|" ></span>
+		                    </td>
+		                    <td th:each="cartItem : ${cartView.cartItemList}">
+		                        <!-- 상품 수량 -->
+		                        <input type="number" min="1" th:max="${cartItem.itemOption.stock}" step="1" th:value="${cartItem.quantity}" class="itemStock" th:data-cart-id="${cartItem.cartId}"/><br>
+		                        <input type="button" class="stockBtn btn btn-light btn-sm mt-2" value="변경">
+		                    </td>
+		                    <td th:each="cartItem : ${cartView.cartItemList}">
+		                        <!-- 상품 가격 -->
+		                        <span th:text="${cartItem.item.price}" style="text-decoration: line-through;"></span><br>
+		                        <span th:text="${cartItem.item.sale}" class="itemSale" th:data-base-sale="${cartItem.item.sale}"></span>
+		                    </td>
+		                    <td th:each="cartItem : ${cartView.cartItemList}">
+		                        <input type="button" class="orderBtn btn btn-dark btn-sm" value="ORDER" th:data-item-id="${cartView.cart.itemId}" th:data-option="|${cartItem.itemOption.color}/${cartItem.itemOption.size}"><br>
+		                        <input type="button" class="wishBtn btn btn-light btn-sm my-1" value="WISH" th:data-item-id="${cartView.cart.itemId}" th:data-option-id="${cartView.cart.optionId}"><br>
+		                        <input type="button" class="deleteBtn btn btn-light btn-sm" value="DELETE" th:data-cart-id="${cartView.cart.id}">
+		                    </td>
+		                </tr>                            
+		            </tbody>        
+		        </table>
+		    </div>
 		</div>
+
 		
 		<hr>
 		<div class="d-flex justify-content-end">

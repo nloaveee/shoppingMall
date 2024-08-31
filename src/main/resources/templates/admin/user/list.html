@@ -7,30 +7,35 @@
 	<div class="w-75">
 		<h4 class="text-dark">회원 관리</h4>
 		<div class="mt-4">
-			<table class="table table-bold text-center">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>이름</th>
-						<th>아이디</th>
-						<th>이메일</th>
-						<th>전화번호</th>
-						<th>가입 날짜</th>							
-					</tr>
-				</thead>				
-				<tbody>
-					<tr th:each="user, status : ${userList}">
-						<td th:text="${status.count}"></td>					
-						<td th:text="${user.name}"></td>					
-						<td th:text="${user.userId}"></td>					
-						<td th:text="${user.email}"></td>					
-						<td th:text="${user.phone}"></td>					
-						<td th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>															
-					</tr>
-					
-				</tbody>
-			
-			</table>
+			<div class="cartTableHeader">
+				<table class="table table-bold text-center">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>이름</th>
+							<th>아이디</th>
+							<th>이메일</th>
+							<th>전화번호</th>
+							<th>가입 날짜</th>							
+						</tr>
+					</thead>	
+				</table>
+			</div>	
+			<!-- 테이블 바디 (스크롤) -->
+		    <div class="scrollTableBody">
+		        <table class="table text-center">				
+					<tbody>
+						<tr th:each="user, status : ${userList}">
+							<td th:text="${status.count}"></td>					
+							<td th:text="${user.name}"></td>					
+							<td th:text="${user.userId}"></td>					
+							<td th:text="${user.email}"></td>					
+							<td th:text="${user.phone}"></td>					
+							<td th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>															
+						</tr>					
+					</tbody>
+				</table>
+			</div>
 		</div>	
 	</div>
 </section>
