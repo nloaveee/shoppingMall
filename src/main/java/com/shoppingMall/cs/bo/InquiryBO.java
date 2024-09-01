@@ -1,11 +1,15 @@
 package com.shoppingMall.cs.bo;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shoppingMall.admin.domain.Item;
 import com.shoppingMall.common.FileManagerService;
 import com.shoppingMall.cs.entity.Inquiry;
 import com.shoppingMall.cs.entity.InquiryAnswer;
@@ -47,6 +51,37 @@ public class InquiryBO {
 	public List<Inquiry> getInquiryList() {
 		return inquiryRepository.findAll();
 	}
+	
+	
+	private static final int MAX_SIZE = 10;
+	public List<Inquiry> getInquiryList(Integer prevId,Integer nextId) {
+		
+		Pageable pageable = PageRequest.of(0, MAX_SIZE); // 페이징 처리
+	    
+	    if (prevId != null) { // 이전 페이지
+	        List<Inquiry> inquiryList = inquiryRepository.findAllByIdLessThanOrderByIdDesc(prevId, pageable);
+	        Collections.reverse(inquiryList); 
+	        return inquiryList;
+	        
+	    } else if (nextId != null) { // 다음 페이지
+	        return inquiryRepository.findAllByIdGreaterThanOrderByIdAsc(nextId, pageable);
+	    }
+	    
+	    // 페이징이 적용되지 않은 경우 (기본)
+	    return inquiryRepository.findAll(PageRequest.of(0, MAX_SIZE)).getContent();
+	}
+
+	public boolean isPrevLastPage(int prevId) {
+	    List<Inquiry> inquiries = inquiryRepository.findAllByIdLessThanOrderByIdDesc(prevId, PageRequest.of(0, 1));
+	    return inquiries.isEmpty() || inquiries.get(0).getId() == prevId;
+	}
+
+	public boolean isNextLastPage(int nextId) {
+	    List<Inquiry> inquiries = inquiryRepository.findAllByIdGreaterThanOrderByIdAsc(nextId, PageRequest.of(0, 1));
+	    return inquiries.isEmpty() || inquiries.get(0).getId() == nextId;
+	}
+
+
 	
 	public Inquiry getInquiryById(int id) {
 		return inquiryRepository.findById(id);

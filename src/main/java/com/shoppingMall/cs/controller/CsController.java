@@ -36,11 +36,35 @@ public class CsController {
 		// Q&A 목록
 		@GetMapping("/inquiry-list-view")
 		public String inquiryListView(
+				@RequestParam(value="prevId", required = false) Integer prevIdParam,
+				@RequestParam(value="nextId", required = false) Integer nextIdParam,
 				Model model) {
 			
-			List<Inquiry> inquiryList = inquiryBO.getInquiryList();
+				List<Inquiry> inquiryList = inquiryBO.getInquiryList(prevIdParam, nextIdParam);
 			
-			model.addAttribute("inquiryList",inquiryList);
+				int prevId = 0;
+				int nextId = 0;
+				if (inquiryList.isEmpty() == false) { // item 비어있지 않을 때 페이징 정보 세팅 
+					prevId = inquiryList.get(0).getId(); // 첫번째칸 id
+					nextId = inquiryList.get(inquiryList.size() - 1).getId(); // 마지막칸 id 	
+					
+					// 이전 방향의 끝인가? => 끝이면 0으로 세팅 
+					// prevId == 유저가 쓴 item 테이블의 제일 큰 숫자와 같으면 이전의 끝페이지 
+					if (inquiryBO.isPrevLastPage( prevId)) { // true가 온 경우
+						prevId = 0;
+					}
+					
+					// 다음 방향의 끝인가? => 끝이면 0으로 세팅
+					// nextId == 테이블의 제일 작은 숫자와 같으면 다음의 끝페이지 
+					if (inquiryBO.isNextLastPage(nextId)) { // true가 온 경우 
+						nextId = 0;
+					}
+					
+				}
+				
+				model.addAttribute("inquiryList",inquiryList);
+				model.addAttribute("prevId",prevId);
+				model.addAttribute("nextId",nextId);
 			
 			return "cs/list";
 		}

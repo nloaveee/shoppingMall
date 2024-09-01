@@ -26,6 +26,11 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- 페이징 -->
+		<div class="text-center">
+			<a th:if="${prevId != 0}" th:href="|/shop/main/inquiry-list-view?prevId=${prevId}|" class="mr-5 text-dark">&lt;&lt; 이전</a>
+			<a th:if="${nextId != 0}" th:href="|/shop/main/inquiry-list-view?nextId=${nextId}|" class="text-dark">다음 &gt;&gt;</a>
+		</div>  
 		
 		<!-- 글쓰기 버튼 -->
 		<div class="d-flex justify-content-end">

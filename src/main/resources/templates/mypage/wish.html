@@ -10,7 +10,9 @@
 			<h4 class="mt-4">WISH</h4>
 		</div>
 		
-		<table class="wishTable table mt-5 text-center">
+				    <!-- 테이블 헤더 (고정) -->
+    <div class="wishTableHeader">
+        <table class="table text-center mt-5">
 			<thead>
 				<tr class="bg-light">		
 					<th>
@@ -21,7 +23,12 @@
 					<th class="text-secondary">판매가</th>
 					<th class="text-secondary">선택</th>
 				</tr>
-			</thead>			
+			</thead>	
+		</table>
+	</div>
+    <!-- 테이블 바디 (스크롤) -->
+   	<div class="scrollTableBody">
+       <table class="table text-center">		
 			<tbody>
 		        <tr th:each="wishView : ${wishViewList}">
 		            <td>
@@ -50,9 +57,10 @@
 		        </tr>              	      
 			</tbody>					
 		</table>
+	</div>
 		
 		<!-- 하단 부분 -->
-		<div class="d-flex justify-content-between align-items-center">
+		<div class="d-flex justify-content-between align-items-center mt-5">
 			<div>
 				<span>선택상품을</span>
 				<button id="selectedDeleteBtn"class="btn btn-secondary btn-sm">x 삭제하기</button>
