@@ -9,25 +9,30 @@
 	<!-- 주문 상품 -->
 	<div>
 		<h5 class="my-3"><b>주문상품</b></h5>
-		<div class="d-flex">
-			<!-- 상품 이미지 -->
-			<div class="col-2" th:each="orderItem : ${orderList}">
-			<img th:src="${orderItem.item.imagePath}"  width="100px" height="100px">
+			<div class="order-scroll">
+			   <!-- 상품 정보 및 이미지 -->
+			  <div class="w-100 mb-2" th:each="orderItem : ${orderList}">
+			      <div class="row w-100">
+			          <!-- 상품 이미지 -->
+			          <div class="col-3 text-center">
+			              <img th:src="${orderItem.item.imagePath}" width="100px" height="100px" alt="상품 이미지">
+			          </div>
+			          
+			          <!-- 상품 정보 -->
+			            <div class="col-9 bg-light">
+			                <h5 th:text="${orderItem.item.name}" class="ml-2"></h5>
+			                <div class="d-flex ml-2">
+			                    [옵션 : <div th:text="${orderItem.option}"></div>]
+			                </div>
+			                <div class="d-flex ml-2">
+			                    수량 : <div th:text="${orderItem.count}"></div>개
+			                </div>
+			                <h6 th:text="${orderItem.sale}" class="itemSale ml-2" th:data-base-sale="${orderItem.sale}"></h6>
+			                <hr>
+			            </div>
+			        </div>
+			    </div>
 			</div>
-			
-			<!-- 상품 정보 -->
-			<div class="col-10 bg-light" th:each="orderItem : ${orderList}">
-        		<h5 th:text="${orderItem.item.name}"></h5>
-        		<div class="d-flex">
-        			[옵션 : <div th:text="${orderItem.option}" ></div>]
-        		</div>
-        		<div class="d-flex">
-        			수량 : <div th:text="${orderItem.count}" ></div>개
-        		</div>
-        		<h6 th:text="${orderItem.sale}" class="itemSale" th:data-base-sale="${orderItem.sale}"></h6>	
-        		<hr>		
-			</div>	
-		</div>
 	</div>
 	
 	<!-- 결제 정보 -->

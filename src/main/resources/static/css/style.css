@@ -49,3 +49,7 @@ html, body {
 	overflow-y: auto;
 }
 
+.order-scroll {
+	max-height: 400px; 
+	overflow-y: auto;
+}

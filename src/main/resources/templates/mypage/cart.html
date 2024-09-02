@@ -164,10 +164,19 @@
         $(".orderBtn").on('click',function(){
             let itemId = $(this).data('item-id');
             let option = $(this).data('option');
+                        
             
             let row = $(this).closest('tr'); 
             let count = row.find(".itemStock").val(); 
             let sale = row.find(".itemSale").text().replace(/,/g, '');
+            let cartId = row.find('.itemStock').data('cart-id');
+            
+            // 수량이 0인지 확인
+            if (count <= 0) {
+                alert('해당 상품 품절로 주문할 수 없습니다.');
+                row.closest('tr').remove(); 
+                return;
+            }
             
             let orderList = [];
             
@@ -188,10 +197,24 @@
 						location.href = "/shop/order/order-form-view"; 
 						row.closest('tr').remove();
                     } else if (data.code == 400) {
-                    	alert(e.massage);
-                    	location.reload();
-                    }                    
-		      	  } // ------------- success 끝 				    	  
+                    	alert(data.message);
+                    	
+                    	// 서버에서 수량 변경 실패 응답을 받은 경우, 수량을 0으로 설정하고 서버에 저장 요청
+                        $.ajax({                            
+                            type: 'POST',
+                            url: '/shop/user/mypage/cart/quantity-update', 
+                            data: {"cartId" : cartId , "quantity" : 0},
+                            success: function(data) {
+                                if (data.code == 200) {
+                                	location.reload();  
+                                }
+                            },
+                            error: function(e) {
+                                alert('수량 변경 중 오류가 발생했습니다.');
+                            }
+                        });                    	
+                    }                   
+		      	  } // ------------- success 끝 		
  			   }); // ------- ajax 끝                  	
         }); // ------------ 상품 바로 주문
         
@@ -257,13 +280,71 @@
           
         }); // ----------- 상품 찜하기 끝
         
-        $("#orderAllBtn").on('click',function(){
-        	
-        	
-        	
-        	
-        	
-        });
+        
+     	// 전체 상품 주문하기
+        $("#orderAllBtn").on('click', function() {
+            let orderList = [];
+            let allItemsAvailable = true; 
+            let outOfStockItems = [];
+
+            
+            $("tbody tr").each(function() {
+                let itemId = $(this).find(".orderBtn").data('item-id');
+                let option = $(this).find(".orderBtn").data('option');
+                let count = $(this).find(".itemStock").val();
+                let sale = $(this).find(".itemSale").text().trim().replace(/,/g, '');
+                let itemName = $(this).find("td:nth-child(3) span").text();
+
+                // 수량이 0인지 확인
+                if (count <= 0) {
+                    allItemsAvailable = false; 
+                    outOfStockItems.push(itemName);
+                    $(this).remove(); 
+                    return;
+                }
+
+                // orderItem 객체 생성
+                let orderItem = {
+                    itemId: itemId,
+                    option: option,
+                    count: count,
+                    sale: sale
+                };
+
+                orderList.push(orderItem);
+            });
+
+            
+            if (allItemsAvailable) {
+
+                // Ajax 요청으로 데이터 전송
+                $.ajax({
+                    type: 'POST',
+                    url: '/shop/order/add',
+                    contentType: 'application/json',
+                    data: JSON.stringify(orderList),
+                    success: function(data) {
+                        if (data.code === 200) {
+    						location.href = "/shop/order/order-form-view"; 
+    						row.closest('tr').remove();
+                        } else {
+                            alert('주문 실패: ' + data.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                        alert('주문 중 오류가 발생했습니다.');
+                    }
+                });
+            } else {
+                // 품절 상품 이름을 포함한 알림 메시지 표시
+                alert('다음 상품이 품절로 인해 주문할 수 없습니다: \n' + outOfStockItems.join('\n'));
+                location.reload(); // 페이지 리로드
+            }
+        }); // ---------- 전체 상품 주문하기 끝
+
+        
+        
                        
        		
    	}); // -----------documnet 끝
