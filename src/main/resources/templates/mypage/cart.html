@@ -187,12 +187,12 @@
                     if (data.code == 200) {                                   
 						location.href = "/shop/order/order-form-view"; 
 						row.closest('tr').remove();
-                    }                  			    
-		      	  } // ------------- success 끝
- 				      	  	 				    	  
- 			   }); // ------- ajax 끝
-            
-        	
+                    } else if (data.code == 400) {
+                    	alert(e.massage);
+                    	location.reload();
+                    }                    
+		      	  } // ------------- success 끝 				    	  
+ 			   }); // ------- ajax 끝                  	
         }); // ------------ 상품 바로 주문
         
      	// 장바구니 상품 삭제 
@@ -257,32 +257,15 @@
           
         }); // ----------- 상품 찜하기 끝
         
-        
-        // 장바구니 상품 개별 주문하기 
-        $(".orderBtn").on('click',function(){        
-        	let $row = $(this).closest('tr'); 
-        	let itemId = $(this).data('item-id'); 
-            let optionId = $(this).data('option-id');
-            let quantity = $row.find('.itemStock').val();
-
-
-             $.ajax({
-                 type: 'POST',
-                 url: '/shop/order/cart-order',
-                 data : {"itemId" : itemId, "optionId":optionId, "quantity":quantity},
-                 success: function(data) {
-                     if (data.code == 200) {                    	 
-						location.href="/shop/order/order-form-view"
-                     } 
-                 },
-                 error: function(e) {
-                	alert(data.error_message);
-                 }
-             });        	
-        }); // ----------- 상품 개별 주문하기 끝
-        
-   		
-   		
+        $("#orderAllBtn").on('click',function(){
+        	
+        	
+        	
+        	
+        	
+        });
+                       
+       		
    	}); // -----------documnet 끝
 
     </script>

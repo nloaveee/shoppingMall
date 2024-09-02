@@ -37,4 +37,6 @@ public interface ItemOptionMapper {
 	
 	public ItemOption selectOptionByOptionId(int optionId);
 	
+	public void updateStock(ItemOption option);
+	
 }

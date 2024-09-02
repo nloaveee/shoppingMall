@@ -36,10 +36,22 @@ public class OrderBO {
 		        	String[] optionPart = item.getOption().split("\\/");
 					String color = optionPart.length>0 ? optionPart[0].trim() : "";
 					String size = optionPart.length>1 ? optionPart[1].trim() : "";
-					ItemOption option = itemBO.getItemOptionByItemIdColorSize(item.getItemId(),color , size);
 					
+					// itemOption 가져오기
+					ItemOption option = itemBO.getItemOptionByItemIdColorSize(item.getItemId(),color , size);			
 					
-		            // 새로운 Cart 객체 생성
+			        // Item 가져오기
+			        Item orderItem = itemBO.getItemById(item.getItemId());
+			        item.setItem(orderItem);
+					
+					// 재고 확인
+					int remainingStock = option.getStock() - item.getCount();
+					if (remainingStock < 0) {
+						result.put("code", 400); // 재고 부족
+						result.put("message", "현재 상품 재고가 0으로 주문이 불가합니다.");
+						return result;
+					}
+											         
 		            Orders order = Orders.builder()
 		            		.userId(userId)
 		            		.itemId(item.getItemId())
@@ -50,6 +62,11 @@ public class OrderBO {
 		            
 		            // DB에 저장
 		            orderRepository.save(order);
+		            
+		    		// 재고 업데이트
+		    		option.setStock(remainingStock);
+		    			    	
+		    		itemBO.updateItemOptionStock(option, remainingStock);
 	
 		        }
 		        		        

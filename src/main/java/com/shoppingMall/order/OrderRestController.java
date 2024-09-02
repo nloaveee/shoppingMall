@@ -46,8 +46,8 @@ public class OrderRestController {
 		    
 		    result = orderBO.addOrder(userId, orderList);	
 		    
-		    session.setAttribute("oderList", orderList);
-		    
+		    session.setAttribute("orderList", orderList);
+		    		  		   
 		    return result;
 		}	
 	

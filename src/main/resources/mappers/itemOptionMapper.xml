@@ -103,6 +103,15 @@
  		WHERE 
  			`id`= #{cartId}
  	</select>
+ 	
+ 	<update id="updateStock">
+    UPDATE 
+    	item_option
+    SET 
+    	stock = #{stock}
+    WHERE 
+    	id = #{id}
+	</update>
  
  
  </mapper>

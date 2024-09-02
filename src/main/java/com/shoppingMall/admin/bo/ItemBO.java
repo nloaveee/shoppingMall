@@ -104,6 +104,12 @@ public class ItemBO {
 		return itemOptionMapper.selectOptionByOptionId(optionId);
 	}
 	
+	// 재고 관리
+    public void updateItemOptionStock(ItemOption option, int remainingStock) {
+        option.setStock(remainingStock);
+        itemOptionMapper.updateStock(option);
+    }
+	
 	
 	
 	// 페이징

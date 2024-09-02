@@ -12,11 +12,11 @@
 		<div class="d-flex">
 			<!-- 상품 이미지 -->
 			<div class="col-2" th:each="orderItem : ${orderList}">
-				<img th:src="${orderItem.item.imagePath}"  width="100px" height="100px">
+			<img th:src="${orderItem.item.imagePath}"  width="100px" height="100px">
 			</div>
 			
 			<!-- 상품 정보 -->
-			<div class="col-10 bg-light" th:block th:each="orderItem : ${orderList}">
+			<div class="col-10 bg-light" th:each="orderItem : ${orderList}">
         		<h5 th:text="${orderItem.item.name}"></h5>
         		<div class="d-flex">
         			[옵션 : <div th:text="${orderItem.option}" ></div>]
@@ -26,7 +26,7 @@
         		</div>
         		<h6 th:text="${orderItem.sale}" class="itemSale" th:data-base-sale="${orderItem.sale}"></h6>	
         		<hr>		
-			</div>		
+			</div>	
 		</div>
 	</div>
 	
@@ -43,15 +43,15 @@
 		<table class="table table-borderless">
 			<tr>
 				<th>*주문자</th>
-				<td><input th:value="${user.userId}" type="text" id="name" class="form-control"></td>
+				<td><input th:value="${user.userId}" type="text" id="orderName" class="form-control"></td>
 			</tr>
 			<tr>
 				<th>*이메일</th>
-				<td><input th:value="${user.email}" type="text" id="name" class="form-control"></td>
+				<td><input th:value="${user.email}" type="text" id="email" class="form-control"></td>
 			</tr>
 			<tr>
 				<th>*휴대전화</th>
-				<td><input th:value="${user.phone}" type="text" id="name" class="form-control"></td>
+				<td><input th:value="${user.phone}" type="text" id="phone" class="form-control"></td>
 			</tr>
 			<tr>
 				<th>*주소</th>
@@ -73,21 +73,21 @@
 		<table class="table table-borderless">
 			<tr>
 				<th>*받는사람</th>
-				<td><input type="text" id="name" class="form-control"></td>
+				<td><input type="text" id="receiver" class="form-control"></td>
 			</tr>
 			<tr>
 				<th>*휴대전화</th>
-				<td><input type="text" id="name" class="form-control"></td>
+				<td><input type="text" id="receiverPhone" class="form-control"></td>
 			</tr>
 			<tr>
 				<th>*주소</th>
 				<td>
 					<span class="d-flex">
-						<input type="text" id="postCode" class="form-control col-4" placeholder="우편번호">
+						<input type="text" id="receiverPostCode" class="form-control col-4" placeholder="우편번호">
 						<input type="button" value="우편번호 찾기" id="addressBtn" class="btn btn-secondary ml-2 col-3"><br>
 					</span>
-					<input type="text" id="address" placeholder="주소" class="form-control my-2">
-					<input type="text" id="detailAddress" placeholder="상세주소" class="form-control">											
+					<input type="text" id="receiverAddress" placeholder="주소" class="form-control my-2">
+					<input type="text" id="receiverDetailAddress" placeholder="상세주소" class="form-control">											
 				</td>
 			</tr>					
 		</table>					
@@ -148,9 +148,37 @@
     		
     		// 주문하기btn 
     		$(".orderBtn").on('click',function(){
+    			let receiver = $("#receiver").val();
+    			let receiverPhone = $("#receiverPhone").val();
+    			let receiverPostCode = $("#receiverPostCode").val();
+    			let receiverAddress = $("#receiverAddress").val();
+    			let receiverDetailAddress = $("#receiverDetailAddress").val();
     			
+    			if (receiver == null) {
+    				alert("받는 사람을 작성해주세요.")
+    				return;
+    			}
     			
+    			if (receiverPhone == null) {
+    				alert("배송 사람 전화번호를 작성해주세요.")
+    				return;
+    			}
     			
+    			if (receiverPostCode == null) {
+    				alert("우편번호를 작성해주세요.")
+    				return;
+    			}
+    			
+    			if (receiverAddress == null) {
+    				alert("주소를 작성해주세요.")
+    				return;
+    			}
+    			
+    			if (receiverDetailAddress == null) {
+    				alert("상세주소를 작성해주세요.")
+    				return;
+    			}
+    			    			
     		});
     
     	});
