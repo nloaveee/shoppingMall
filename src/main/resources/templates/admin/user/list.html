@@ -11,12 +11,12 @@
 				<table class="table table-bold text-center">
 					<thead>
 						<tr>
-							<th>번호</th>
-							<th>이름</th>
-							<th>아이디</th>
-							<th>이메일</th>
-							<th>전화번호</th>
-							<th>가입 날짜</th>							
+							<th class="col-1">번호</th>
+							<th class="col-2">이름</th>
+							<th class="col-2">아이디</th>
+							<th class="col-3">이메일</th>
+							<th class="col-2">전화번호</th>
+							<th class="col-2">가입 날짜</th>							
 						</tr>
 					</thead>	
 				</table>
@@ -26,12 +26,12 @@
 		        <table class="table text-center">				
 					<tbody>
 						<tr th:each="user, status : ${userList}">
-							<td th:text="${status.count}"></td>					
-							<td th:text="${user.name}"></td>					
-							<td th:text="${user.userId}"></td>					
-							<td th:text="${user.email}"></td>					
-							<td th:text="${user.phone}"></td>					
-							<td th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>															
+							<td th:text="${status.count}" class="col-1"></td>					
+							<td th:text="${user.name}" class="col-2"></td>					
+							<td th:text="${user.userId}" class="col-2"></td>					
+							<td th:text="${user.email}" class="col-3"></td>					
+							<td th:text="${user.phone}" class="col-2"></td>					
+							<td th:text="${#temporals.format(user.createdAt, 'yyyy.MM.dd HH:mm')}" class="col-2"></td>															
 						</tr>					
 					</tbody>
 				</table>

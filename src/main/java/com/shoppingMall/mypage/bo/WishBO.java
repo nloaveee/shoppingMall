@@ -108,7 +108,7 @@ public class WishBO {
 			WishItem wishItemObj = new WishItem();
 			wishItemObj.setItemId(wish.getItemId());
 			
-			Item item = itemBO.getItemByid(wish.getItemId());
+			Item item = itemBO.getItemById(wish.getItemId());
 			wishItemObj.setItem(item);
 			
 			ItemOption option = itemBO.getitemOptionByOptionId(wish.getOptionId()); // Option 정보 가져오기

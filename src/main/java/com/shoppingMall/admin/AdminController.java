@@ -18,6 +18,8 @@ import com.shoppingMall.admin.domain.Notice;
 import com.shoppingMall.cs.bo.InquiryBO;
 import com.shoppingMall.cs.entity.Inquiry;
 import com.shoppingMall.cs.entity.InquiryAnswer;
+import com.shoppingMall.order.bo.OrderBO;
+import com.shoppingMall.order.entity.Orders;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -37,6 +39,9 @@ public class AdminController {
 	
 	@Autowired
 	private InquiryBO inquiryBO;
+	
+	@Autowired
+	private OrderBO orderBO;
 	
 	
 	// 메인 화면
@@ -159,5 +164,15 @@ public class AdminController {
 		model.addAttribute("answer",answer);
 		
 		return "admin/inquiry/detail";
+	}
+	
+	// 주문
+	@GetMapping("/order-list-view")
+	public String orderListView(Model model) {
+		List<Orders> orderList = orderBO.getOrderList();
+		
+		model.addAttribute("orderList",orderList);
+		
+		return "admin/order/list";
 	}
 }

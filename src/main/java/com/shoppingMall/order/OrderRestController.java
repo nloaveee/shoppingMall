@@ -30,22 +30,25 @@ public class OrderRestController {
 	
 	@Autowired
 	private OrderBO orderBO;
+	
+	@Autowired
+	private ItemBO itemBO;
 		
 
 	// 주문하기
-	@PostMapping("/add")
-	public Map<String, Object> orderAdd(
-			@RequestBody List<OrderItem> orderList,
-	        HttpSession session) {
-	    
-	    Map<String, Object> result = new HashMap<>();
-	    String userId = (String) session.getAttribute("userId");
-	    
-	    result = orderBO.addOrder(userId, orderList);	
-	    
-	    session.setAttribute("oderList", orderList);
-	    
-	    return result;
-	}	
+		@PostMapping("/add")
+		public Map<String, Object> orderAdd(
+				@RequestBody List<OrderItem> orderList,
+		        HttpSession session) {
+		    
+		    Map<String, Object> result = new HashMap<>();
+		    String userId = (String) session.getAttribute("userId");
+		    
+		    result = orderBO.addOrder(userId, orderList);	
+		    
+		    session.setAttribute("oderList", orderList);
+		    
+		    return result;
+		}	
 	
 }

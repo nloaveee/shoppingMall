@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75">
+		<!-- order  -->
+		<div class=" d-flex justify-content-center">
+			<h4 class="mt-4">ORDER</h4>
+		</div>
+		
+	<!-- 테이블 헤더 (고정) -->
+    <div class="orderTableHeader">
+        <table class="table text-center mt-5">
+			<thead>
+				<tr class="bg-light">				
+					<th class="text-secondary">이미지</th>
+					<th class="text-secondary">상품정보</th>
+					<th class="text-secondary">판매가</th>
+					<th class="text-secondary">주문일</th>
+				</tr>
+			</thead>	
+		</table>
+	</div>
+    <!-- 테이블 바디 (스크롤) -->
+   	<div class="scrollTableBody">
+       <table class="table text-center">		
+			<tbody>
+		        <tr th:each="order : ${orderList}">
+		            <td th:text="${order.item.name}">
+		                
+		            </td>		           
+		        </tr>              	      
+			</tbody>					
+		</table>
+	</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

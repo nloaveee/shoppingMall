@@ -12,10 +12,10 @@
 			<table class="table table-bold text-center">
 				<thead>
 					<tr>
-						<th>NO.</th>
-						<th>제목</th>
-						<th>작성일</th>
-						<th>수정일</th>
+						<th class="col-1">NO.</th>
+						<th class="col-4">제목</th>
+						<th class="col-2">작성일</th>
+						<th class="col-2">수정일</th>
 					</tr>
 				</thead>
 			</table>
@@ -25,10 +25,10 @@
 	        <table class="table text-center">	
 				<tbody>
 					<tr th:each="notice,status : ${noticeList}">
-						<td th:text="${status.count}"></td>
-						<td><b><a th:href="|/shop/admin/notice-detail-view?noticeId=${notice.id}" th:text="${notice.title}" class="text-dark"></a></b></td>
-						<td th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
-						<td th:text="${#temporals.format(notice.updatedAt, 'yyyy.MM.dd HH:mm:ss')}"></td>
+						<td th:text="${status.count}" class="col-1"></td>
+						<td class="col-4"><b><a th:href="|/shop/admin/notice-detail-view?noticeId=${notice.id}" th:text="${notice.title}" class="text-dark"></a></b></td>
+						<td th:text="${#temporals.format(notice.createdAt, 'yyyy.MM.dd HH:mm:ss')}" class="col-2"></td>
+						<td th:text="${#temporals.format(notice.updatedAt, 'yyyy.MM.dd HH:mm:ss')}" class="col-2"></td>
 					</tr>
 				</tbody>
 			</table>

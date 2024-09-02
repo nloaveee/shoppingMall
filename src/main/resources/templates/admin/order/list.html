@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/adminLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-75">
+		<h4 class="text-dark">주문 현황</h4>
+
+		<div class="mt-4">
+		<div class="orderTableHeader">
+			<table class="table table-bold text-center">
+				<thead>
+					<tr>
+						<th class="col-4">NO.</th>
+						<th class="col-4">주문자</th>		
+						<th class="col-4">주문일</th>
+					</tr>
+				</thead>
+			 </table>
+		 </div>
+		 <!-- 테이블 바디 (스크롤) -->
+	    <div class="scrollTableBody">
+	        <table class="table text-center">		
+				<tbody>
+					<tr th:each="order,status : ${orderList}">
+						<td th:text="${status.count}" class="col-4"></td>
+						<td><a th:text="${order.userId}" class="col-4 text-dark"></a></td>
+						<td th:text="${#temporals.format(order.createdAt, 'yyyy.MM.dd HH:mm:ss')}" class="col-4"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>		
+	</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

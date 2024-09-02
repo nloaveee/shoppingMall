@@ -42,6 +42,9 @@ public class OrderController {
 		
 		User user = userBO.getUserByUserId(userId);	
 		
+	    List<OrderItem> orderList = (List<OrderItem>) session.getAttribute("orderList");
+	    model.addAttribute("orderList", orderList);
+		
 		
 		// address를 나누는 코드
 		// $ 기호를 기준으로 나누기

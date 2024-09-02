@@ -13,16 +13,22 @@
 					<b>WISHLIST</b>
 				</a>
 			</div>
-			<div class="col-3 bg-light text-center">
+			<div class="col-3 bg-light text-center mx-2">
 				<a  href="/shop/user/mypage/cart-view" class="text-secondary">
 					<img src="/img/cart.png" class="col-8 my-4"><br>
 					<b>CART</b>
 				</a>
 			</div>
-			<div class=" col-3 bg-light text-center">
+			<div class=" col-3 bg-light text-center mr-2">
 				<a th:href="|/shop/user/mypage/profile?userId=${user.userId}|" class="text-secondary">
 					<img src="/img/profile.png" class="col-8 my-4"><br>
 					<b>MY PROFILE</b>
+				</a>
+			</div>
+			<div class=" col-3 bg-light text-center">
+				<a th:href="|/shop/user/mypage/order-view?userId=${user.userId}|" class="text-secondary">
+					<img src="/img/order.png" class="col-8 my-4"><br>
+					<b>ORDERLIST</b>
 				</a>
 			</div>
 		</div>

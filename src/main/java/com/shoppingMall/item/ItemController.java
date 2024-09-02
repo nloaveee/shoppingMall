@@ -30,7 +30,7 @@ public class ItemController {
 			Model model,HttpSession session) {
 		
 		// 상품 상세 정보 가져오기 		
-		Item item = itemBO.getItemByid(itemId);
+		Item item = itemBO.getItemById(itemId);
 		List<ItemOption> optionList = itemBO.getItemOptionListByItemId(itemId);
 		String userId = (String)session.getAttribute("userId");
 		

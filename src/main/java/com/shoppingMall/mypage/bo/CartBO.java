@@ -98,7 +98,7 @@ public class CartBO {
 	        cartItemObj.setCartId(cart.getId());
 	        
 	        // Item 정보 설정
-	        Item item = itemBO.getItemByid(cart.getItemId());
+	        Item item = itemBO.getItemById(cart.getItemId());
 	        cartItemObj.setItem(item);
 	        
 	        // Option 정보 설정

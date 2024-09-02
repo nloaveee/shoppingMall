@@ -7,18 +7,25 @@
 	<div class="orderForm col-7">
 	
 	<!-- 주문 상품 -->
-	<div class="bg-success">
-		<h5><b>주문상품</b></h5>
+	<div>
+		<h5 class="my-3"><b>주문상품</b></h5>
 		<div class="d-flex">
 			<!-- 상품 이미지 -->
-			<div class="col-2 bg-dark">
-				<img>
+			<div class="col-2" th:each="orderItem : ${orderList}">
+				<img th:src="${orderItem.item.imagePath}"  width="100px" height="100px">
 			</div>
 			
 			<!-- 상품 정보 -->
-			<div class="col-10 bg-light">
-			
-			
+			<div class="col-10 bg-light" th:block th:each="orderItem : ${orderList}">
+        		<h5 th:text="${orderItem.item.name}"></h5>
+        		<div class="d-flex">
+        			[옵션 : <div th:text="${orderItem.option}" ></div>]
+        		</div>
+        		<div class="d-flex">
+        			수량 : <div th:text="${orderItem.count}" ></div>개
+        		</div>
+        		<h6 th:text="${orderItem.sale}" class="itemSale" th:data-base-sale="${orderItem.sale}"></h6>	
+        		<hr>		
 			</div>		
 		</div>
 	</div>
@@ -87,7 +94,7 @@
 	</div>
 	
 	<div class="d-flex justify-content-center">
-		<button class="orderBtn btn btn-dark col-3 mt-4">주문하기</button>
+		<a href="/shop/order/order-success-view" class="orderBtn btn btn-dark col-3 mt-4">주문하기</a>
 	</div>
 	</div>
 		
@@ -127,6 +134,16 @@
     	        }).open();
     			
     		}); //-------------------- 우편번호 찾기 끝
+    		
+       	    // 상품 천 단위 구분
+       	    function formatPrice(price) {
+       	        return parseFloat(price).toLocaleString();
+       	    }
+    		
+       	    $(".itemSale").each(function() {
+       	        let baseSale = $(this).data('base-sale');
+       	        $(this).text(formatPrice(baseSale));
+       	    });
     		
     		
     		// 주문하기btn 

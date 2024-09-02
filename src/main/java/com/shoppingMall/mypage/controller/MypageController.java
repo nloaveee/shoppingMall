@@ -17,6 +17,9 @@ import com.shoppingMall.mypage.bo.WishBO;
 import com.shoppingMall.mypage.entity.Cart;
 import com.shoppingMall.mypage.entity.CartView;
 import com.shoppingMall.mypage.entity.WishView;
+import com.shoppingMall.order.bo.OrderBO;
+import com.shoppingMall.order.entity.OrderItem;
+import com.shoppingMall.order.entity.Orders;
 import com.shoppingMall.user.bo.UserBO;
 import com.shoppingMall.user.entity.User;
 
@@ -36,6 +39,9 @@ public class MypageController {
 	
 	@Autowired
 	private CartBO cartBO;
+	
+	@Autowired
+	private OrderBO orderBO;
 	
 	// 마이페이지 - 메인
 	@GetMapping("/mypage")
@@ -103,6 +109,20 @@ public class MypageController {
 	
 		return "mypage/cart";
 	}
+	
+	// 마이페이지 - 주문
+	@GetMapping("/mypage/order-view")
+	public String orderView(
+			HttpSession session,Model model) {
+		
+		String userId =(String) session.getAttribute("userId");
+		
+	    List<OrderItem> orderList = (List<OrderItem>) session.getAttribute("orderList");
+	    model.addAttribute("orderList", orderList);
+	    	
+		return "mypage/order";
+	}
+	
 	
 	
 
