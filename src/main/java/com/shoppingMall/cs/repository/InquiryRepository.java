@@ -14,8 +14,4 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Integer>{
 	    
     public List<Inquiry> findAll();
     
-    	 
-    List<Inquiry> findAllByIdLessThanOrderByIdDesc(int standardId, Pageable pageable);
-
-    List<Inquiry> findAllByIdGreaterThanOrderByIdAsc(int standardId, Pageable pageable);
 }
