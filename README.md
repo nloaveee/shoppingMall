@@ -62,10 +62,17 @@ Author: nloavee@gmail.com
     </tr>
     <tr>
       <td>Frontend</td>
-      <td><img src="https://img.shields.io/badge/HTML-F7AA3E?style=flat-square&logo=HTML5&logoColor=white"/>
+      <td><img src="https://img.shields.io/badge/HTML-F28211?style=flat-square&logo=HTML5&logoColor=white"/>
       <img src="https://img.shields.io/badge/CSS-F2EE13?style=flat-square&logo=css3&logoColor=white"/>
       <img src="https://img.shields.io/badge/JAVASCRIPT-F2D011?style=flat-square&logo=javascript&logoColor=white"/>
       <img src="https://img.shields.io/badge/JQUERY-118DF2?style=flat-square&logo=jquery&logoColor=white"/>
+      <img src="https://img.shields.io/badge/AJAX-11C9F2?style=flat-square&logo=ajax&logoColor=white"/>
+      </td>
+    </tr>
+      <tr>
+      <td>Library</td>
+      <td><img src="https://img.shields.io/badge/THYMELEAF-2E7800?style=flat-square&logo=THYMELEAF&logoColor=white"/>
+      <img src="https://img.shields.io/badge/JUNIT5-58E307?style=flat-square&logo=JUNIT5&logoColor=white"/>  
       </td>
     </tr>
     
