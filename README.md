@@ -77,9 +77,24 @@ Author: nloavee@gmail.com
     </tr>
     <tr>
       <td>API</td>
-      <td><img src="https://img.shields.io/badge/JAVA MAIL-ED9AEC?style=flat-square&logo=JAVA MAIL&logoColor=white"/>
+      <td><img src="https://img.shields.io/badge/JAVA MAIL-7893F5?style=flat-square&logo=JAVA MAIL&logoColor=white"/>
       <img src="https://img.shields.io/badge/DAUM POSTCODE-D09AED?style=flat-square&logo=DAUM POSTCODE&logoColor=white"/>  
       <img src="https://img.shields.io/badge/DAUM BOOTSTRAP-AF29F2?style=flat-square&logo=bootstrap&logoColor=white"/>  
+      </td>
+    </tr>
+    <tr>
+      <td>Server</td>
+      <td><img src="https://img.shields.io/badge/APACHE TOMCAT-F5D856?style=flat-square&logo=apache tomcat&logoColor=black"/>
+      </td>
+    </tr>
+        <tr>
+      <td>Cloud</td>
+      <td><img src="https://img.shields.io/badge/AWS-1923B0?style=flat-square&logo=aws&logoColor=white"/>
+      </td>
+    </tr>
+            <tr>
+      <td>Version Control</td>
+      <td><img src="https://img.shields.io/badge/GITHUB-black?style=flat-square&logo=github&logoColor=white"/>
       </td>
     </tr>
     
