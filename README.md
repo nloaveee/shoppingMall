@@ -51,7 +51,9 @@ Author: nloavee@gmail.com
     <tr>
       <td>Framework</td>
       <td><img src="https://img.shields.io/badge/SpingBoot-A0D468?style=flat-square&logo=Springboot&logoColor=white"/>
-      <img src="https://img.shields.io/badge/MyBatis-white?style=flat-square&logo=MyBatis&logoColor=black"/> </td>
+      <img src="https://img.shields.io/badge/MyBatis-FC1717?style=flat-square&logo=MyBatis&logoColor=white"/>
+         <img src="https://img.shields.io/badge/JPA-B2B1E3?style=flat-square&logo=MyBatis&logoColor=white"/>
+      </td>
     </tr>
     
   </tbody>
