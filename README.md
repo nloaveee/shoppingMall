@@ -31,9 +31,16 @@ Author: nloavee@gmail.com
   <thead>
     <tr>
       <th>OS</th>
-      <th>Windows11</th>
+      <th>Windowsv11</th>
     </tr>
   </thead>
+  <tbody>
+    <tr>
+      <td>Language</td>
+      <td><img src="https://img.shields.io/badge/JAVA-white?style=flat-square&logo=java&logoColor=white"/></td>
+    </tr>
+    
+  </tbody>
   
 </table>
 
