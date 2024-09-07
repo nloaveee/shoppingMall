@@ -31,7 +31,7 @@ Author: nloavee@gmail.com
   <thead>
     <tr>
       <th>OS</th>
-      <th>Windowsv11</th>
+      <th>Windows 11</th>
     </tr>
   </thead>
   <tbody>
@@ -73,6 +73,13 @@ Author: nloavee@gmail.com
       <td>Library</td>
       <td><img src="https://img.shields.io/badge/THYMELEAF-2E7800?style=flat-square&logo=THYMELEAF&logoColor=white"/>
       <img src="https://img.shields.io/badge/JUNIT5-58E307?style=flat-square&logo=JUNIT5&logoColor=white"/>  
+      </td>
+    </tr>
+    <tr>
+      <td>API</td>
+      <td><img src="https://img.shields.io/badge/JAVA MAIL-ED9AEC?style=flat-square&logo=JAVA MAIL&logoColor=white"/>
+      <img src="https://img.shields.io/badge/DAUM POSTCODE-D09AED?style=flat-square&logo=DAUM POSTCODE&logoColor=white"/>  
+      <img src="https://img.shields.io/badge/DAUM BOOTSTRAP-AF29F2?style=flat-square&logo=bootstrap&logoColor=white"/>  
       </td>
     </tr>
     
