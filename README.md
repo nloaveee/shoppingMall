@@ -55,6 +55,19 @@ Author: nloavee@gmail.com
          <img src="https://img.shields.io/badge/JPA-B2B1E3?style=flat-square&logo=MyBatis&logoColor=white"/>
       </td>
     </tr>
+    <tr>
+      <td>Database</td>
+      <td><img src="https://img.shields.io/badge/MySQL-3F85F5?style=flat-square&logo=MySQL&logoColor=white"/>
+      </td>
+    </tr>
+    <tr>
+      <td>Frontend</td>
+      <td><img src="https://img.shields.io/badge/HTML-F7AA3E?style=flat-square&logo=HTML5&logoColor=white"/>
+      <img src="https://img.shields.io/badge/CSS-F2EE13?style=flat-square&logo=css3&logoColor=white"/>
+      <img src="https://img.shields.io/badge/JAVASCRIPT-F2D011?style=flat-square&logo=javascript&logoColor=white"/>
+      <img src="https://img.shields.io/badge/JQUERY-118DF2?style=flat-square&logo=jquery&logoColor=white"/>
+      </td>
+    </tr>
     
   </tbody>
   
