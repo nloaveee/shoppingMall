@@ -1,5 +1,4 @@
 <h1>ShoppingMall🛒(1인 프로젝트)</h1>
-<hr>
 Author: nloavee@gmail.com
 
 <h4>프로젝트 개요</h4>
