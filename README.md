@@ -45,8 +45,8 @@ Author: nloavee@gmail.com
     </tr>
     <tr>
       <td>IDE</td>
-      <td><img src="https://img.shields.io/badge/STS4-white?style=flat-square&logo=springboot&logoColor=black"/> </td>
-      <td><img src="https://img.shields.io/badge/ECLIPSE-white?style=flat-square&logo=STS4&logoColor=black"/> </td>
+      <td><img src="https://img.shields.io/badge/STS4-white?style=flat-square&logo=springboot&logoColor=black"/>
+      <img src="https://img.shields.io/badge/ECLIPSE-white?style=flat-square&logo=STS4&logoColor=black"/> </td>
     </tr>
     
   </tbody>
