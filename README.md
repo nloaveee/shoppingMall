@@ -24,3 +24,16 @@ Author: nloavee@gmail.com
   상품 등록 | 상품 목록 | 주문 목록 | 회원 목록 | 공지사항 등록 | 문의 사항 답변 <br>
 </div>
 
+
+<hr>
+<h4>🛠기술 스택</h4>
+<table>
+  <thead>
+    <tr>
+      <th>OS</th>
+      <th>Windows11</th>
+    </tr>
+  </thead>
+  
+</table>
+
