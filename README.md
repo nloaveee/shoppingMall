@@ -89,7 +89,7 @@ Author: nloavee@gmail.com
     </tr>
         <tr>
       <td>Cloud</td>
-      <td><img src="https://img.shields.io/badge/AWS-1923B0?style=flat-square&logo=aws&logoColor=white"/>
+      <td><img src="https://img.shields.io/badge/AWS-1923B0?style=flat-square&logo=Amazon Web Services&logoColor=white"/>
       </td>
     </tr>
             <tr>
