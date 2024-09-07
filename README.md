@@ -50,7 +50,7 @@ Author: nloavee@gmail.com
     </tr>
     <tr>
       <td>Framework</td>
-      <td><img src="https://img.shields.io/badge/SpingBoot-#A0D468?style=flat-square&logo=springboot&logoColor=white"/>
+      <td><img src="https://img.shields.io/badge/SpingBoot-A0D468?style=flat-square&logo=Springboot&logoColor=white"/>
       <img src="https://img.shields.io/badge/MyBatis-white?style=flat-square&logo=MyBatis&logoColor=black"/> </td>
     </tr>
     
