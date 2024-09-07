@@ -38,6 +38,10 @@ Author: nloavee@gmail.com
     <tr>
       <td>Language</td>
       <td><img src="https://img.shields.io/badge/JAVA-white?style=flat-square&logo=java&logoColor=white"/></td>
+      <td><img src="https://img.shields.io/badge/SPRING-white?style=flat-square&logo=spring&logoColor=white"/></td>
+      <td><img src="https://img.shields.io/badge/HTML-white?style=flat-square&logo=html&logoColor=white"/></td>
+      <td><img src="https://img.shields.io/badge/CSS-white?style=flat-square&logo=css&logoColor=white"/></td>
+      <td><img src="https://img.shields.io/badge/JAVASCRIPT-white?style=flat-square&logo=javascript&logoColor=white"/></td>
     </tr>
     
   </tbody>
