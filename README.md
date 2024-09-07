@@ -5,7 +5,22 @@ Author: nloavee@gmail.com
 - SpringBoot를 사용하여 쇼핑몰 구현 
 
 
-<a href="#" style="display: block;">🔎핵심 기능</a>
-<a href="#" style="display: block;">🖥시연 영상</a>
-<a href="#" style="display: block;">🛠기술 스택</a>
-<a href="#" style="display: block;">📄ERD</a>
+<a href="#">🔎핵심 기능</a><br>
+<a href="#">🖥시연 영상</a><br>
+<a href="#">🛠기술 스택</a><br>
+<a href="#">📄ERD</a>
+
+<hr>
+
+<h4>🔎핵심 기능</h4>
+<div>
+  👫 회원
+  회원가입 | 로그인 | 아이디 찾기 | 비밀번호 찾기 | 임시 비밀번호 발송 
+  🎁 마이페이지
+  찜하기 목록 조회, 삭제, 장바구니 | 회원정보수정 | 장바구니 조회,삭제,주문 | 문의 등록, 삭제 | 공지사항 조회
+  👕 상품
+  찜하기 등록, 삭제 | 장바구니 담기 | 옵션 선택
+  📑 관리자 페이지
+  상품 등록 | 상품 목록 | 주문 목록 | 회원 목록 | 공지사항 등록 | 문의 사항 답
+</div>
+
