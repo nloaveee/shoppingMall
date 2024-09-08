@@ -105,10 +105,10 @@ Author: nloavee@gmail.com
 OS | Windows 11
 --- | --- |
 Language | <img src="https://img.shields.io/badge/JAVA-white?style=flat-square&logo=java&logoColor=black"/>  
-      !<img src="https://img.shields.io/badge/SPRING-white?style=flat-square&logo=spring&logoColor=black"/>  
-      !<img src="https://img.shields.io/badge/HTML-white?style=flat-square&logo=html&logoColor=blacke"/>  
-      !<img src="https://img.shields.io/badge/CSS-white?style=flat-square&logo=css&logoColor=black"/>  
-      !<img src="https://img.shields.io/badge/JAVASCRIPT-white?style=flat-square&logo=javascript&logoColor=black"/
+      <img src="https://img.shields.io/badge/SPRING-white?style=flat-square&logo=spring&logoColor=black"/>  
+      <img src="https://img.shields.io/badge/HTML-white?style=flat-square&logo=html&logoColor=blacke"/>  
+      <img src="https://img.shields.io/badge/CSS-white?style=flat-square&logo=css&logoColor=black"/>  
+      <img src="https://img.shields.io/badge/JAVASCRIPT-white?style=flat-square&logo=javascript&logoColor=black"/
 IDE | ![STS4](https://img.shields.io/badge/STS4-000?style=for-the-badge&logo=spring&logoColor=white) ![Eclipse](https://img.shields.io/badge/Eclipse-000?style=for-the-badge&logo=eclipseide&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-000?style=for-the-badge&logo=visualstudiocode&logoColor=white) ![SQL Developer](https://img.shields.io/badge/SQL%20Developer-000?style=for-the-badge&logo=oracle&logoColor=white)
 Framework | ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white) ![MyBatis](https://img.shields.io/badge/Mybatis-d40000?style=for-the-badge)
 Build Tool | ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
