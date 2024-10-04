@@ -103,32 +103,5 @@ Author: nloavee@gmail.com
 <hr>
 <h4>🖥시연 영상</h4>
 
-회원가입
-
-https://github.com/user-attachments/assets/6d121cee-4ca9-45f5-8185-3d733080de70
-
-
-이메일 인증 
-
-https://github.com/user-attachments/assets/a80edcef-4665-4393-82cb-25dbb70dd292
-
-
-아이디 & 비밀번호 찾기
-
-https://github.com/user-attachments/assets/177cdbc0-b438-4357-8317-750a9706767d
-
-
-임시 비밀번호 발송
-
-https://github.com/user-attachments/assets/5ec9b71d-8ea4-4226-b70a-b587dca52e0c
-
-
-장바구니 & 상품 검색
-
-https://github.com/user-attachments/assets/517fd190-2073-4fad-b726-df37c8d4954b
-
-
-
-
 
 
