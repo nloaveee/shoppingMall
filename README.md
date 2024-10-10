@@ -12,8 +12,32 @@ Author: nloavee@gmail.com
 
 <hr>
 
+<h4>🖥시연 영상</h4>
 
-https://github.com/user-attachments/assets/47478a2c-c001-49ab-8d1e-207a590029b0
+회원가입 
+
+https://github.com/user-attachments/assets/33dd6d2b-f7d9-4427-ac8f-d46b0447cee0
+
+아이디 / 비밀번호 찾기 
+
+https://github.com/user-attachments/assets/b859605a-60c3-4449-86d6-1a98cd010af6
+
+임시 비밀번호 
+
+https://github.com/user-attachments/assets/0e95e6c1-e718-4e93-a27d-76e48b646de3
+
+이메일 인증 
+
+https://github.com/user-attachments/assets/adc7481c-72a6-41a7-b1fe-1f9ecd41f8ab
+
+장바구니 / 상품검색
+
+https://github.com/user-attachments/assets/7e3cb4f1-4040-4d6f-b593-9294adcc85f9
+
+찜하기 
+
+https://github.com/user-attachments/assets/6535269d-8e2f-45b7-8440-0ca7904bb893
+
 
 
 <h4>🔎핵심 기능</h4>
