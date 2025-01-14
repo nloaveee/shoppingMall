@@ -128,8 +128,5 @@ https://github.com/user-attachments/assets/6535269d-8e2f-45b7-8440-0ca7904bb893
   
 </table>
 
-<hr>
-<h4>🖥시연 영상</h4>
-
 
 
